@@ -11,11 +11,10 @@ import javafx.scene.control.*;
 
 import java.net.URL;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.scene.control.cell.PropertyValueFactory;
-
+import javafx.scene.input.MouseEvent;
 public class OwnerController implements Initializable {
     private int myUserID;
     @FXML
@@ -24,10 +23,6 @@ public class OwnerController implements Initializable {
     private ComboBox myOwnershipType;
     @FXML
     private DatePicker myDateOfAdoption;
-    @FXML
-    private Button myAddOwnershipFormBtn;
-    @FXML
-    private Button myClearOwnershipFormBtn;
     @FXML
     private Label myOwnershipMessage;
 
@@ -47,9 +42,8 @@ public class OwnerController implements Initializable {
     private ComboBox myPetSpecies;
     @FXML
     private ComboBox myPetBreed;
-
     @FXML
-    private Button myLoadDataBtn;
+    private Label myPetMessage;
 
     @FXML
     private TableView<OwnershipData> myOwnershipTable;
@@ -96,20 +90,72 @@ public class OwnerController implements Initializable {
     }
 
     private void initializeInsuranceComboBox() {
-//        myPetInsurance.setItems();
+        String query = "SELECT Company, Plan FROM Insurances";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement pr = conn.prepareStatement(query);
+            ResultSet rs = pr.executeQuery();
+            ObservableList<String> insurances = FXCollections.observableArrayList();
+            while (rs.next()) {
+                insurances.add(rs.getString(1) + ", " + rs.getString(2));
+            }
+            myPetInsurance.setItems(insurances);
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void initializeSpeciesComboBox() {
-//        myPetSpecies.setItems();
+        String query = "SELECT SpeciesName FROM Species";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement pr = conn.prepareStatement(query);
+            ResultSet rs = pr.executeQuery();
+            ObservableList<String> species = FXCollections.observableArrayList();
+            while (rs.next()) {
+                species.add(rs.getString(1));
+            }
+            myPetSpecies.setItems(species);
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    @FXML
+    public void initializeBreedComboBox(ActionEvent theEvent) {
+        String query = "SELECT BreedName FROM Breeds WHERE Breeds.SpeciesID = (SELECT SpeciesID FROM Species WHERE SpeciesName = ?);";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement pr = conn.prepareStatement(query);
+            pr.setString(1, myPetSpecies.getValue().toString());
+            ResultSet rs = pr.executeQuery();
+            ObservableList<String> breeds = FXCollections.observableArrayList();
+            while (rs.next()) {
+                breeds.add(rs.getString(1));
+            }
+            myPetBreed.setItems(breeds);
+            conn.close();
+
+            myPetMessage.setText(null);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
+    @FXML
+    public void generateErrorMessageIfSpeciesNull(MouseEvent theEvent) {
+        if (myPetSpecies.getValue() == null) {
+            myPetMessage.setText("Pick a species first");
+        }
+    }
 
     public void setUserID(int theUserID) {
         myUserID = theUserID;
     }
 
     @FXML
-    public void loadOwnershipData(ActionEvent event) {
+    public void loadOwnershipData(ActionEvent theEvent) {
         try {
             Connection conn = dbConnection.getConnection();
             myOwnershipData = FXCollections.observableArrayList();
@@ -138,7 +184,8 @@ public class OwnerController implements Initializable {
         myOwnershipTable.setItems(myOwnershipData);
     }
 
-    public void addOwnership() {
+    @FXML
+    public void addOwnership(ActionEvent theEvent) {
         String getOwnershipTypeId = "SELECT OwnershipTypeID FROM OwnershipTypes WHERE OwnershipType = ?;";
         String insertStatement = "INSERT INTO Ownerships(UserID, PetID, OwnershipTypeID, Date) VALUES(?, ?, ?, ?);";
         try {
@@ -169,17 +216,19 @@ public class OwnerController implements Initializable {
         }
     }
 
-    public void clearOwnershipForm() {
+    @FXML
+    public void clearOwnershipForm(ActionEvent theEvent) {
         myPetID.clear();
         myDateOfAdoption.setValue(null);
         myOwnershipType.setValue(null);
     }
 
-    public void addPet() {
+    public void addPet(ActionEvent theEvent) {
 
     }
 
-    public void clearPetForm() {
+    @FXML
+    public void clearPetForm(ActionEvent theEvent) {
         myPetFirstName.clear();
         myPetLastName.clear();
         myPetDOB.setValue(null);

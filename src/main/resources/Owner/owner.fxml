@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Owner.OwnerController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Owner.OwnerController">
    <children>
       <TabPane prefHeight="720.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -113,12 +103,12 @@
                                     <Insets left="15.0" right="15.0" />
                                  </VBox.margin>
                               </ComboBox>
-                              <ComboBox fx:id="myPetSpecies" layoutX="25.0" layoutY="177.0" prefHeight="25.0" prefWidth="389.0" promptText="Species">
+                              <ComboBox fx:id="myPetSpecies" layoutX="25.0" layoutY="177.0" onAction="#initializeBreedComboBox" prefHeight="25.0" prefWidth="389.0" promptText="Species">
                                  <VBox.margin>
                                     <Insets left="15.0" right="15.0" />
                                  </VBox.margin>
                               </ComboBox>
-                              <ComboBox fx:id="myPetBreed" layoutX="25.0" layoutY="152.0" prefHeight="25.0" prefWidth="389.0" promptText="Breed">
+                              <ComboBox fx:id="myPetBreed" layoutX="25.0" layoutY="152.0" onMouseClicked="#generateErrorMessageIfSpeciesNull" prefHeight="25.0" prefWidth="389.0" promptText="Breed">
                                  <VBox.margin>
                                     <Insets bottom="10.0" left="15.0" right="15.0" />
                                  </VBox.margin>
