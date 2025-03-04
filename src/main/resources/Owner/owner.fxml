@@ -49,17 +49,22 @@
                                     <Insets left="15.0" right="15.0" />
                                  </VBox.margin>
                               </TextField>
+                              <DatePicker fx:id="myDateOfAdoption" prefHeight="25.0" prefWidth="391.0" promptText="Date Of Adoption">
+                                 <VBox.margin>
+                                    <Insets left="15.0" right="15.0" />
+                                 </VBox.margin>
+                              </DatePicker>
                               <ComboBox fx:id="myOwnershipType" prefHeight="25.0" prefWidth="384.0" promptText="Ownership Type">
                                  <VBox.margin>
                                     <Insets bottom="10.0" left="15.0" right="15.0" />
                                  </VBox.margin>
                               </ComboBox>
-                              <Button fx:id="myAddOwnershipFormBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="384.0" text="Add Ownership">
+                              <Button fx:id="myAddOwnershipFormBtn" mnemonicParsing="false" onAction="#addOwnership" prefHeight="25.0" prefWidth="384.0" text="Add Ownership">
                                  <VBox.margin>
                                     <Insets left="15.0" right="15.0" />
                                  </VBox.margin>
                               </Button>
-                              <Button fx:id="myClearOwnershipFormBtn" layoutX="25.0" layoutY="77.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="384.0" text="Clear Form">
+                              <Button fx:id="myClearOwnershipFormBtn" layoutX="25.0" layoutY="77.0" mnemonicParsing="false" onAction="#clearOwnershipForm" prefHeight="25.0" prefWidth="384.0" text="Clear Form">
                                  <VBox.margin>
                                     <Insets left="15.0" right="15.0" />
                                  </VBox.margin>
@@ -118,12 +123,12 @@
                                     <Insets bottom="10.0" left="15.0" right="15.0" />
                                  </VBox.margin>
                               </ComboBox>
-                              <Button fx:id="myAddPetBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="353.0" text="Add Pet">
+                              <Button fx:id="myAddPetBtn" mnemonicParsing="false" onAction="#addPet" prefHeight="25.0" prefWidth="353.0" text="Add Pet">
                                  <VBox.margin>
                                     <Insets left="15.0" right="15.0" />
                                  </VBox.margin>
                               </Button>
-                              <Button fx:id="myClearPetFormBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="384.0" text="Clear Form">
+                              <Button fx:id="myClearPetFormBtn" mnemonicParsing="false" onAction="#clearPetForm" prefHeight="25.0" prefWidth="384.0" text="Clear Form">
                                  <VBox.margin>
                                     <Insets left="15.0" right="15.0" />
                                  </VBox.margin>

@@ -1,6 +1,7 @@
 package Owner;
 
 import Database.dbConnection;
+import Login.userType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,10 +10,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -24,9 +23,13 @@ public class OwnerController implements Initializable {
     @FXML
     private ComboBox myOwnershipType;
     @FXML
+    private DatePicker myDateOfAdoption;
+    @FXML
     private Button myAddOwnershipFormBtn;
     @FXML
     private Button myClearOwnershipFormBtn;
+    @FXML
+    private Label myOwnershipMessage;
 
     @FXML
     private TextField myPetFirstName;
@@ -64,7 +67,42 @@ public class OwnerController implements Initializable {
 
     public void initialize(URL theURL, ResourceBundle theRB) {
         myConnection = new dbConnection();
+        initializePetOwnershipTypeComboBox();
+        initializeGenderComboBox();
+        initializeInsuranceComboBox();
+        initializeSpeciesComboBox();
     }
+
+    private void initializePetOwnershipTypeComboBox() {
+        String query = "SELECT OwnershipType FROM OwnershipTypes";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement pr = conn.prepareStatement(query);
+            ResultSet rs = pr.executeQuery();
+            ObservableList<String> ownershipTypes = FXCollections.observableArrayList();
+            while (rs.next()) {
+                ownershipTypes.add(rs.getString(1));
+            }
+            myOwnershipType.setItems(ownershipTypes);
+            myPetOwnershipType.setItems(ownershipTypes);
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void initializeGenderComboBox() {
+        myPetGender.setItems(FXCollections.observableArrayList("Male", "Female", "Unknown"));
+    }
+
+    private void initializeInsuranceComboBox() {
+//        myPetInsurance.setItems();
+    }
+
+    private void initializeSpeciesComboBox() {
+//        myPetSpecies.setItems();
+    }
+
 
     public void setUserID(int theUserID) {
         myUserID = theUserID;
@@ -98,5 +136,57 @@ public class OwnerController implements Initializable {
 
         myOwnershipTable.setItems(null);
         myOwnershipTable.setItems(myOwnershipData);
+    }
+
+    public void addOwnership() {
+        String getOwnershipTypeId = "SELECT OwnershipTypeID FROM OwnershipTypes WHERE OwnershipType = ?;";
+        String insertStatement = "INSERT INTO Ownerships(UserID, PetID, OwnershipTypeID, Date) VALUES(?, ?, ?, ?);";
+        try {
+            if (myPetID.getText() == null) {
+                myOwnershipMessage.setText("An petID must be selected.");
+                return;
+            }
+            if (myOwnershipType.getValue() == null) {
+                myOwnershipMessage.setText("An ownership type must be selected.");
+                return;
+            }
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement prOwnershipType = conn.prepareStatement(getOwnershipTypeId);
+            prOwnershipType.setString(1, myOwnershipType.getValue().toString());
+            ResultSet rsOwnershipType = prOwnershipType.executeQuery();
+
+            if (rsOwnershipType.next()) {
+                PreparedStatement prInsert = conn.prepareStatement(insertStatement);
+                prInsert.setInt(1, myUserID);
+                prInsert.setInt(2, Integer.parseInt(myPetID.getText()));
+                prInsert.setInt(3, rsOwnershipType.getInt(1));
+                prInsert.setDate(4, Date.valueOf(myDateOfAdoption.getValue()));          //Source: https://stackoverflow.com/questions/30279125/insert-date-into-mysql-database-using-javafx-datepicker
+                prInsert.execute();
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            myOwnershipMessage.setText("Ownership could not be added. A relationship already exists.");
+        }
+    }
+
+    public void clearOwnershipForm() {
+        myPetID.clear();
+        myDateOfAdoption.setValue(null);
+        myOwnershipType.setValue(null);
+    }
+
+    public void addPet() {
+
+    }
+
+    public void clearPetForm() {
+        myPetFirstName.clear();
+        myPetLastName.clear();
+        myPetDOB.setValue(null);
+        myPetGender.setValue(null);
+        myPetInsurance.setValue(null);
+        myPetOwnershipType.setValue(null);
+        myPetSpecies.setValue(null);
+        myPetBreed.setValue(null);
     }
 }
