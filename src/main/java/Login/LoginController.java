@@ -1,4 +1,4 @@
-package PetInformationSystem.login;
+package Login;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;

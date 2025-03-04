@@ -1,2 +1,4 @@
-package Caretaker;public class CaretakerController {
+package Caretaker;
+
+public class CaretakerController {
 }

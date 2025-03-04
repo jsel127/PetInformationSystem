@@ -1,2 +1,4 @@
-package Owner;public class OwnerController {
+package Owner;
+
+public class OwnerController {
 }

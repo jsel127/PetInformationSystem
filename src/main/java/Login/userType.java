@@ -1,4 +1,4 @@
-package PetInformationSystem.login;
+package Login;
 
 public enum userType {
     Owner, Veterinarian, Caretaker;

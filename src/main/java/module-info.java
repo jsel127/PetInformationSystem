@@ -5,6 +5,13 @@ module com.example.demo1 {
     requires com.dlsc.formsfx;
     requires java.sql;
 
-    opens PetInformationSystem to javafx.fxml;
-    exports PetInformationSystem;
+    opens Login to javafx.fxml;
+    opens Owner to javafx.fxml;
+    opens Veterinarian to javafx.fxml;
+    opens Caretaker to javafx.fxml;
+
+    exports Login;
+    exports Owner;
+    exports Veterinarian;
+    exports Caretaker;
 }

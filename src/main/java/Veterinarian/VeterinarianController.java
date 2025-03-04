@@ -1,2 +1,4 @@
-package Veterinarian;public class VeterinarianController {
+package Veterinarian;
+
+public class VeterinarianController {
 }
