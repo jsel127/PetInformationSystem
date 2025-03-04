@@ -5,6 +5,6 @@ module com.example.demo1 {
     requires com.dlsc.formsfx;
     requires java.sql;
 
-    opens com.example.demo1 to javafx.fxml;
-    exports com.example.demo1;
+    opens PetInformationSystem to javafx.fxml;
+    exports PetInformationSystem;
 }
