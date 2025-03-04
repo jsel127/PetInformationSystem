@@ -1,6 +1,8 @@
 package Login;
 
+import Caretaker.CaretakerController;
 import Owner.OwnerController;
+import Veterinarian.VeterinarianController;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -44,18 +46,19 @@ public class LoginController implements Initializable {
     @FXML
     public void login(ActionEvent theEvent) {
         try {
-            if (loginModel.isLogin(Integer.parseInt(myUserID.getText()), myPassword.getText(), ((userType) myUserType.getValue()).toString())) {
+            int userID = Integer.parseInt(myUserID.getText());
+            if (loginModel.isLogin(userID, myPassword.getText(), ((userType) myUserType.getValue()).toString())) {
                 Stage stage = (Stage) this.myLoginButton.getScene().getWindow();
                 stage.close();
                 switch (((userType)myUserType.getValue()).toString()) {
                     case "Owner":
-                        ownerLogin();
+                        ownerLogin(userID);
                         break;
                     case "Veterinarian":
-                        veterinaryLogin();
+                        veterinaryLogin(userID);
                         break;
                     case "Caretaker":
-                        caretakerLogin();
+                        caretakerLogin(userID);
                         break;
                 }
             } else {
@@ -66,13 +69,14 @@ public class LoginController implements Initializable {
         }
     }
 
-    public void ownerLogin() {
+    public void ownerLogin(final int theUserID) {
         try {
             Stage ownerStage = new Stage();
             FXMLLoader loader = new FXMLLoader();
-            Pane root = (Pane) loader.load(getClass().getResource("/Owner/owner.fxml"));
+            Pane root = (Pane) loader.load(getClass().getResource("/Owner/owner.fxml").openStream());
 
             OwnerController ownerController = (OwnerController) loader.getController();
+            ownerController.setUserID(theUserID);
 
             Scene scene = new Scene(root);
             ownerStage.setScene(scene);
@@ -84,11 +88,14 @@ public class LoginController implements Initializable {
         }
     }
 
-    public void veterinaryLogin() {
+    public void veterinaryLogin(final int theUserID) {
         try {
             Stage veterinaryStage = new Stage();
             FXMLLoader loader = new FXMLLoader();
-            Pane root = (Pane) loader.load(getClass().getResource("/Veterinarian/veterinarian.fxml"));
+            Pane root = (Pane) loader.load(getClass().getResource("/Veterinarian/veterinarian.fxml").openStream());
+
+            VeterinarianController veterinarianController = (VeterinarianController) loader.getController();
+            veterinarianController.setUserID(theUserID);
 
             Scene scene = new Scene(root);
             veterinaryStage.setScene(scene);
@@ -100,11 +107,14 @@ public class LoginController implements Initializable {
         }
     }
 
-    public void caretakerLogin() {
+    public void caretakerLogin(final int theUserID) {
         try {
             Stage caretakerStage = new Stage();
             FXMLLoader loader = new FXMLLoader();
-            Pane root = (Pane) loader.load(getClass().getResource("/Caretaker/caretaker.fxml"));
+            Pane root = (Pane) loader.load(getClass().getResource("/Caretaker/caretaker.fxml").openStream());
+
+            CaretakerController caretakerController = (CaretakerController) loader.getController();
+            caretakerController.setUserID(theUserID);
 
             Scene scene = new Scene(root);
             caretakerStage.setScene(scene);

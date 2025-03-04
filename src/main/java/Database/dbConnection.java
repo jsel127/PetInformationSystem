@@ -8,8 +8,8 @@ public class dbConnection {
     public static Connection getConnection() throws SQLException {
         try {
             String dbURL = "jdbc:mysql://127.0.0.1:3306/sellers_jasmine_beyene_selly_db";
-            String dbUser = "";
-            String dbPassword = "";
+            String dbUser = "root";
+            String dbPassword = "445dummyPassword";
             return DriverManager.getConnection(
                     dbURL,
                     dbUser,
