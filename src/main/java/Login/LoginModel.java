@@ -25,14 +25,17 @@ public class LoginModel {
         return myConnection != null;
     }
 
-    public boolean isLogin(String theUser, String thePass) throws Exception {
+    public boolean isLogin(int theUserID, String thePass, String theUserType) throws Exception {
         PreparedStatement pr = null;
         ResultSet rs = null;
-        String sql = "SELECT * FROM Users WHERE UserID = ? and Password = ?";
+        String sql = "SELECT * FROM Users WHERE UserID = ? AND Password = ? AND IsVeterinarian = ? AND IsCaretaker = ?";
         try {
             pr = myConnection.prepareStatement(sql);
-            pr.setString(1, theUser);
+            pr.setInt(1, theUserID);
             pr.setString(2, thePass);
+            pr.setBoolean(3, theUserType == "Veterinarian");
+            pr.setBoolean(4, theUserType == "Caretaker");
+
 
             rs = pr.executeQuery();
 
