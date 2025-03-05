@@ -314,6 +314,7 @@ public class OwnerController implements Initializable {
                 System.out.println(prInsertPet.toString());
                 prInsertPet.execute();
             }
+            conn.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
             myPetMessage.setText("Failed to create relationship to pet.");
@@ -331,10 +332,11 @@ public class OwnerController implements Initializable {
             if (rsOwnershipType.next()) {
                 return rsOwnershipType.getInt(1);
             }
+            conn.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return -1;
+        return 1;
     }
 
     private int getInsuranceID() {
@@ -350,6 +352,7 @@ public class OwnerController implements Initializable {
                 if (rs.next()) {
                     return rs.getInt(1);
                 }
+                conn.close();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
