@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Login.CreateAccountController">
+   <children>
+      <Button layoutX="591.0" layoutY="500.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="98.0" text="Create Account" />
+      <TextField layoutX="441.0" layoutY="263.0" promptText="Password" />
+      <TextField layoutX="441.0" layoutY="300.0" promptText="First Name" />
+      <TextField layoutX="441.0" layoutY="337.0" promptText="Last Name" />
+      <TextField layoutX="441.0" layoutY="374.0" promptText="Phone Number" />
+      <TextField layoutX="441.0" layoutY="413.0" promptText="Email" />
+      <ComboBox layoutX="681.0" layoutY="374.0" prefWidth="150.0" promptText="Phone Type" />
+      <ComboBox layoutX="681.0" layoutY="413.0" prefWidth="150.0" promptText="Email Type" />
+      <ComboBox layoutX="441.0" layoutY="219.0" prefWidth="150.0" promptText="Account Type" />
+      <Label layoutX="556.0" layoutY="109.0" text="Create Account">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
