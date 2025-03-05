@@ -9,9 +9,11 @@ module com.example.demo1 {
     opens Owner to javafx.fxml;
     opens Veterinarian to javafx.fxml;
     opens Caretaker to javafx.fxml;
+    opens Pet to javafx.fxml;
 
     exports Login;
     exports Owner;
     exports Veterinarian;
     exports Caretaker;
+    exports Pet;
 }
