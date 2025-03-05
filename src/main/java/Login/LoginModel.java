@@ -43,7 +43,7 @@ public class LoginModel {
                 return true;
             }
         } catch (SQLException ex) {
-
+            ex.printStackTrace();
         }
 
         finally {

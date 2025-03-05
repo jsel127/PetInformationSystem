@@ -5,12 +5,13 @@ import javafx.fxml.Initializable;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
 /**
- * Controller class to connect UI to database for the Event table.
+ * Controller class to connect UI to database for the Exercise Event table.
  * @version March 5 2025
  * @author Jasmine Sellers
  */
-public class EventController implements Initializable {
+public class ExerciseEventController implements Initializable {
     /** The PetID for the event */
     private int myPetID;
     /** the EventID for the event */
@@ -19,7 +20,6 @@ public class EventController implements Initializable {
     private dbConnection myConnection;
     /** Initializes the window and connects to the database */
     public void initialize(URL theURL, ResourceBundle theRB) {
-
         myConnection = new dbConnection();
     }
 
@@ -33,4 +33,5 @@ public class EventController implements Initializable {
         }
         myPetID = thePetID;
     }
+
 }
