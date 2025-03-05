@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SignUp.SignUpController">
+   <children>
+      <Button fx:id="myCreateAccountButton" layoutX="251.0" layoutY="337.0" onAction="#signup" mnemonicParsing="false" text="Create Account" />
+      <TextField fx:id="myUserLastName" layoutX="225.0" layoutY="102.0" promptText="Last Name" />
+      <TextField fx:id="myUserFirstName" layoutX="225.0" layoutY="70.0" promptText="First Name" />
+      <TextField fx:id="myPhoneNumber" layoutX="225.0" layoutY="143.0" promptText="Phone Number" />
+      <TextField fx:id="myEmail" layoutX="225.0" layoutY="176.0" promptText="Email" />
+      <TextField fx:id="myPassword" layoutX="225.0" layoutY="224.0" promptText="Password" />
+      <Label layoutX="122.0" layoutY="74.0" text="First Name" />
+      <Label layoutX="123.0" layoutY="106.0" text="Last Name" />
+      <Label layoutX="122.0" layoutY="147.0" text="Phone Number" />
+      <Label layoutX="124.0" layoutY="180.0" text="Email" />
+      <Label layoutX="122.0" layoutY="228.0" text="Password" />
+      <Label layoutX="14.0" layoutY="14.0" text="Pet Information System" />
+      <RadioButton layoutX="225.0" layoutY="268.0" mnemonicParsing="false" text="Owner" />
+      <RadioButton fx:id="isVeterinarian" layoutX="300.0" layoutY="269.0" mnemonicParsing="false" text="Veterinarian" />
+      <RadioButton fx:id="isCaretaker" layoutX="225.0" layoutY="300.0" mnemonicParsing="false" text="Caretaker" />
+      <Label fx:id="myDBConnectionLabel" layoutX="179.0" layoutY="14.0" text="Database Connection" />
+   </children>
+</AnchorPane>

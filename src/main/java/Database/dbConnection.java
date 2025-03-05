@@ -9,7 +9,7 @@ public class dbConnection {
         try {
             String dbURL = "jdbc:mysql://127.0.0.1:3306/sellers_jasmine_beyene_selly_db";
             String dbUser = "root";
-            String dbPassword = "445dummyPassword";
+            String dbPassword = "MySQL1234!";
             return DriverManager.getConnection(
                     dbURL,
                     dbUser,
