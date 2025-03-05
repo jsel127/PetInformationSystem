@@ -22,7 +22,7 @@
                                   <TableColumn fx:id="myDateOfAdoptionCol" minWidth="0.0" prefWidth="185.0" text="Date Of Adoption" />
                                 </columns>
                                  <HBox.margin>
-                                    <Insets />
+                                    <Insets left="15.0" right="15.0" />
                                  </HBox.margin>
                               </TableView>
                            </children>
@@ -88,6 +88,11 @@
                                     <Insets left="15.0" right="15.0" />
                                  </VBox.margin>
                               </DatePicker>
+                              <DatePicker fx:id="myPetDOA" layoutX="25.0" layoutY="77.0" prefHeight="25.0" prefWidth="387.0" promptText="Date of Adoption">
+                                 <VBox.margin>
+                                    <Insets left="15.0" right="15.0" />
+                                 </VBox.margin>
+                              </DatePicker>
                               <ComboBox fx:id="myPetGender" prefHeight="25.0" prefWidth="384.0" promptText="Gender">
                                  <VBox.margin>
                                     <Insets left="15.0" right="15.0" />
@@ -113,7 +118,7 @@
                                     <Insets bottom="10.0" left="15.0" right="15.0" />
                                  </VBox.margin>
                               </ComboBox>
-                              <Button fx:id="myAddPetBtn" mnemonicParsing="false" onAction="#addPet" prefHeight="25.0" prefWidth="353.0" text="Add Pet">
+                              <Button fx:id="myAddPetBtn" mnemonicParsing="false" onAction="#addPetAndOwnership" prefHeight="25.0" prefWidth="353.0" text="Add Pet">
                                  <VBox.margin>
                                     <Insets left="15.0" right="15.0" />
                                  </VBox.margin>

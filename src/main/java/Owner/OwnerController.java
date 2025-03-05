@@ -33,6 +33,8 @@ public class OwnerController implements Initializable {
     @FXML
     private DatePicker myPetDOB;
     @FXML
+    private DatePicker myPetDOA;
+    @FXML
     private ComboBox myPetGender;
     @FXML
     private ComboBox myPetInsurance;
@@ -172,6 +174,7 @@ public class OwnerController implements Initializable {
                 myOwnershipData.add(new OwnershipData(rs.getString(1), rs.getString(2),
                                                       rs.getString(3), rs.getString(4)));
             }
+            conn.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -186,7 +189,6 @@ public class OwnerController implements Initializable {
 
     @FXML
     public void addOwnership(ActionEvent theEvent) {
-        String getOwnershipTypeId = "SELECT OwnershipTypeID FROM OwnershipTypes WHERE OwnershipType = ?;";
         String insertStatement = "INSERT INTO Ownerships(UserID, PetID, OwnershipTypeID, Date) VALUES(?, ?, ?, ?);";
         try {
             if (myPetID.getText() == null) {
@@ -198,18 +200,12 @@ public class OwnerController implements Initializable {
                 return;
             }
             Connection conn = dbConnection.getConnection();
-            PreparedStatement prOwnershipType = conn.prepareStatement(getOwnershipTypeId);
-            prOwnershipType.setString(1, myOwnershipType.getValue().toString());
-            ResultSet rsOwnershipType = prOwnershipType.executeQuery();
-
-            if (rsOwnershipType.next()) {
-                PreparedStatement prInsert = conn.prepareStatement(insertStatement);
-                prInsert.setInt(1, myUserID);
-                prInsert.setInt(2, Integer.parseInt(myPetID.getText()));
-                prInsert.setInt(3, rsOwnershipType.getInt(1));
-                prInsert.setDate(4, Date.valueOf(myDateOfAdoption.getValue()));          //Source: https://stackoverflow.com/questions/30279125/insert-date-into-mysql-database-using-javafx-datepicker
-                prInsert.execute();
-            }
+            PreparedStatement prInsert = conn.prepareStatement(insertStatement);
+            prInsert.setInt(1, myUserID);
+            prInsert.setInt(2, Integer.parseInt(myPetID.getText()));
+            prInsert.setInt(3, getOwnershipTypeID(myOwnershipType.getValue().toString()));
+            prInsert.setDate(4, Date.valueOf(myDateOfAdoption.getValue()));          //Source: https://stackoverflow.com/questions/30279125/insert-date-into-mysql-database-using-javafx-datepicker
+            prInsert.execute();
             conn.close();
         } catch (SQLException ex) {
             myOwnershipMessage.setText("Ownership could not be added. A relationship already exists.");
@@ -223,8 +219,106 @@ public class OwnerController implements Initializable {
         myOwnershipType.setValue(null);
     }
 
-    public void addPet(ActionEvent theEvent) {
+    @FXML
+    public void addPetAndOwnership(ActionEvent theEvent) {
+        if (myPetFirstName.getText() == null) {
+            myPetMessage.setText("Pet's first name was not specified.");
+            return;
+        }
+        if (myPetBreed.getValue() == null) {
+            myPetMessage.setText("Pet's breed was not specified");
+            return;
+        }
+        if (myPetOwnershipType.getValue() == null) {
+            myPetMessage.setText("Pet's ownership type to user was not specified");
+            return;
+        }
+        addPet();
+        addOwnershipFromPetFrom();
+    }
 
+    private void addPet() {
+        String insertPetStatement = "INSERT INTO Pets (InsuranceID, FirstName, LastName, DOB, Gender) " +
+                                    "VALUES (?, ?, ?, ?, ?);";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement prInsertPet = conn.prepareStatement(insertPetStatement);
+            int insuranceID = getInsuranceID();
+            prInsertPet.setObject(1, (insuranceID >= 0) ? insuranceID : null, Types.INTEGER); // Source: https://blogs.oracle.com/javamagazine/post/quiz-yourself-working-with-preparedstatement-and-sql-null-values-in-java, https://learn.microsoft.com/en-us/sql/connect/jdbc/reference/setobject-method-int-java-lang-object-int?view=sql-server-ver16             prInsertPet.setString(2, java.lang.Object myPetFirstName.getText());
+            prInsertPet.setString(2, myPetFirstName.getText());
+            prInsertPet.setObject(3, myPetLastName.getText());
+            Date dob = (myPetDOB.getValue() != null) ? Date.valueOf(myPetDOB.getValue()) : null;
+            prInsertPet.setObject(4, dob);
+            Object gender = myPetGender.getValue();
+            prInsertPet.setObject(5, (gender != null) ? gender.toString() : null);
+            prInsertPet.execute();
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            myPetMessage.setText("Failed to create pet. ");
+        }
+    }
+
+    private void addOwnershipFromPetFrom() {
+        String insertOwnershipStatement = "INSERT INTO Ownerships(UserID, PetID, OwnershipTypeID, Date) VALUES(?, ?, ?, ?);";
+        try {
+            Connection conn = dbConnection.getConnection();
+            // Source: https://www.w3schools.com/sql/func_mysql_last_insert_id.asp
+            PreparedStatement getLastIndex = conn.prepareStatement("SELECT MAX(PetID) FROM Pets;");
+            ResultSet rs = getLastIndex.executeQuery();
+            if (rs.next()) {
+                int PetID = rs.getInt(1);
+                System.out.println("PetID" + PetID);
+                PreparedStatement prInsertPet = conn.prepareStatement(insertOwnershipStatement);
+                prInsertPet.setInt(1, myUserID);
+                prInsertPet.setInt(2, PetID);
+                prInsertPet.setInt(3, getOwnershipTypeID(myPetOwnershipType.getValue().toString()));
+                Date doa = (myPetDOA.getValue() != null) ? Date.valueOf(myPetDOA.getValue()) : null;
+                prInsertPet.setObject(4, doa);
+                System.out.println(prInsertPet.toString());
+                prInsertPet.execute();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            myPetMessage.setText("Failed to create relationship to pet.");
+        }
+    }
+
+    private int getOwnershipTypeID(String theOwnershipType) {
+        String getOwnershipTypeId = "SELECT OwnershipTypeID FROM OwnershipTypes WHERE OwnershipType = ?;";
+
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement prOwnershipType = conn.prepareStatement(getOwnershipTypeId);
+            prOwnershipType.setString(1, theOwnershipType);
+            ResultSet rsOwnershipType = prOwnershipType.executeQuery();
+            if (rsOwnershipType.next()) {
+                return rsOwnershipType.getInt(1);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return -1;
+    }
+
+    private int getInsuranceID() {
+        String query = "SELECT InsuranceID FROM Insurances WHERE Company = ? AND Plan = ?";
+        if (myPetInsurance.getValue() != null) {
+            try {
+                Connection conn = dbConnection.getConnection();
+                PreparedStatement pr = conn.prepareStatement(query);
+                String[] insuranceInfo = myPetInsurance.getValue().toString().split(", ");
+                pr.setString(1, insuranceInfo[0]);
+                pr.setString(2, insuranceInfo[1]);
+                ResultSet rs = pr.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return -1;
     }
 
     @FXML
