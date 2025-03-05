@@ -1,11 +1,12 @@
 package Veterinarian;
 
 import Database.dbConnection;
+import javafx.fxml.Initializable;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class VeterinarianController {
+public class VeterinarianController implements Initializable {
     private int myUserID;
     private dbConnection myConnection;
 

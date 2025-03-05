@@ -48,7 +48,7 @@ public class LoginController implements Initializable {
         try {
             int userID = Integer.parseInt(myUserID.getText());
             if (loginModel.isLogin(userID, myPassword.getText(), ((userType) myUserType.getValue()).toString())) {
-                Stage stage = (Stage) this.myLoginButton.getScene().getWindow();
+                Stage stage = (Stage) myLoginButton.getScene().getWindow();
                 stage.close();
                 switch (((userType)myUserType.getValue()).toString()) {
                     case "Owner":

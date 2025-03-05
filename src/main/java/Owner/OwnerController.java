@@ -2,19 +2,26 @@ package Owner;
 
 import Database.dbConnection;
 import Login.userType;
+import Pet.PetController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+
 public class OwnerController implements Initializable {
     private int myUserID;
     @FXML
@@ -57,6 +64,9 @@ public class OwnerController implements Initializable {
     private TableColumn<OwnershipData, String> myOwnershipTypeCol;
     @FXML
     private TableColumn<OwnershipData, String> myDateOfAdoptionCol;
+
+    @FXML
+    private Button myLogExpensesBtn;
 
     private dbConnection myConnection;
     private ObservableList<OwnershipData> myOwnershipData;
@@ -185,6 +195,32 @@ public class OwnerController implements Initializable {
 
         myOwnershipTable.setItems(null);
         myOwnershipTable.setItems(myOwnershipData);
+    }
+
+    @FXML
+    public void openSelectedPetDashboard(MouseEvent theEvent) {
+        OwnershipData selectedPet = myOwnershipTable.getSelectionModel().getSelectedItem();
+        if (selectedPet != null) {
+            try {
+                Stage currentStage = (Stage) myOwnershipTable.getScene().getWindow();
+                currentStage.close();
+                Stage petStage = new Stage();
+                FXMLLoader loader = new FXMLLoader();
+                Pane root = (Pane) loader.load(getClass().getResource("/Pet/pet.fxml").openStream());
+
+                PetController petController = (PetController) loader.getController();
+                petController.setPetID(Integer.parseInt(selectedPet.getMyPetID()));
+
+                Scene scene = new Scene(root);
+                petStage.setScene(scene);
+                petStage.setTitle("Pet Dashboard");
+                petStage.setResizable(false);
+                petStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     @FXML
@@ -331,5 +367,27 @@ public class OwnerController implements Initializable {
         myPetOwnershipType.setValue(null);
         myPetSpecies.setValue(null);
         myPetBreed.setValue(null);
+    }
+
+    @FXML
+    public void openLogExpensesFXML(ActionEvent theEvent) {
+        try {
+            Stage currentStage = (Stage) myLogExpensesBtn.getScene().getWindow();
+            currentStage.close();
+
+            Stage expenseStage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            Pane root = (Pane) loader.load(getClass().getResource("/Owner/expense.fxml").openStream());
+
+            ExpenseController expenseController = (ExpenseController) loader.getController();
+            expenseController.setUserID(myUserID);
+            Scene scene = new Scene(root);
+            expenseStage.setScene(scene);
+            expenseStage.setTitle("Expense Dashboard");
+            expenseStage.setResizable(false);
+            expenseStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

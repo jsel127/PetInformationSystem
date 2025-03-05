@@ -1,11 +1,12 @@
 package Caretaker;
 
 import Database.dbConnection;
+import javafx.fxml.Initializable;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class CaretakerController {
+public class CaretakerController implements Initializable {
     private int myUserID;
     private dbConnection myConnection;
 
