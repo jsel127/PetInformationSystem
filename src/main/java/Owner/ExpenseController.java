@@ -105,7 +105,7 @@ public class ExpenseController implements Initializable {
 
             String query = "SELECT ExpenseID, ExpenseTypes.ExpenseType, Amount, `Date`, Notes " +
                            "FROM Expenses JOIN ExpenseTypes ON Expenses.ExpenseTypeID = ExpenseTypes.ExpenseTypeID " +
-                           "WHERE Expenses.UserID = ?;";
+                           "WHERE Expenses.UserID = ? LIMIT 50;";
             PreparedStatement pr = conn.prepareStatement(query);
             pr.setInt(1, myUserID);
             ResultSet rs = pr.executeQuery();

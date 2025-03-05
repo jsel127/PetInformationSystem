@@ -1,6 +1,7 @@
 package Pet;
 
 import Database.dbConnection;
+import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
@@ -11,13 +12,15 @@ import java.util.ResourceBundle;
  * @version March 5 2025
  * @author Jasmine Sellers
  */
-public class TrainingEventController  implements Initializable {
+public class TrainingEventController extends EventController implements Initializable {
     /** The PetID for the event */
     private int myPetID;
     /** the EventID for the event */
     private int myEventID;
     /** The connection to the database */
     private dbConnection myConnection;
+    /** Stores loaded events */
+    private ObservableList<TrainingEventData> myTrainingEventData;
     /** Initializes the window and connects to the database */
     public void initialize(URL theURL, ResourceBundle theRB) {
         myConnection = new dbConnection();

@@ -8,7 +8,6 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -23,12 +22,11 @@
                         <children>
                             <HBox layoutX="401.0" layoutY="-1.0" prefHeight="693.0" prefWidth="879.0">
                                 <children>
-                                    <TableView prefHeight="708.0" prefWidth="879.0">
+                                    <TableView fx:id="myEventTable" prefHeight="708.0" prefWidth="879.0">
                                         <columns>
-                                            <TableColumn prefWidth="175.0" text="EventID" />
-                                            <TableColumn prefWidth="170.0" text="Start Date" />
-                                            <TableColumn minWidth="0.0" prefWidth="177.0" text="End Date " />
-                                            <TableColumn minWidth="0.0" prefWidth="356.0" text="Summary" />
+                                            <TableColumn fx:id="myEventIDCol" prefWidth="175.0" text="EventID" />
+                                            <TableColumn fx:id="myStartDateTimeCol" prefWidth="354.0" text="Start Date" />
+                                            <TableColumn fx:id="myEndDateTimeCol" minWidth="0.0" prefWidth="353.0" text="End Date " />
                                         </columns>
                                     </TableView>
                                 </children>
@@ -36,9 +34,8 @@
                             <VBox prefHeight="208.0" prefWidth="402.0" AnchorPane.leftAnchor="0.0">
                                 <children>
                                     <Label prefHeight="17.0" prefWidth="410.0" text="Add Event" />
-                                    <DatePicker layoutX="25.0" layoutY="77.0" prefHeight="25.0" prefWidth="388.0" promptText="Start Date Time" />
-                                    <DatePicker prefHeight="25.0" prefWidth="388.0" promptText="End Date Time" />
-                                    <TextArea prefHeight="75.0" prefWidth="372.0" promptText="Summary" />
+                                    <DatePicker fx:id="myStartDateTime" layoutX="25.0" layoutY="77.0" prefHeight="25.0" prefWidth="388.0" promptText="Start Date Time" />
+                                    <DatePicker fx:id="myEndDateTime" prefHeight="25.0" prefWidth="388.0" promptText="End Date Time" />
                                     <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="379.0" text="Log Event">
                                         <VBox.margin>
                                             <Insets top="10.0" />
@@ -51,12 +48,12 @@
                             </VBox>
                         <VBox layoutY="627.0" prefHeight="50.0" prefWidth="402.0">
                            <children>
-                                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="374.0" text="Load Table">
+                                  <Button mnemonicParsing="false" onAction="#loadEventData" prefHeight="25.0" prefWidth="374.0" text="Load Table">
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="374.0" text="Return Pet Page">
+                              <Button fx:id="myReturnPetPageBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="374.0" text="Return Pet Page">
                                  <VBox.margin>
                                     <Insets bottom="10.0" top="15.0" />
                                  </VBox.margin>
@@ -69,32 +66,32 @@
                         <VBox layoutX="-1.0" layoutY="231.0" prefHeight="377.0" prefWidth="402.0">
                            <children>
                               <Label text="Add Event Types" />
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="384.0" text="Potty">
+                              <Button fx:id="myPottyEventBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="384.0" text="Potty">
                                  <VBox.margin>
                                     <Insets bottom="10.0" top="10.0" />
                                  </VBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="384.0" text="Meal">
+                              <Button fx:id="myMealEventBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="384.0" text="Meal">
                                  <VBox.margin>
                                     <Insets bottom="10.0" top="10.0" />
                                  </VBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="384.0" text="Exercise">
+                              <Button fx:id="myExerciseEventBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="384.0" text="Exercise">
                                  <VBox.margin>
                                     <Insets bottom="10.0" top="10.0" />
                                  </VBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="384.0" text="Training">
+                              <Button fx:id="myTrainingEventBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="384.0" text="Training">
                                  <VBox.margin>
                                     <Insets bottom="10.0" top="10.0" />
                                  </VBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="384.0" text="Grooming">
+                              <Button fx:id="myGroomingEventBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="384.0" text="Grooming">
                                  <VBox.margin>
                                     <Insets bottom="10.0" top="10.0" />
                                  </VBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="384.0" text="Medical Checkup">
+                              <Button fx:id="myMedicalCheckupEventBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="384.0" text="Medical Checkup">
                                  <VBox.margin>
                                     <Insets bottom="10.0" top="10.0" />
                                  </VBox.margin>

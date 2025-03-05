@@ -1,8 +1,17 @@
 package Pet;
 
 import Database.dbConnection;
+import Owner.OwnerController;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -11,7 +20,7 @@ import java.util.ResourceBundle;
  * @version March 5 2025
  * @author Jasmine Sellers
  */
-public class ExerciseEventController implements Initializable {
+public class ExerciseEventController extends EventController implements Initializable {
     /** The PetID for the event */
     private int myPetID;
     /** the EventID for the event */
@@ -22,7 +31,8 @@ public class ExerciseEventController implements Initializable {
     public void initialize(URL theURL, ResourceBundle theRB) {
         myConnection = new dbConnection();
     }
-
+    /** Stores loaded events */
+    private ObservableList<ExerciseEventData> myExerciseEventData;
     /**
      * Sets the PetID for the event
      * @param thePetID the key for the Pets table.
@@ -33,5 +43,4 @@ public class ExerciseEventController implements Initializable {
         }
         myPetID = thePetID;
     }
-
 }
