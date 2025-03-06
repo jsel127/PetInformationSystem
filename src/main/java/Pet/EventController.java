@@ -1,6 +1,7 @@
 package Pet;
 
 import Database.dbConnection;
+import Owner.OwnershipData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,12 +12,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 /**
  * Controller class to connect UI to database for the Event table.
@@ -24,9 +28,10 @@ import java.util.ResourceBundle;
  * @author Jasmine Sellers
  */
 public class EventController implements Initializable {
+    private final static boolean ENABLED = false;
     /** The PetID for the event */
     private int myPetID;
-    /** the EventID for the event */
+    /** The selected EventID  */
     private int myEventID;
     /** The connection to the database */
     private dbConnection myConnection;
@@ -58,6 +63,10 @@ public class EventController implements Initializable {
     @FXML
     private Label myErrorMessage;
     @FXML
+    private Label myEventIDSelectedLabel;
+    @FXML
+    private Label myAddEventErrorMessage;
+    @FXML
     private TableView<EventData> myEventTable;
     @FXML
     private TableColumn<EventData, Integer> myEventIDCol;
@@ -68,8 +77,9 @@ public class EventController implements Initializable {
 
     /** Initializes the window and connects to the database */
     public void initialize(URL theURL, ResourceBundle theRB) {
-
+        myEventID = -1;
         myConnection = new dbConnection();
+        updateButtonStatuses(!ENABLED);
     }
 
     /**
@@ -100,13 +110,19 @@ public class EventController implements Initializable {
                 return;
             }
             Connection conn = dbConnection.getConnection();
-            PreparedStatement prInsertEvent = conn.prepareStatement(insertEventStatement);
+            PreparedStatement prInsertEvent = conn.prepareStatement(insertEventStatement, Statement.RETURN_GENERATED_KEYS);
             prInsertEvent.setInt(1, myPetID);
             String startDateTimeFormatted = Date.valueOf(myStartDate.getValue()).toString() + " " + myStartTime.getText().strip();
             String endDateTimeFormatted = Date.valueOf(myEndDate.getValue()).toString() + " " + myEndTime.getText().strip();
             prInsertEvent.setString(2, startDateTimeFormatted);
             prInsertEvent.setString(3, endDateTimeFormatted);
             prInsertEvent.execute();
+            ResultSet keyData = prInsertEvent.getGeneratedKeys();
+            if (keyData.next()) {
+                myEventID = keyData.getInt(1);
+                myEventIDSelectedLabel.setText(Integer.toString(myEventID));
+                updateButtonStatuses(ENABLED);
+            }
             conn.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -120,6 +136,10 @@ public class EventController implements Initializable {
      */
     @FXML
     public void loadPottyEventPage(ActionEvent theEvent) {
+        if (myPottyEventBtn.isDisabled()){
+            myAddEventErrorMessage.setText("Please select a event to add event types to.");
+            return;
+        }
         try {
             Stage currentStage = (Stage) myPottyEventBtn.getScene().getWindow();
             currentStage.close();
@@ -130,6 +150,7 @@ public class EventController implements Initializable {
 
             PottyEventController eventController = (PottyEventController) loader.getController();
             eventController.setPetID(myPetID);
+            eventController.setEventID(myEventID);
 
             Scene scene = new Scene(root);
             expenseStage.setScene(scene);
@@ -158,6 +179,7 @@ public class EventController implements Initializable {
 
             MealEventController eventController = (MealEventController) loader.getController();
             eventController.setPetID(myPetID);
+            eventController.setEventID(myEventID);
 
             Scene scene = new Scene(root);
             expenseStage.setScene(scene);
@@ -185,6 +207,7 @@ public class EventController implements Initializable {
 
             ExerciseEventController eventController = (ExerciseEventController) loader.getController();
             eventController.setPetID(myPetID);
+            eventController.setEventID(myEventID);
 
             Scene scene = new Scene(root);
             expenseStage.setScene(scene);
@@ -212,6 +235,7 @@ public class EventController implements Initializable {
 
             TrainingEventController eventController = (TrainingEventController) loader.getController();
             eventController.setPetID(myPetID);
+            eventController.setEventID(myEventID);
 
             Scene scene = new Scene(root);
             expenseStage.setScene(scene);
@@ -238,6 +262,7 @@ public class EventController implements Initializable {
 
             GroomingEventController eventController = (GroomingEventController) loader.getController();
             eventController.setPetID(myPetID);
+            eventController.setEventID(myEventID);
 
             Scene scene = new Scene(root);
             expenseStage.setScene(scene);
@@ -264,6 +289,7 @@ public class EventController implements Initializable {
 
             MedicalCheckupEventController eventController = (MedicalCheckupEventController) loader.getController();
             eventController.setPetID(myPetID);
+            eventController.setEventID(myEventID);
 
             Scene scene = new Scene(root);
             expenseStage.setScene(scene);
@@ -308,6 +334,21 @@ public class EventController implements Initializable {
     }
 
     /**
+     * Changes the event ID currently selected. This is used to set the event that will be changed when
+     * adding an event types (e.g. Exercise Event).
+     * @param theEvent the triggering event.
+     */
+    @FXML
+    public void changeEventSelected(MouseEvent theEvent) {
+        EventData selectedPet = myEventTable.getSelectionModel().getSelectedItem();
+        if (selectedPet != null) {
+            myEventID = selectedPet.getMyEventID();
+            myEventIDSelectedLabel.setText(Integer.toString(selectedPet.getMyEventID()));
+            updateButtonStatuses(ENABLED);
+        }
+    }
+
+    /**
      * Returns to the Pet Dashboard.
      * @param theEvent the event that triggered the return.
      */
@@ -330,6 +371,17 @@ public class EventController implements Initializable {
             expenseStage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Disable/Enables the buttons to add an event type
+     * @param theStatus true if the buttons should be disabled, false otherwise.
+     */
+    private void updateButtonStatuses(boolean theStatus) {
+        ArrayList<Button> buttonsToChangeStatus = new ArrayList<>(Arrays.asList(myPottyEventBtn, myMealEventBtn, myExerciseEventBtn, myTrainingEventBtn, myGroomingEventBtn, myMedicalCheckupEventBtn));
+        for (Button buttonToChangeStatus : buttonsToChangeStatus) {
+            buttonToChangeStatus.setDisable(theStatus);
         }
     }
 }

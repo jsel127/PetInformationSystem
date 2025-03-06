@@ -220,7 +220,6 @@ public class OwnerController implements Initializable {
                 e.printStackTrace();
             }
         }
-
     }
 
     @FXML
