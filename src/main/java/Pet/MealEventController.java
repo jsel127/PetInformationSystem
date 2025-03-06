@@ -9,9 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -39,6 +37,12 @@ public class MealEventController implements Initializable {
     /** Stores loaded events */
     private ObservableList<MealEventData> myMealEventData;
     @FXML
+    private ComboBox myMealType;
+    @FXML
+    private TextArea myNotes;
+    @FXML
+    private Label myErrorMessage;
+    @FXML
     private Button myReturnEventPageBtn;
     @FXML
     private TableView<MealEventData> myMealTable;
@@ -52,6 +56,7 @@ public class MealEventController implements Initializable {
     /** Initializes the window and connects to the database */
     public void initialize(URL theURL, ResourceBundle theRB) {
         myConnection = new dbConnection();
+        initializeMealTypeComboBox();
     }
 
     /**
@@ -75,6 +80,73 @@ public class MealEventController implements Initializable {
         }
         myEventID = theEventID;
     }
+
+    /**
+     * Initializes options for meal type combo box
+     */
+    private void initializeMealTypeComboBox() {
+        String query = "SELECT MealType FROM MealTypes";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement pr = conn.prepareStatement(query);
+            ResultSet rs = pr.executeQuery();
+            ObservableList<String> mealTypes = FXCollections.observableArrayList();
+            while (rs.next()) {
+                mealTypes.add(rs.getString(1));
+            }
+            myMealType.setItems(mealTypes);
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * Adds an event into the meal table.
+     * @param theEvent the triggering event.
+     */
+    @FXML
+    public void addMeal(ActionEvent theEvent) {
+        if (myMealType.getValue() == null) {
+            myErrorMessage.setText("Meal type is required.");
+            return;
+        }
+        String insertExerciseStatement = "INSERT INTO Meals (EventID, MealTypeID, Notes) VALUES (?, ?, ?);";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement prInsertEvent = conn.prepareStatement(insertExerciseStatement);
+            prInsertEvent.setInt(1, myEventID);
+            prInsertEvent.setInt(2, getMealTypeID());
+            prInsertEvent.setString(3, myNotes.getText());
+            prInsertEvent.execute();
+            conn.close();
+            myErrorMessage.setText("Sucessfully added meal");
+        } catch (SQLException ex) {
+            myErrorMessage.setText("Only one entry of each event type per event is allowed.");
+        }
+    }
+    /**
+     * Gets the id of the meal type.
+     * @return key of the selected meal type
+     */
+    @FXML
+    private int getMealTypeID() {
+        String queryGetPottyID = "SELECT MealTypeID FROM MealTypes WHERE MealType = ?;";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement prPottiesType = conn.prepareStatement(queryGetPottyID);
+            prPottiesType.setString(1, myMealType.getValue().toString());
+            ResultSet rsPottiesType = prPottiesType.executeQuery();
+            if (rsPottiesType.next()) {
+                return rsPottiesType.getInt(1);
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 1;
+    }
+
 
     /**
      * Returns to the pet page.

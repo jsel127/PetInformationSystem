@@ -95,12 +95,11 @@ public class ExerciseEventController implements Initializable {
      */
     @FXML
     public void addExercise(ActionEvent theEvent) {
-        // TODO - implement
         String insertExerciseStatement = "INSERT INTO Exercises (EventID, ExerciseTypeID, IntensityLevel, Distance) VALUES (?, ?, ?, ?, ?);";
         try {
             Connection conn = dbConnection.getConnection();
             PreparedStatement prInsertEvent = conn.prepareStatement(insertExerciseStatement);
-
+            prInsertEvent.setInt(1, myEventID);
             prInsertEvent.execute();
             conn.close();
         } catch (SQLException ex) {

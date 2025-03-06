@@ -8,9 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -39,6 +37,12 @@ public class PottyEventController implements Initializable {
     private ObservableList<PottyEventData> myPottyData;
 
     @FXML
+    private ComboBox myPottyType;
+    @FXML
+    private TextArea myNotes;
+    @FXML
+    private Label myErrorMessage;
+    @FXML
     private Button myReturnEventPageBtn;
     @FXML
     private TableView<PottyEventData> myPottyTable;
@@ -51,6 +55,7 @@ public class PottyEventController implements Initializable {
     /** Initializes the window and connects to the database */
     public void initialize(URL theURL, ResourceBundle theRB) {
         myConnection = new dbConnection();
+        initializePottyTypeComboBox();
     }
 
     /**
@@ -62,6 +67,72 @@ public class PottyEventController implements Initializable {
             throw new IndexOutOfBoundsException();
         }
         myPetID = thePetID;
+    }
+
+    /**
+     * Initializes options for potty type combo box
+     */
+    private void initializePottyTypeComboBox() {
+        String query = "SELECT PottyType FROM PottyTypes";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement pr = conn.prepareStatement(query);
+            ResultSet rs = pr.executeQuery();
+            ObservableList<String> pottyTypes = FXCollections.observableArrayList();
+            while (rs.next()) {
+                pottyTypes.add(rs.getString(1));
+            }
+            myPottyType.setItems(pottyTypes);
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    /**
+     * Adds an event into the potty table.
+     * @param theEvent the triggering event.
+     */
+    @FXML
+    public void addPotty(ActionEvent theEvent) {
+        if (myPottyType.getValue() == null) {
+            myErrorMessage.setText("Potty type is required.");
+            return;
+        }
+        String insertExerciseStatement = "INSERT INTO Potties (EventID, PottyTypeID, Notes) VALUES (?, ?, ?);";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement prInsertEvent = conn.prepareStatement(insertExerciseStatement);
+            prInsertEvent.setInt(1, myEventID);
+            prInsertEvent.setInt(2, getPottyTypeID());
+            prInsertEvent.setString(3, myNotes.getText());
+            prInsertEvent.execute();
+            conn.close();
+            myErrorMessage.setText("Successfully added potty event.");
+        } catch (SQLException ex) {
+            myErrorMessage.setText("Only one entry of each event type per event is allowed.");
+        }
+    }
+
+    /**
+     * Gets the id of the potty type.
+     * @return key of the selected potty type
+     */
+    @FXML
+    private int getPottyTypeID() {
+        String queryGetPottyTypeID = "SELECT PottyTypeID FROM PottyTypes WHERE PottyType = ?;";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement prPottiesType = conn.prepareStatement(queryGetPottyTypeID);
+            prPottiesType.setString(1, myPottyType.getValue().toString());
+            ResultSet rsPottiesType = prPottiesType.executeQuery();
+            if (rsPottiesType.next()) {
+                return rsPottiesType.getInt(1);
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 1;
     }
 
     /**

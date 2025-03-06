@@ -33,13 +33,14 @@
                         <VBox prefHeight="209.0" prefWidth="402.0" AnchorPane.leftAnchor="0.0">
                             <children>
                                 <Label prefHeight="17.0" prefWidth="410.0" text="Add Meal" />
-                                <ComboBox prefHeight="25.0" prefWidth="372.0" promptText="Meal Type" />
-                                <TextArea prefHeight="75.0" prefWidth="372.0" promptText="Notes" />
-                                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="379.0" text="Log Meal">
+                                <ComboBox fx:id="myMealType" prefHeight="25.0" prefWidth="372.0" promptText="Meal Type" />
+                                <TextArea fx:id="myNotes" prefHeight="75.0" prefWidth="372.0" promptText="Notes" />
+                                <Button mnemonicParsing="false" onAction="#addMeal" prefHeight="25.0" prefWidth="379.0" text="Log Meal">
                                     <VBox.margin>
                                         <Insets top="10.0" />
                                     </VBox.margin>
                                 </Button>
+                        <Label fx:id="myErrorMessage" prefHeight="18.0" prefWidth="375.0" />
                             </children>
                             <padding>
                                 <Insets left="15.0" right="15.0" />

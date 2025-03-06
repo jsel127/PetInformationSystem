@@ -65,11 +65,11 @@ public class ExpenseController implements Initializable {
             Connection conn = dbConnection.getConnection();
             PreparedStatement pr = conn.prepareStatement(query);
             ResultSet rs = pr.executeQuery();
-            ObservableList<String> species = FXCollections.observableArrayList();
+            ObservableList<String> expenseType = FXCollections.observableArrayList();
             while (rs.next()) {
-                species.add(rs.getString(1));
+                expenseType.add(rs.getString(1));
             }
-            myExpenseType.setItems(species);
+            myExpenseType.setItems(expenseType);
             conn.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
