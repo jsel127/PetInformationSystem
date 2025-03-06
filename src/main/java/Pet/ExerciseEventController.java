@@ -14,6 +14,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -22,10 +23,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ResourceBundle;
 
 /**
@@ -40,6 +38,8 @@ public class ExerciseEventController implements Initializable {
     private int myEventID;
     /** The connection to the database */
     private dbConnection myConnection;
+    @FXML
+    private Label myErrorMessage;
     /** Bar chart to track the event types */
     @FXML
     private BarChart<String, Integer> myBarChart;
@@ -88,8 +88,27 @@ public class ExerciseEventController implements Initializable {
         }
         myEventID = theEventID;
     }
+
     /**
-     * Loads at most 50 events from the Event Table and stores it to be loaded in the UI.
+     * Adds an event into the exercise table.
+     * @param theEvent the triggering event.
+     */
+    @FXML
+    public void addExercise(ActionEvent theEvent) {
+        // TODO - implement
+        String insertExerciseStatement = "INSERT INTO Exercises (EventID, ExerciseTypeID, IntensityLevel, Distance) VALUES (?, ?, ?, ?, ?);";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement prInsertEvent = conn.prepareStatement(insertExerciseStatement);
+
+            prInsertEvent.execute();
+            conn.close();
+        } catch (SQLException ex) {
+            myErrorMessage.setText("Only one entry of each event type per event is allowed.");
+        }
+    }
+    /**
+     * Loads at most 50 events from the Exercise Event Table and stores it to be loaded in the UI.
      * @param theEvent the action taken.
      */
     @FXML
@@ -101,7 +120,7 @@ public class ExerciseEventController implements Initializable {
             String query = "SELECT Exercises.EventID, ExerciseTypes.ExerciseName, IntensityLevel, Distance " +
                            "FROM Exercises JOIN ExerciseTypes ON Exercises.ExerciseTypeID = ExerciseTypes.ExerciseTypeID " +
                            "JOIN EventLogs ON Exercises.EventID = EventLogs.EventID " +
-                           "WHERE PetID = ? LIMIT 50";
+                           "WHERE PetID = ? LIMIT 50;";
             PreparedStatement pr = conn.prepareStatement(query);
             pr.setInt(1, myPetID);
             ResultSet rs = pr.executeQuery();

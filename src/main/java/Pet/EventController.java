@@ -123,6 +123,7 @@ public class EventController implements Initializable {
                 myEventIDSelectedLabel.setText(Integer.toString(myEventID));
                 updateButtonStatuses(ENABLED);
             }
+            myErrorMessage.setText("");
             conn.close();
         } catch (SQLException ex) {
             ex.printStackTrace();

@@ -6,6 +6,7 @@ import Pet.PetController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -242,6 +243,7 @@ public class OwnerController implements Initializable {
             prInsert.setDate(4, Date.valueOf(myDateOfAdoption.getValue()));          //Source: https://stackoverflow.com/questions/30279125/insert-date-into-mysql-database-using-javafx-datepicker
             prInsert.execute();
             conn.close();
+            clearOwnershipForm(theEvent);
         } catch (SQLException ex) {
             myOwnershipMessage.setText("Ownership could not be added. A relationship already exists.");
         }
@@ -270,6 +272,7 @@ public class OwnerController implements Initializable {
             return;
         }
         addPet();
+        clearPetForm(theEvent);
     }
 
     private void addPet() {
@@ -300,7 +303,6 @@ public class OwnerController implements Initializable {
                 prInsertOwnership.execute();
             }
             conn.close();
-
         } catch (SQLException ex) {
             ex.printStackTrace();
             myPetMessage.setText("Failed to create pet. ");

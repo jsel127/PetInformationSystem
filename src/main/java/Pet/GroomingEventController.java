@@ -2,6 +2,7 @@ package Pet;
 
 import Database.dbConnection;
 import Owner.OwnerController;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,11 +10,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 /**
@@ -32,6 +41,14 @@ public class GroomingEventController implements Initializable {
     private ObservableList<GroomingEventData> myGroomingEventData;
     @FXML
     private Button myReturnEventPageBtn;
+    @FXML
+    private TableView<GroomingEventData> myGroomingTable;
+    @FXML
+    private TableColumn<GroomingEventData, Integer> myEventIDCol;
+    @FXML
+    private TableColumn<GroomingEventData, String> myGroomingTypeCol;
+    @FXML
+    private TableColumn<GroomingEventData, Integer> myGroomerIDCol;
     /** Initializes the window and connects to the database */
     public void initialize(URL theURL, ResourceBundle theRB) {
         myConnection = new dbConnection();
@@ -57,6 +74,38 @@ public class GroomingEventController implements Initializable {
             throw new IndexOutOfBoundsException();
         }
         myEventID = theEventID;
+    }
+
+    /**
+     * Loads at most 50 events from the Grooming Event Table and stores it to be loaded in the UI.
+     * @param theEvent the action taken.
+     */
+    @FXML
+    public void loadGroomingEventData(ActionEvent theEvent) {
+        try {
+            Connection conn = dbConnection.getConnection();
+            myGroomingEventData = FXCollections.observableArrayList();
+
+            String query = "SELECT Groomings.EventID, GroomingTypes.GroomingType, GroomerID " +
+                           "FROM Groomings JOIN GroomingTypes ON Groomings.GroomingTypeID = GroomingTypes.GroomingTypeID " +
+                           "JOIN EventLogs ON Groomings.EventID = EventLogs.EventID " +
+                           "WHERE PetID = ? LIMIT 50;";
+            PreparedStatement pr = conn.prepareStatement(query);
+            pr.setInt(1, myPetID);
+            ResultSet rs = pr.executeQuery();
+
+            while (rs.next()) {
+                myGroomingEventData.add(new GroomingEventData(rs.getInt(1), rs.getString(2), rs.getInt(3)));
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        myEventIDCol.setCellValueFactory(new PropertyValueFactory<GroomingEventData, Integer>("myEventID"));
+        myGroomingTypeCol.setCellValueFactory(new PropertyValueFactory<GroomingEventData, String>("myGroomingType"));
+        myGroomerIDCol.setCellValueFactory(new PropertyValueFactory<GroomingEventData, Integer>("myGroomerID"));
+        myGroomingTable.setItems(null);
+        myGroomingTable.setItems(myGroomingEventData);
     }
 
     /**

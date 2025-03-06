@@ -43,6 +43,7 @@
                                     </VBox.margin>
                                 </Button>
                         <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="374.0" text="Load Table" />
+                        <Label fx:id="myErrorMessage" prefHeight="17.0" prefWidth="374.0" />
                             </children>
                             <padding>
                                 <Insets left="15.0" right="15.0" />
