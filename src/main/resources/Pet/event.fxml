@@ -36,11 +36,12 @@
                                     <Label prefHeight="17.0" prefWidth="410.0" text="Add Event" />
                                     <DatePicker fx:id="myStartDateTime" layoutX="25.0" layoutY="77.0" prefHeight="25.0" prefWidth="388.0" promptText="Start Date Time" />
                                     <DatePicker fx:id="myEndDateTime" prefHeight="25.0" prefWidth="388.0" promptText="End Date Time" />
-                                    <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="379.0" text="Log Event">
+                                    <Button mnemonicParsing="false" onAction="#addEvent" prefHeight="25.0" prefWidth="379.0" text="Log Event">
                                         <VBox.margin>
                                             <Insets top="10.0" />
                                         </VBox.margin>
                                     </Button>
+                              <Label fx:id="myErrorMessage" prefHeight="18.0" prefWidth="375.0" />
                                 </children>
                                 <padding>
                                     <Insets left="15.0" right="15.0" />

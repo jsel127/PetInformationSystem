@@ -1,8 +1,6 @@
 package Pet;
 
 import Database.dbConnection;
-import Owner.OwnerController;
-import Owner.OwnershipData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,20 +9,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ResourceBundle;
 /**
  * Controller class to connect UI to database for the Event table.
@@ -60,6 +52,8 @@ public class EventController implements Initializable {
     @FXML
     private Button myReturnPetPageBtn;
     @FXML
+    private Label myErrorMessage;
+    @FXML
     private TableView<EventData> myEventTable;
     @FXML
     private TableColumn<EventData, Integer> myEventIDCol;
@@ -83,6 +77,35 @@ public class EventController implements Initializable {
             throw new IndexOutOfBoundsException();
         }
         myPetID = thePetID;
+    }
+
+    /**
+     * Adds an event based
+     * @param theEvent the triggering event
+     */
+    @FXML
+    public void addEvent(ActionEvent theEvent) {
+//        String insertEventStatement = "INSERT INTO EventLogs(PetID, StartDateTime, EndDateTime) VALUES(?, ?, ?);";
+//        try {
+//            if (myStartDateTime.getValue() == null) {
+//                myErrorMessage.setText("A start date must be specified.");
+//                return;
+//            }
+//            if (myEndDateTime.getValue() == null) {
+//                myErrorMessage.setText("A end date must be specified.");
+//                return;
+//            }
+//            Connection conn = dbConnection.getConnection();
+//            PreparedStatement prInsertEvent = conn.prepareStatement(insertEventStatement);
+//            prInsertEvent.setInt(1, myPetID);
+//            prInsertEvent.setDate(2, Date.valueOf(myStartDateTime.getValue()));
+//            prInsertEvent.setDate(3, Date.valueOf(myEndDateTime.getValue()));
+//            prInsertEvent.execute();
+//            conn.close();
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
+//            myErrorMessage.setText("Failed to create event.");
+//        }
     }
 
     /**

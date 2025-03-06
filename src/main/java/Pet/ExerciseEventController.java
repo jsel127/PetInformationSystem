@@ -43,5 +43,4 @@ public class ExerciseEventController implements Initializable {
         }
         myPetID = thePetID;
     }
-
 }
