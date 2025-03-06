@@ -12,12 +12,12 @@
                     <children>
                         <HBox layoutX="401.0" layoutY="-1.0" prefHeight="693.0" prefWidth="879.0">
                             <children>
-                                <TableView prefHeight="693.0" prefWidth="880.0">
+                                <TableView fx:id="myExerciseTable" prefHeight="693.0" prefWidth="880.0">
                                     <columns>
-                                        <TableColumn prefWidth="175.0" text="EventID" />
-                                        <TableColumn prefWidth="221.0" text="Exercise Type" />
-                                        <TableColumn minWidth="0.0" prefWidth="259.0" text="Intensity Level" />
-                                        <TableColumn minWidth="0.0" prefWidth="223.0" text="Distance (km)" />
+                                        <TableColumn fx:id="myEventIDCol" prefWidth="175.0" text="EventID" />
+                                        <TableColumn fx:id="myExerciseTypeCol" prefWidth="221.0" text="Exercise Type" />
+                                        <TableColumn fx:id="myIntensityLevelCol" minWidth="0.0" prefWidth="259.0" text="Intensity Level" />
+                                        <TableColumn fx:id="myDistanceCol" minWidth="0.0" prefWidth="223.0" text="Distance (km)" />
                                     </columns>
                                 </TableView>
                             </children>
@@ -41,7 +41,7 @@
                         </VBox>
                   <VBox layoutY="610.0" prefHeight="50.0" prefWidth="402.0">
                      <children>
-                        <Button fx:id="myLoadTableBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="374.0" text="Load Table">
+                        <Button fx:id="myLoadTableBtn" mnemonicParsing="false" onAction="#loadExerciseEventDate" prefHeight="25.0" prefWidth="374.0" text="Load Table">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>

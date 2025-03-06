@@ -1,23 +1,19 @@
 package Pet;
 
 import Database.dbConnection;
-import Owner.ExpenseData;
-import Owner.OwnerController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,6 +36,16 @@ public class ExerciseEventController implements Initializable {
     /** Bar chart to track the event types */
     @FXML
     private BarChart<String, Integer> myBarChart;
+    @FXML
+    private TableView<ExerciseEventData> myExerciseTable;
+    @FXML
+    private TableColumn<ExerciseEventData, Integer> myEventIDCol;
+    @FXML
+    private TableColumn<ExerciseEventData, String> myExerciseTypeCol;
+    @FXML
+    private TableColumn<ExerciseEventData, Integer> myIntensityLevelCol;
+    @FXML
+    private TableColumn<ExerciseEventData, String> myDistanceCol;
     /***/
     @FXML
     private NumberAxis myYAxis;
@@ -51,7 +57,7 @@ public class ExerciseEventController implements Initializable {
         myConnection = new dbConnection();
     }
     /** Stores loaded events */
-    private ObservableList<ExerciseEventData> myExerciseEventData;
+    private ObservableList<ExerciseEventReportData> myExerciseEventData;
     /**
      * Sets the PetID for the event
      * @param thePetID the key for the Pets table.
@@ -61,6 +67,50 @@ public class ExerciseEventController implements Initializable {
             throw new IndexOutOfBoundsException();
         }
         myPetID = thePetID;
+    }
+
+    /**
+     * Sets the EventID for the event
+     * @param theEventID the eventID
+     */
+    public void setEventID(int theEventID) {
+        if (theEventID < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+        myPetID = theEventID;
+    }
+    /**
+     * Loads at most 50 events from the Event Table and stores it to be loaded in the UI.
+     * @param theEvent the action taken.
+     */
+    @FXML
+    public void loadExerciseEventDate(ActionEvent theEvent) {
+        try {
+            Connection conn = dbConnection.getConnection();
+            myExerciseData = FXCollections.observableArrayList();
+
+            String query = "SELECT Exercises.EventID, ExerciseTypes.ExerciseName, IntensityLevel, Distance " +
+                           "FROM Exercises JOIN ExerciseTypes ON Exercises.ExerciseTypeID = ExerciseTypes.ExerciseTypeID " +
+                           "JOIN EventLogs ON Exercises.EventID = EventLogs.EventID " +
+                           "WHERE PetID = ? LIMIT 50";
+            PreparedStatement pr = conn.prepareStatement(query);
+            pr.setInt(1, myPetID);
+            ResultSet rs = pr.executeQuery();
+
+            while (rs.next()) {
+                myExerciseData.add(new ExerciseEventData(rs.getInt(1), rs.getString(2),
+                                   rs.getInt(3), rs.getString(3)));
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        myEventIDCol.setCellValueFactory(new PropertyValueFactory<ExerciseEventData, Integer>("myEventID"));
+        myExerciseTypeCol.setCellValueFactory(new PropertyValueFactory<ExerciseEventData, String>("myExerciseType"));
+        myIntensityLevelCol.setCellValueFactory(new PropertyValueFactory<ExerciseEventData, Integer>("myIntensityLevel"));
+        myDistanceCol.setCellValueFactory(new PropertyValueFactory<ExerciseEventData, String>("myDistance"));
+        myExerciseTable.setItems(null);
+        myExerciseTable.setItems(myExerciseData);
     }
 
     public void generateBarChart() {

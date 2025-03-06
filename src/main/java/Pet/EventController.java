@@ -34,9 +34,13 @@ public class EventController implements Initializable {
     private ObservableList<EventData> myEventData;
 
     @FXML
-    private DatePicker myStartDateTime;
+    private DatePicker myStartDate;
     @FXML
-    private DatePicker myEndDateTime;
+    private TextField myStartTime;
+    @FXML
+    private DatePicker myEndDate;
+    @FXML
+    private TextField myEndTime;
     @FXML
     private Button myPottyEventBtn;
     @FXML
@@ -85,27 +89,29 @@ public class EventController implements Initializable {
      */
     @FXML
     public void addEvent(ActionEvent theEvent) {
-//        String insertEventStatement = "INSERT INTO EventLogs(PetID, StartDateTime, EndDateTime) VALUES(?, ?, ?);";
-//        try {
-//            if (myStartDateTime.getValue() == null) {
-//                myErrorMessage.setText("A start date must be specified.");
-//                return;
-//            }
-//            if (myEndDateTime.getValue() == null) {
-//                myErrorMessage.setText("A end date must be specified.");
-//                return;
-//            }
-//            Connection conn = dbConnection.getConnection();
-//            PreparedStatement prInsertEvent = conn.prepareStatement(insertEventStatement);
-//            prInsertEvent.setInt(1, myPetID);
-//            prInsertEvent.setDate(2, Date.valueOf(myStartDateTime.getValue()));
-//            prInsertEvent.setDate(3, Date.valueOf(myEndDateTime.getValue()));
-//            prInsertEvent.execute();
-//            conn.close();
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//            myErrorMessage.setText("Failed to create event.");
-//        }
+        String insertEventStatement = "INSERT INTO EventLogs(PetID, StartDateTime, EndDateTime) VALUES(?, ?, ?);";
+        try {
+            if (myStartDate.getValue() == null || myStartTime.getText() == "") {
+                myErrorMessage.setText("A start date and time must be specified.");
+                return;
+            }
+            if (myEndDate.getValue() ==  null || myEndTime.getText() == "") {
+                myErrorMessage.setText("A end date and time must be specified.");
+                return;
+            }
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement prInsertEvent = conn.prepareStatement(insertEventStatement);
+            prInsertEvent.setInt(1, myPetID);
+            String startDateTimeFormatted = Date.valueOf(myStartDate.getValue()).toString() + " " + myStartTime.getText().strip();
+            String endDateTimeFormatted = Date.valueOf(myEndDate.getValue()).toString() + " " + myEndTime.getText().strip();
+            prInsertEvent.setString(2, startDateTimeFormatted);
+            prInsertEvent.setString(3, endDateTimeFormatted);
+            prInsertEvent.execute();
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            myErrorMessage.setText("Failed to create event. Check formatting of date.");
+        }
     }
 
     /**
