@@ -15,6 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -174,6 +175,42 @@ public class MedicalCheckupEventController implements Initializable{
             expenseStage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Runs the first analytical query "Find the veterinary clinic that takes care of the most <species> (between __ and __kg).
+     * Note: was adjusted to a query that can be specified by the user.
+     * @param theEvent
+     */
+    @FXML
+    public void runVeterinaryAnalyticalQuery(ActionEvent theEvent) {
+        String analyticalQuery = "SELECT VeterinaryName " +
+                "FROM Veterinary JOIN MedicalCheckups ON Veterinary.VeterinaryID = MedicalCheckups.VeterinaryID " +
+                "JOIN EventLogs ON MedicalCheckups.EventID = EventLogs.EventID " +
+                "JOIN Pets ON EventLogs.PetID = Pets.PetID " +
+                "JOIN PetBreeds ON Pets.PetID = PetBreeds.PetID " +
+                "JOIN Breeds ON PetBreeds.BreedID = Breeds.BreedID " +
+                "JOIN Species ON Breeds.SpeciesID = Species.SpeciesID " +
+                "WHERE SpeciesName = ? AND MedicalCheckups.Weight BETWEEN ? AND ? " +
+                "GROUP BY VeterinaryName " +
+                "ORDER BY Count(*) DESC " +
+                "LIMIT 1;";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement pr = conn.prepareStatement(analyticalQuery);
+            pr.setString(1, mySelectedSpeciesAQ.getValue().toString());
+            pr.setBigDecimal(2, new BigDecimal(myMinWeight.getText()));
+            pr.setBigDecimal(3, new BigDecimal(myMaxWeight.getText()));
+            ResultSet rs = pr.executeQuery();
+            if (rs.next()) {
+                myVeterinaryQueryResult.setText(rs.getString(1));
+            } else {
+                myVeterinaryQueryResult.setText("No such veterinary was found.");
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 }
