@@ -16,5 +16,6 @@
       <Label fx:id="myLoginMessage" layoutX="216.0" layoutY="340.0" prefHeight="17.0" prefWidth="168.0" />
       <Label layoutX="135.0" layoutY="348.0" text="New user?" />
       <Button fx:id="mySignUpButton" layoutX="226.0" layoutY="344.0" mnemonicParsing="false" onAction="#signup" prefHeight="25.0" prefWidth="149.0" text="Sign Up" />
+      <Button layoutX="50.0" layoutY="61.0" mnemonicParsing="false" onAction="#exercise" text="Go to Exercise Report" />
    </children>
 </AnchorPane>

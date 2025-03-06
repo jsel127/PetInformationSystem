@@ -2,6 +2,7 @@ package Login;
 
 import Caretaker.CaretakerController;
 import Owner.OwnerController;
+import Pet.ExerciseEventController;
 import SignUp.SignUpController;
 import Veterinarian.VeterinarianController;
 import javafx.collections.FXCollections;
@@ -147,4 +148,23 @@ public class LoginController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    public void exercise() {
+        try {
+            Stage signupStage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            Pane root = (Pane) loader.load(getClass().getResource("/ExerciseReport/exerciseReport.fxml").openStream());
+
+            ExerciseEventController exerciseEventController = (ExerciseEventController) loader.getController();
+
+            Scene scene = new Scene(root);
+            signupStage.setScene(scene);
+            signupStage.setTitle("Sign Up Dashboard");
+            signupStage.setResizable(false);
+            signupStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
