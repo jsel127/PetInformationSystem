@@ -123,11 +123,11 @@ public class EventController implements Initializable {
                 myEventIDSelectedLabel.setText(Integer.toString(myEventID));
                 updateButtonStatuses(ENABLED);
             }
-            myErrorMessage.setText("");
             conn.close();
+            myErrorMessage.setText("Successfully added event ID:" + myEventID);
         } catch (SQLException ex) {
             ex.printStackTrace();
-            myErrorMessage.setText("Failed to create event. Check formatting of date.");
+            myErrorMessage.setText("Failed to create event. Check formatting of date. Start date must be before end date.");
         }
     }
 

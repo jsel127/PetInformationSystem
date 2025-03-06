@@ -102,6 +102,7 @@ public class ExerciseEventController implements Initializable {
             prInsertEvent.setInt(1, myEventID);
             prInsertEvent.execute();
             conn.close();
+            myErrorMessage.setText("Sucessfully added exercise event.");
         } catch (SQLException ex) {
             myErrorMessage.setText("Only one entry of each event type per event is allowed.");
         }

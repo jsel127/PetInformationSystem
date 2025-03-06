@@ -203,5 +203,4 @@ public class PottyEventController implements Initializable {
             e.printStackTrace();
         }
     }
-
 }
