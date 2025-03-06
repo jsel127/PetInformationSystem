@@ -43,7 +43,7 @@
                               <Insets />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="myReturnPetPageBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="374.0" text="Return Event Page">
+                        <Button fx:id="myReturnEventPageBtn" mnemonicParsing="false" onAction="#returnToEventPage" prefHeight="25.0" prefWidth="374.0" text="Return Event Page">
                            <VBox.margin>
                               <Insets bottom="10.0" top="15.0" />
                            </VBox.margin>
