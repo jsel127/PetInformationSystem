@@ -5,6 +5,7 @@ import Login.LoginApp;
 import Login.LoginController;
 import Login.userType;
 import Owner.OwnerController;
+import com.dlsc.formsfx.model.structure.DateField;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +20,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 
 public class SignUpController implements Initializable {
@@ -45,11 +48,13 @@ public class SignUpController implements Initializable {
     @FXML
     private RadioButton isCaretaker;
     @FXML
-    private TextField myLoginMessage;
+    private Label myLoginMessage;
     private dbConnection myConnection;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        myLoginMessage = new Label();
+        myLoginMessage.setText(" ");
         if (signUpModel.isDatabaseConnected()) {
             myDBConnectionLabel.setText("Connected to Database");
         } else {
@@ -80,8 +85,9 @@ public class SignUpController implements Initializable {
                 return;
             }*/
             // add more null cases later.
+            // Source for Statement.RETURN_GENERATED_KEYS: https://www.baeldung.com/jdbc-returning-generated-keys
             Connection conn = dbConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(insertNewUser);
+            PreparedStatement stmt = conn.prepareStatement(insertNewUser, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, myPassword.getText());
             stmt.setString(2, myUserFirstName.getText());
             stmt.setString(3, myUserLastName.getText());
@@ -92,7 +98,12 @@ public class SignUpController implements Initializable {
 
             int rowsInserted = stmt.executeUpdate();
             if (rowsInserted > 0) {
-                backToLogin();
+                ResultSet generatedKeys = stmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    int userID = generatedKeys.getInt(1);
+                    myLoginMessage.setText("You have successfully created an account! You're UserID is " + userID);
+                }
+                //backToLogin();
             } else {
                 myLoginMessage.setText("Signup failed. Please try again.");
             }
@@ -104,6 +115,9 @@ public class SignUpController implements Initializable {
 
     public void backToLogin() {
         try {
+            Stage currentStage = (Stage) myCreateAccountButton.getScene().getWindow();
+            currentStage.close();
+
             Stage loginStage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             Pane root = (Pane) loader.load(getClass().getResource("/Login/login.fxml").openStream());

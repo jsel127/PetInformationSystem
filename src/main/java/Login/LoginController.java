@@ -3,6 +3,7 @@ package Login;
 import Caretaker.CaretakerController;
 import Owner.OwnerController;
 import Pet.ExerciseEventController;
+import Pet.TrainingEventController;
 import SignUp.SignUpController;
 import Veterinarian.VeterinarianController;
 import javafx.collections.FXCollections;
@@ -112,6 +113,9 @@ public class LoginController implements Initializable {
 
     public void caretakerLogin(final int theUserID) {
         try {
+            Stage currentStage = (Stage) myLoginButton.getScene().getWindow();
+            currentStage.close();
+
             Stage caretakerStage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             Pane root = (Pane) loader.load(getClass().getResource("/Caretaker/caretaker.fxml").openStream());
@@ -130,6 +134,9 @@ public class LoginController implements Initializable {
     }
     public void signup() {
         try {
+            Stage currentStage = (Stage) myLoginButton.getScene().getWindow();
+            currentStage.close();
+
             Stage signupStage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             Pane root = (Pane) loader.load(getClass().getResource("/SignUp/signup.fxml").openStream());
@@ -148,11 +155,14 @@ public class LoginController implements Initializable {
 
     public void exercise() {
         try {
+            Stage currentStage = (Stage) myLoginButton.getScene().getWindow();
+            currentStage.close();
+
             Stage signupStage = new Stage();
             FXMLLoader loader = new FXMLLoader();
-            Pane root = (Pane) loader.load(getClass().getResource("/ExerciseReport/exerciseReport.fxml").openStream());
+            Pane root = (Pane) loader.load(getClass().getResource("/TrainingReport/trainingReport.fxml").openStream());
 
-            ExerciseEventController exerciseEventController = (ExerciseEventController) loader.getController();
+            TrainingEventController trainingEventController = (TrainingEventController) loader.getController();
 
             Scene scene = new Scene(root);
             signupStage.setScene(scene);

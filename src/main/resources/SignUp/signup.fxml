@@ -3,9 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SignUp.SignUpController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SignUp.SignUpController">
    <children>
-      <Button fx:id="myCreateAccountButton" layoutX="251.0" layoutY="337.0" onAction="#signup" mnemonicParsing="false" text="Create Account" />
+      <Button fx:id="myCreateAccountButton" layoutX="251.0" layoutY="337.0" mnemonicParsing="false" onAction="#signup" text="Create Account" />
       <TextField fx:id="myUserLastName" layoutX="225.0" layoutY="102.0" promptText="Last Name" />
       <TextField fx:id="myUserFirstName" layoutX="225.0" layoutY="70.0" promptText="First Name" />
       <TextField fx:id="myPhoneNumber" layoutX="225.0" layoutY="143.0" promptText="Phone Number" />
@@ -21,5 +21,6 @@
       <RadioButton fx:id="isVeterinarian" layoutX="300.0" layoutY="269.0" mnemonicParsing="false" text="Veterinarian" />
       <RadioButton fx:id="isCaretaker" layoutX="225.0" layoutY="300.0" mnemonicParsing="false" text="Caretaker" />
       <Label fx:id="myDBConnectionLabel" layoutX="179.0" layoutY="14.0" text="Database Connection" />
+      <Label fx:id="myLoginMessage" layoutX="278.0" layoutY="39.0" text="Login Message" />
    </children>
 </AnchorPane>
