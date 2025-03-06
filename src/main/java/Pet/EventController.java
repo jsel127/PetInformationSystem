@@ -86,6 +86,168 @@ public class EventController implements Initializable {
     }
 
     /**
+     * Loads the potty event page to log potty events.
+     * @param theEvent the triggering event
+     */
+    @FXML
+    public void loadPottyEventPage(ActionEvent theEvent) {
+        try {
+            Stage currentStage = (Stage) myPottyEventBtn.getScene().getWindow();
+            currentStage.close();
+
+            Stage expenseStage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            Pane root = (Pane) loader.load(getClass().getResource("/Pet/pottyEvent.fxml").openStream());
+
+            PottyEventController eventController = (PottyEventController) loader.getController();
+            eventController.setPetID(myPetID);
+
+            Scene scene = new Scene(root);
+            expenseStage.setScene(scene);
+            expenseStage.setTitle("Potty Event Dashboard");
+            expenseStage.setResizable(false);
+            expenseStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Loads the meal event page to log meal events.
+     * @param theEvent the triggering event
+     */
+    @FXML
+    public void loadMealEventPage(ActionEvent theEvent) {
+        try {
+            Stage currentStage = (Stage) myMealEventBtn.getScene().getWindow();
+            currentStage.close();
+
+            Stage expenseStage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            Pane root = (Pane) loader.load(getClass().getResource("/Pet/mealEvent.fxml").openStream());
+
+            MealEventController eventController = (MealEventController) loader.getController();
+            eventController.setPetID(myPetID);
+
+            Scene scene = new Scene(root);
+            expenseStage.setScene(scene);
+            expenseStage.setTitle("Meal Event Dashboard");
+            expenseStage.setResizable(false);
+            expenseStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Loads the exercise event page to log exercise events.
+     * @param theEvent the triggering event
+     */
+    @FXML
+    public void loadExerciseEventPage(ActionEvent theEvent) {
+        try {
+            Stage currentStage = (Stage) myExerciseEventBtn.getScene().getWindow();
+            currentStage.close();
+
+            Stage expenseStage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            Pane root = (Pane) loader.load(getClass().getResource("/Pet/exerciseEvent.fxml").openStream());
+
+            ExerciseEventController eventController = (ExerciseEventController) loader.getController();
+            eventController.setPetID(myPetID);
+
+            Scene scene = new Scene(root);
+            expenseStage.setScene(scene);
+            expenseStage.setTitle("Exercise Event Dashboard");
+            expenseStage.setResizable(false);
+            expenseStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Loads the training event page to log training events.
+     * @param theEvent the triggering event
+     */
+    @FXML
+    public void loadTrainingEventPage(ActionEvent theEvent) {
+        try {
+            Stage currentStage = (Stage) myTrainingEventBtn.getScene().getWindow();
+            currentStage.close();
+
+            Stage expenseStage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            Pane root = (Pane) loader.load(getClass().getResource("/Pet/trainingEvent.fxml").openStream());
+
+            TrainingEventController eventController = (TrainingEventController) loader.getController();
+            eventController.setPetID(myPetID);
+
+            Scene scene = new Scene(root);
+            expenseStage.setScene(scene);
+            expenseStage.setTitle("Training Event Dashboard");
+            expenseStage.setResizable(false);
+            expenseStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * Loads the grooming event page to log grooming events.
+     * @param theEvent the triggering event
+     */
+    @FXML
+    public void loadGroomingEventPage(ActionEvent theEvent) {
+        try {
+            Stage currentStage = (Stage) myGroomingEventBtn.getScene().getWindow();
+            currentStage.close();
+
+            Stage expenseStage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            Pane root = (Pane) loader.load(getClass().getResource("/Pet/groomingEvent.fxml").openStream());
+
+            GroomingEventController eventController = (GroomingEventController) loader.getController();
+            eventController.setPetID(myPetID);
+
+            Scene scene = new Scene(root);
+            expenseStage.setScene(scene);
+            expenseStage.setTitle("Grooming Event Dashboard");
+            expenseStage.setResizable(false);
+            expenseStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * Loads the medical checkup event page to log medical checkup events.
+     * @param theEvent the triggering event
+     */
+    @FXML
+    public void loadMedicalCheckupEventPage(ActionEvent theEvent) {
+        try {
+            Stage currentStage = (Stage) myMedicalCheckupEventBtn.getScene().getWindow();
+            currentStage.close();
+
+            Stage expenseStage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            Pane root = (Pane) loader.load(getClass().getResource("/Pet/medicalCheckupEvent.fxml").openStream());
+
+            MedicalCheckupEventController eventController = (MedicalCheckupEventController) loader.getController();
+            eventController.setPetID(myPetID);
+
+            Scene scene = new Scene(root);
+            expenseStage.setScene(scene);
+            expenseStage.setTitle("Medical Checkup Event Dashboard");
+            expenseStage.setResizable(false);
+            expenseStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
      * Loads at most 50 events from the Event Table and stores it to be loaded in the UI.
      * @param theEvent the action taken.
      */
@@ -116,6 +278,10 @@ public class EventController implements Initializable {
         myEventTable.setItems(myEventData);
     }
 
+    /**
+     * Returns to the Pet Dashboard.
+     * @param theEvent the event that triggered the return.
+     */
     @FXML
     public void returnToPetDashboard(ActionEvent theEvent) {
         try {
@@ -126,8 +292,8 @@ public class EventController implements Initializable {
             FXMLLoader loader = new FXMLLoader();
             Pane root = (Pane) loader.load(getClass().getResource("/Pet/pet.fxml").openStream());
 
-            OwnerController ownerController = (OwnerController) loader.getController();
-            ownerController.setUserID(myPetID);
+            PetController ownerController = (PetController) loader.getController();
+            ownerController.setPetID(myPetID);
             Scene scene = new Scene(root);
             expenseStage.setScene(scene);
             expenseStage.setTitle("Pet Dashboard");
