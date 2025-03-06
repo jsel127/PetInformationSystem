@@ -35,8 +35,6 @@ public class LoginController implements Initializable {
     @FXML
     private Button myLoginButton;
     @FXML
-    private Button mySignUpButton;
-    @FXML
     private ComboBox myUserType;
     @FXML
     private Label myLoginMessage;
@@ -54,8 +52,7 @@ public class LoginController implements Initializable {
         try {
             int userID = Integer.parseInt(myUserID.getText());
             if (loginModel.isLogin(userID, myPassword.getText(), ((userType) myUserType.getValue()).toString())) {
-                Stage stage = (Stage) myLoginButton.getScene().getWindow();
-                stage.close();
+                Stage stage = (Stage) this.myLoginButton.getScene().getWindow();
                 switch (((userType)myUserType.getValue()).toString()) {
                     case "Owner":
                         ownerLogin(userID);
