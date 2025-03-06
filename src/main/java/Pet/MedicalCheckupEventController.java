@@ -210,7 +210,9 @@ public class MedicalCheckupEventController implements Initializable{
             }
             conn.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            myVeterinaryQueryResult.setText("Please select a species and specify valid weight (postive and min is less than max)");
+        } catch (NullPointerException ex) {
+            myVeterinaryQueryResult.setText("Please select a species and specify valid weight (postive and min is less than max)");
         }
     }
 }
