@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Pet.GroomingEventController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Pet.GroomingEventController">
     <TabPane prefHeight="720.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
         <Tab text="Grooming">
             <content>
@@ -33,7 +25,7 @@
                             <children>
                                 <Label prefHeight="17.0" prefWidth="410.0" text="Add Grooming" />
                                 <ComboBox prefHeight="25.0" prefWidth="372.0" promptText="Grooming Type" />
-                                <ComboBox layoutX="25.0" layoutY="27.0" prefHeight="25.0" prefWidth="372.0" promptText="Groomer" />
+                                <ComboBox layoutX="25.0" layoutY="27.0" prefHeight="25.0" prefWidth="372.0" promptText="GroomerID" />
                                 <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="379.0" text="Log Grooming">
                                     <VBox.margin>
                                         <Insets top="10.0" />
