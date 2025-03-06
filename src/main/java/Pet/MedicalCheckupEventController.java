@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
  * @version March 5 2025
  * @author Jasmine Sellers
  */
-public class MedicalCheckupEventController extends EventController implements Initializable{
+public class MedicalCheckupEventController implements Initializable{
     /** The PetID for the event */
     private int myPetID;
     /** the EventID for the event */
