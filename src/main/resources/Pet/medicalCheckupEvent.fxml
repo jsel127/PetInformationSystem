@@ -35,7 +35,7 @@
                                 </TableView>
                             </children>
                         </HBox>
-                        <VBox prefHeight="338.0" prefWidth="402.0" AnchorPane.leftAnchor="0.0">
+                        <VBox prefHeight="213.0" prefWidth="402.0" AnchorPane.leftAnchor="0.0">
                             <children>
                                 <Label prefHeight="17.0" prefWidth="410.0" text="Add Medical Checkup" />
                                 <ComboBox prefHeight="25.0" prefWidth="372.0" promptText="Veterinarian, ID" />
@@ -64,6 +64,29 @@
                               <Insets bottom="10.0" top="15.0" />
                            </VBox.margin>
                         </Button>
+                     </children>
+                     <padding>
+                        <Insets left="15.0" right="15.0" />
+                     </padding>
+                  </VBox>
+                  <VBox layoutX="1.0" layoutY="247.0" prefHeight="176.0" prefWidth="401.0">
+                     <children>
+                        <Label text="Analytical Query" />
+                        <HBox>
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="321.0" text="Find the vet clinic that takes care of the most " />
+                              <ComboBox fx:id="mySelectedSpeciesAQ" prefHeight="25.0" prefWidth="199.0" promptText="Species" />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="194.0" text="between the weights (kg)" />
+                           </children>
+                        </HBox>
+                        <TextField fx:id="myMinWeight" promptText="Min" />
+                        <TextField fx:id="myMaxWeight" promptText="Max" />
+                        <Button mnemonicParsing="false" onAction="#runVeterinaryAnalyticalQuery" prefHeight="25.0" prefWidth="388.0" text="Query" />
+                        <Label fx:id="myVeterinaryQueryResult" prefHeight="38.0" prefWidth="371.0" />
                      </children>
                      <padding>
                         <Insets left="15.0" right="15.0" />

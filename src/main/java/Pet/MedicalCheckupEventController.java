@@ -9,9 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -56,9 +54,38 @@ public class MedicalCheckupEventController implements Initializable{
     private TableColumn<MedicalCheckupEventData, String> myWeightCol;
     @FXML
     private TableColumn<MedicalCheckupEventData, String> myNotesCol;
+    @FXML
+    private Label myVeterinaryQueryResult;
+    @FXML
+    private ComboBox mySelectedSpeciesAQ;
+    @FXML
+    private TextField myMinWeight;
+    @FXML
+    private TextField myMaxWeight;
     /** Initializes the window and connects to the database */
     public void initialize(URL theURL, ResourceBundle theRB) {
         myConnection = new dbConnection();
+        initializeAnalyticalQuerySpeciesComboBox();
+    }
+
+    /**
+     * Initializes options for species type combo box
+     */
+    private void initializeAnalyticalQuerySpeciesComboBox() {
+        String query = "SELECT SpeciesName FROM Species";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement pr = conn.prepareStatement(query);
+            ResultSet rs = pr.executeQuery();
+            ObservableList<String> mealTypes = FXCollections.observableArrayList();
+            while (rs.next()) {
+                mealTypes.add(rs.getString(1));
+            }
+            mySelectedSpeciesAQ.setItems(mealTypes);
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**

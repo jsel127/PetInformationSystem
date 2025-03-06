@@ -310,6 +310,7 @@ public class EventController implements Initializable {
     @FXML
     public void loadEventData(ActionEvent theEvent) {
         try {
+            System.out.println(myPetID);
             Connection conn = dbConnection.getConnection();
             myEventData = FXCollections.observableArrayList();
 
