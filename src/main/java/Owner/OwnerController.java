@@ -172,7 +172,6 @@ public class OwnerController implements Initializable {
         try {
             Connection conn = dbConnection.getConnection();
             myOwnershipData = FXCollections.observableArrayList();
-
             String query = "SELECT Pets.PetID, Pets.FirstName, OwnershipTypes.OwnershipType, Ownerships.`Date` " +
                     "FROM Ownerships JOIN Pets ON Ownerships.PetID = Pets.PetID " +
                     "JOIN OwnershipTypes ON Ownerships.OwnershipTypeID = OwnershipTypes.OwnershipTypeID " +
@@ -180,7 +179,6 @@ public class OwnerController implements Initializable {
             PreparedStatement pr = conn.prepareStatement(query);
             pr.setInt(1, myUserID);
             ResultSet rs = pr.executeQuery();
-
             while (rs.next()) {
                 myOwnershipData.add(new OwnershipData(rs.getString(1), rs.getString(2),
                         rs.getString(3), rs.getString(4)));

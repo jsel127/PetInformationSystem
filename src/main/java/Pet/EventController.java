@@ -363,8 +363,8 @@ public class EventController implements Initializable {
             FXMLLoader loader = new FXMLLoader();
             Pane root = (Pane) loader.load(getClass().getResource("/Pet/pet.fxml").openStream());
 
-            PetController ownerController = (PetController) loader.getController();
-            ownerController.setPetID(myPetID);
+            PetController petController = (PetController) loader.getController();
+            petController.setPetID(myPetID);
             Scene scene = new Scene(root);
             expenseStage.setScene(scene);
             expenseStage.setTitle("Pet Dashboard");
