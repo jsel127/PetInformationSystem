@@ -133,6 +133,7 @@ public class ExpenseController implements Initializable {
         myAmount.clear();
         myDateOfExpense.setValue(null);
         myNotes.clear();
+        myErrorMessage.setText("");
     }
 
     @FXML
