@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Pet.PottyEventController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Pet.PottyEventController">
     <TabPane prefHeight="720.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
         <Tab text="Potty">
             <content>
@@ -12,11 +21,11 @@
                     <children>
                         <HBox layoutX="401.0" layoutY="-1.0" prefHeight="693.0" prefWidth="879.0">
                             <children>
-                                <TableView prefHeight="693.0" prefWidth="880.0">
+                                <TableView fx:id="myPottyTable" prefHeight="693.0" prefWidth="880.0">
                                     <columns>
-                                        <TableColumn prefWidth="175.0" text="EventID" />
-                                        <TableColumn prefWidth="197.0" text="Potty Type" />
-                                        <TableColumn minWidth="0.0" prefWidth="506.0" text="Notes" />
+                                        <TableColumn fx:id="myEventIDCol" prefWidth="175.0" text="EventID" />
+                                        <TableColumn fx:id="myPottyTypeCol" prefWidth="197.0" text="Potty Type" />
+                                        <TableColumn fx:id="myNotesCol" minWidth="0.0" prefWidth="506.0" text="Notes" />
                                     </columns>
                                 </TableView>
                             </children>
@@ -38,7 +47,7 @@
                         </VBox>
                   <VBox layoutY="610.0" prefHeight="50.0" prefWidth="402.0">
                      <children>
-                        <Button fx:id="myLoadTableBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="374.0" text="Load Table">
+                        <Button fx:id="myLoadTableBtn" mnemonicParsing="false" onAction="#loadPottyEventData" prefHeight="25.0" prefWidth="374.0" text="Load Table">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
