@@ -173,16 +173,16 @@ public class OwnerController implements Initializable {
             myOwnershipData = FXCollections.observableArrayList();
 
             String query = "SELECT Pets.PetID, Pets.FirstName, OwnershipTypes.OwnershipType, Ownerships.`Date` " +
-                           "FROM Ownerships JOIN Pets ON Ownerships.PetID = Pets.PetID " +
-                           "JOIN OwnershipTypes ON Ownerships.OwnershipTypeID = OwnershipTypes.OwnershipTypeID " +
-                           "WHERE Ownerships.UserID = ?;";
+                    "FROM Ownerships JOIN Pets ON Ownerships.PetID = Pets.PetID " +
+                    "JOIN OwnershipTypes ON Ownerships.OwnershipTypeID = OwnershipTypes.OwnershipTypeID " +
+                    "WHERE Ownerships.UserID = ?;";
             PreparedStatement pr = conn.prepareStatement(query);
             pr.setInt(1, myUserID);
             ResultSet rs = pr.executeQuery();
 
             while (rs.next()) {
                 myOwnershipData.add(new OwnershipData(rs.getString(1), rs.getString(2),
-                                                      rs.getString(3), rs.getString(4)));
+                        rs.getString(3), rs.getString(4)));
             }
             conn.close();
         } catch (SQLException ex) {
@@ -270,15 +270,14 @@ public class OwnerController implements Initializable {
             return;
         }
         addPet();
-        addOwnershipFromPetFrom();
     }
 
     private void addPet() {
         String insertPetStatement = "INSERT INTO Pets (InsuranceID, FirstName, LastName, DOB, Gender) " +
-                                    "VALUES (?, ?, ?, ?, ?);";
+                "VALUES (?, ?, ?, ?, ?);";
         try {
             Connection conn = dbConnection.getConnection();
-            PreparedStatement prInsertPet = conn.prepareStatement(insertPetStatement);
+            PreparedStatement prInsertPet = conn.prepareStatement(insertPetStatement, Statement.RETURN_GENERATED_KEYS);
             int insuranceID = getInsuranceID();
             prInsertPet.setObject(1, (insuranceID >= 0) ? insuranceID : null, Types.INTEGER); // Source: https://blogs.oracle.com/javamagazine/post/quiz-yourself-working-with-preparedstatement-and-sql-null-values-in-java, https://learn.microsoft.com/en-us/sql/connect/jdbc/reference/setobject-method-int-java-lang-object-int?view=sql-server-ver16             prInsertPet.setString(2, java.lang.Object myPetFirstName.getText());
             prInsertPet.setString(2, myPetFirstName.getText());
@@ -288,39 +287,25 @@ public class OwnerController implements Initializable {
             Object gender = myPetGender.getValue();
             prInsertPet.setObject(5, (gender != null) ? gender.toString() : null);
             prInsertPet.execute();
+            ResultSet keyData = prInsertPet.getGeneratedKeys();
+            if (keyData.next()) {
+                String insertOwnershipStatement = "INSERT INTO Ownerships(UserID, PetID, OwnershipTypeID, Date) VALUES(?, ?, ?, ?);";
+                int PetID = keyData.getInt(1);
+                PreparedStatement prInsertOwnership = conn.prepareStatement(insertOwnershipStatement);
+                prInsertOwnership.setInt(1, myUserID);
+                prInsertOwnership.setInt(2, PetID);
+                prInsertOwnership.setInt(3, getOwnershipTypeID(myPetOwnershipType.getValue().toString()));
+                Date doa = (myPetDOA.getValue() != null) ? Date.valueOf(myPetDOA.getValue()) : null;
+                prInsertOwnership.setObject(4, doa);
+                prInsertOwnership.execute();
+            }
             conn.close();
+
         } catch (SQLException ex) {
             ex.printStackTrace();
             myPetMessage.setText("Failed to create pet. ");
         }
     }
-
-    private void addOwnershipFromPetFrom() {
-        String insertOwnershipStatement = "INSERT INTO Ownerships(UserID, PetID, OwnershipTypeID, Date) VALUES(?, ?, ?, ?);";
-        try {
-            Connection conn = dbConnection.getConnection();
-            // Source: https://www.w3schools.com/sql/func_mysql_last_insert_id.asp
-            PreparedStatement getLastIndex = conn.prepareStatement("SELECT MAX(PetID) FROM Pets;");
-            ResultSet rs = getLastIndex.executeQuery();
-            if (rs.next()) {
-                int PetID = rs.getInt(1);
-                System.out.println("PetID" + PetID);
-                PreparedStatement prInsertPet = conn.prepareStatement(insertOwnershipStatement);
-                prInsertPet.setInt(1, myUserID);
-                prInsertPet.setInt(2, PetID);
-                prInsertPet.setInt(3, getOwnershipTypeID(myPetOwnershipType.getValue().toString()));
-                Date doa = (myPetDOA.getValue() != null) ? Date.valueOf(myPetDOA.getValue()) : null;
-                prInsertPet.setObject(4, doa);
-                System.out.println(prInsertPet.toString());
-                prInsertPet.execute();
-            }
-            conn.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            myPetMessage.setText("Failed to create relationship to pet.");
-        }
-    }
-
     private int getOwnershipTypeID(String theOwnershipType) {
         String getOwnershipTypeId = "SELECT OwnershipTypeID FROM OwnershipTypes WHERE OwnershipType = ?;";
 
