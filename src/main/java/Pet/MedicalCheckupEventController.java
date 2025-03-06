@@ -53,5 +53,6 @@ public class MedicalCheckupEventController implements Initializable{
         if (theEventID < 0) {
             throw new IndexOutOfBoundsException();
         }
+        myEventID = theEventID;
     }
 }

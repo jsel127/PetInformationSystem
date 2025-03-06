@@ -41,7 +41,7 @@
                         </VBox>
                   <VBox layoutY="610.0" prefHeight="50.0" prefWidth="402.0">
                      <children>
-                        <Button fx:id="myLoadTableBtn" mnemonicParsing="false" onAction="#loadExerciseEventDate" prefHeight="25.0" prefWidth="374.0" text="Load Table">
+                        <Button fx:id="myLoadTableBtn" mnemonicParsing="false" onAction="#loadExerciseEventData" prefHeight="25.0" prefWidth="374.0" text="Load Table">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>

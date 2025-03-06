@@ -77,14 +77,14 @@ public class ExerciseEventController implements Initializable {
         if (theEventID < 0) {
             throw new IndexOutOfBoundsException();
         }
-        myPetID = theEventID;
+        myEventID = theEventID;
     }
     /**
      * Loads at most 50 events from the Event Table and stores it to be loaded in the UI.
      * @param theEvent the action taken.
      */
     @FXML
-    public void loadExerciseEventDate(ActionEvent theEvent) {
+    public void loadExerciseEventData(ActionEvent theEvent) {
         try {
             Connection conn = dbConnection.getConnection();
             myExerciseData = FXCollections.observableArrayList();
@@ -99,7 +99,7 @@ public class ExerciseEventController implements Initializable {
 
             while (rs.next()) {
                 myExerciseData.add(new ExerciseEventData(rs.getInt(1), rs.getString(2),
-                                   rs.getInt(3), rs.getString(3)));
+                                   rs.getInt(3), rs.getString(4)));
             }
             conn.close();
         } catch (SQLException ex) {

@@ -45,5 +45,6 @@ public class PottyEventController implements Initializable {
         if (theEventID < 0) {
             throw new IndexOutOfBoundsException();
         }
+        myEventID = theEventID;
     }
 }

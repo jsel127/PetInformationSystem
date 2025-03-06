@@ -85,7 +85,7 @@
                               <HBox>
                                  <children>
                                     <Label prefHeight="17.0" prefWidth="82.0" text="For Event ID: " />
-                                    <Label fx:id="myEventIDSelectedLabel" prefHeight="17.0" prefWidth="303.0" text="No Event ID Selected" />
+                                    <Label fx:id="myEventIDSelectedLabel" prefHeight="17.0" prefWidth="303.0" text="Select EventID (click on the row)" textFill="#7c7c7c" />
                                  </children>
                               </HBox>
                               <Button fx:id="myPottyEventBtn" mnemonicParsing="false" onAction="#loadPottyEventPage" prefHeight="25.0" prefWidth="384.0" text="Potty">
@@ -118,6 +118,7 @@
                                     <Insets bottom="10.0" top="10.0" />
                                  </VBox.margin>
                               </Button>
+                              <Label fx:id="myAddEventErrorMessage" prefHeight="17.0" prefWidth="428.0" />
                            </children>
                            <padding>
                               <Insets left="15.0" right="15.0" />
