@@ -2,6 +2,8 @@ package Login;
 
 import Caretaker.CaretakerController;
 import Owner.OwnerController;
+import Pet.ExerciseEventController;
+import SignUp.SignUpController;
 import Veterinarian.VeterinarianController;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -13,11 +15,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -48,8 +52,7 @@ public class LoginController implements Initializable {
         try {
             int userID = Integer.parseInt(myUserID.getText());
             if (loginModel.isLogin(userID, myPassword.getText(), ((userType) myUserType.getValue()).toString())) {
-                Stage stage = (Stage) myLoginButton.getScene().getWindow();
-                stage.close();
+                Stage stage = (Stage) this.myLoginButton.getScene().getWindow();
                 switch (((userType)myUserType.getValue()).toString()) {
                     case "Owner":
                         ownerLogin(userID);
@@ -125,4 +128,40 @@ public class LoginController implements Initializable {
             e.printStackTrace();
         }
     }
+    public void signup() {
+        try {
+            Stage signupStage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            Pane root = (Pane) loader.load(getClass().getResource("/SignUp/signup.fxml").openStream());
+
+            SignUpController signUpController = (SignUpController) loader.getController();
+
+            Scene scene = new Scene(root);
+            signupStage.setScene(scene);
+            signupStage.setTitle("Sign Up Dashboard");
+            signupStage.setResizable(false);
+            signupStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void exercise() {
+        try {
+            Stage signupStage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            Pane root = (Pane) loader.load(getClass().getResource("/ExerciseReport/exerciseReport.fxml").openStream());
+
+            ExerciseEventController exerciseEventController = (ExerciseEventController) loader.getController();
+
+            Scene scene = new Scene(root);
+            signupStage.setScene(scene);
+            signupStage.setTitle("Sign Up Dashboard");
+            signupStage.setResizable(false);
+            signupStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

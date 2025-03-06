@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="693.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Pet.ExerciseEventController">
+   <children>
+      <BarChart fx:id="myBarChart" layoutX="160.0" layoutY="127.0" prefHeight="488.0" prefWidth="690.0">
+        <xAxis>
+          <CategoryAxis label="Event Type" side="BOTTOM" fx:id="xAxis" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="yAxis" label="Frequency" side="LEFT" />
+        </yAxis>
+      </BarChart>
+      <Button layoutX="33.0" layoutY="158.0" onAction="#generateBarChart" mnemonicParsing="false" text="Generate Exercise Report" />
+   </children>
+</AnchorPane>
