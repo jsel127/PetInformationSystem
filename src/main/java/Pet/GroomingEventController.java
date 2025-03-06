@@ -9,9 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -49,11 +47,34 @@ public class GroomingEventController implements Initializable {
     private TableColumn<GroomingEventData, String> myGroomingTypeCol;
     @FXML
     private TableColumn<GroomingEventData, Integer> myGroomerIDCol;
+    @FXML
+    private ComboBox myCityAQ;
+    @FXML
+    private TextField myMinNumberRatings;
+    @FXML
+    private Label myGroomerQueryResult;
     /** Initializes the window and connects to the database */
     public void initialize(URL theURL, ResourceBundle theRB) {
         myConnection = new dbConnection();
+        initializeCitiesComboBox();
     }
 
+    private void initializeCitiesComboBox() {
+        String query = "SELECT CityName FROM Cities";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement pr = conn.prepareStatement(query);
+            ResultSet rs = pr.executeQuery();
+            ObservableList<String> cityNames = FXCollections.observableArrayList();
+            while (rs.next()) {
+                cityNames.add(rs.getString(1));
+            }
+            myCityAQ.setItems(cityNames);
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
     /**
      * Sets the PetID for the event
      * @param thePetID the key for the Pets table.
@@ -131,6 +152,45 @@ public class GroomingEventController implements Initializable {
             expenseStage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Runs the fourth analytical query "For a given city what is the groomer that has the highest average rating and has over 10 ratings."
+     * Note: was adjusted to a query that can be specified by the user.
+     * @param theEvent the triggering event
+     */
+    @FXML
+    public void runGroomerAnalyticalQuery(ActionEvent theEvent) {
+        String analyticalQuery = "SELECT `Name`, Groomers.Contact, AVG(GroomerRatings.RatingValue) AS AverageRating, COUNT(*) AS NumberOfRatings " +
+                                "FROM Groomers JOIN Addresses ON Groomers.AddressID = Addresses.AddressID " +
+                                "JOIN PostalCodes ON Addresses.PostalID = PostalCodes.PostalID " +
+                                "JOIN Cities ON PostalCodes.CityID = Cities.CityID " +
+                                "JOIN GroomerRatings ON Groomers.GroomerID = GroomerRatings.GroomerID " +
+                                "WHERE Cities.CityName = ? " +
+                                "GROUP BY Groomers.GroomerID, Name " +
+                                "HAVING COUNT(GroomerRatings.RatingValue) > ? " +
+                                "ORDER BY AVG(GroomerRatings.RatingValue) " +
+                                "LIMIT 1;";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement pr = conn.prepareStatement(analyticalQuery);
+            pr.setString(1, myCityAQ.getValue().toString());
+            pr.setInt(2, Integer.parseInt(myMinNumberRatings.getText()));
+            ResultSet rs = pr.executeQuery();
+            if (rs.next() && rs.getString(1) != null) {
+                String formattedResult = String.format("Name: %s \nContact: %s \nAverage Rating: %s \nNumber Ratings: %d",
+                        rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4));
+                myGroomerQueryResult.setText(formattedResult);
+            } else {
+                myGroomerQueryResult.setText("No groomers were found in the given area");
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            myGroomerQueryResult.setText("Invalid input received.");
+        } catch (NullPointerException ex) {
+            myGroomerQueryResult.setText("Sections above must be specified.");
         }
     }
 }

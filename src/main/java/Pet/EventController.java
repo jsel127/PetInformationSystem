@@ -126,7 +126,6 @@ public class EventController implements Initializable {
             conn.close();
             myErrorMessage.setText("Successfully added event ID:" + myEventID);
         } catch (SQLException ex) {
-            ex.printStackTrace();
             myErrorMessage.setText("Failed to create event. Check formatting of date. Start date must be before end date.");
         }
     }
@@ -158,8 +157,9 @@ public class EventController implements Initializable {
             expenseStage.setTitle("Potty Event Dashboard");
             expenseStage.setResizable(false);
             expenseStage.show();
+            myAddEventErrorMessage.setText("");
         } catch (IOException e) {
-            e.printStackTrace();
+            myAddEventErrorMessage.setText("Error opening page");
         }
     }
 
@@ -187,8 +187,9 @@ public class EventController implements Initializable {
             expenseStage.setTitle("Meal Event Dashboard");
             expenseStage.setResizable(false);
             expenseStage.show();
+            myAddEventErrorMessage.setText("");
         } catch (IOException e) {
-            e.printStackTrace();
+            myAddEventErrorMessage.setText("Error opening page");
         }
     }
 
@@ -215,8 +216,9 @@ public class EventController implements Initializable {
             expenseStage.setTitle("Exercise Event Dashboard");
             expenseStage.setResizable(false);
             expenseStage.show();
+            myAddEventErrorMessage.setText("");
         } catch (IOException e) {
-            e.printStackTrace();
+            myAddEventErrorMessage.setText("Error opening page");
         }
     }
 
@@ -243,8 +245,9 @@ public class EventController implements Initializable {
             expenseStage.setTitle("Training Event Dashboard");
             expenseStage.setResizable(false);
             expenseStage.show();
+            myAddEventErrorMessage.setText("");
         } catch (IOException e) {
-            e.printStackTrace();
+            myAddEventErrorMessage.setText("Error opening page");
         }
     }
     /**
@@ -270,8 +273,9 @@ public class EventController implements Initializable {
             expenseStage.setTitle("Grooming Event Dashboard");
             expenseStage.setResizable(false);
             expenseStage.show();
+            myAddEventErrorMessage.setText("");
         } catch (IOException e) {
-            e.printStackTrace();
+            myAddEventErrorMessage.setText("Error opening page");
         }
     }
     /**
@@ -297,8 +301,9 @@ public class EventController implements Initializable {
             expenseStage.setTitle("Medical Checkup Event Dashboard");
             expenseStage.setResizable(false);
             expenseStage.show();
+            myAddEventErrorMessage.setText("");
         } catch (IOException e) {
-            e.printStackTrace();
+            myAddEventErrorMessage.setText("Error opening page");
         }
     }
 
@@ -324,7 +329,7 @@ public class EventController implements Initializable {
             }
             conn.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            myAddEventErrorMessage.setText("Issue loading data");
         }
         myEventIDCol.setCellValueFactory(new PropertyValueFactory<EventData, Integer>("myEventID"));
         myStartDateTimeCol.setCellValueFactory(new PropertyValueFactory<EventData, String>("myStartDateTime"));

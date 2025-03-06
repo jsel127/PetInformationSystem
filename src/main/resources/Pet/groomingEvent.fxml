@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Pet.GroomingEventController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Pet.GroomingEventController">
     <TabPane prefHeight="720.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
         <Tab text="Grooming">
             <content>
@@ -48,6 +57,29 @@
                               <Insets bottom="10.0" top="15.0" />
                            </VBox.margin>
                         </Button>
+                     </children>
+                     <padding>
+                        <Insets left="15.0" right="15.0" />
+                     </padding>
+                  </VBox>
+                  <VBox layoutY="163.0" prefHeight="176.0" prefWidth="401.0">
+                     <children>
+                        <Label text="Analytical Query" />
+                        <HBox>
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="373.0" text="Find the groomer which has the highest average rating in" />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <ComboBox fx:id="myCityAQ" prefHeight="18.0" prefWidth="82.0" promptText="City" />
+                              <Label prefHeight="17.0" prefWidth="60.0" text="  with over " />
+                              <TextField fx:id="myMinNumberRatings" prefHeight="25.0" prefWidth="100.0" promptText="# ratings" />
+                              <Label text="  ratings" />
+                           </children>
+                        </HBox>
+                        <Button mnemonicParsing="false" onAction="#runGroomerAnalyticalQuery" prefHeight="25.0" prefWidth="388.0" text="Query" />
+                        <Label fx:id="myGroomerQueryResult" prefHeight="89.0" prefWidth="371.0" />
                      </children>
                      <padding>
                         <Insets left="15.0" right="15.0" />

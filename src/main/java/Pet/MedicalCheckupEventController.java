@@ -122,20 +122,20 @@ public class MedicalCheckupEventController implements Initializable{
             myMedicalCheckupEventData = FXCollections.observableArrayList();
 
             String query = "SELECT MedicalCheckups.EventID, Veterinarians.UserID, CONCAT(Users.FirstName, ' ', Users.LastName) AS VeterinarianFullName, " +
-                           "Veterinary.VeterinaryID, Veterinary.VeterinaryName, MedicalCheckups.Weight, MedicalCheckups.Notes " +
-                           "FROM MedicalCheckups JOIN EventLogs ON MedicalCheckups.EventID = EventLogs.EventID " +
-                           "JOIN Veterinarians ON MedicalCheckups.VeterinarianID = Veterinarians.UserID " +
-                           "JOIN Users ON Veterinarians.UserID = Users.UserID " +
-                           "JOIN Veterinary ON MedicalCheckups.VeterinaryID = Veterinary.VeterinaryID " +
-                           "WHERE PetID = ? LIMIT 50;";
+                    "Veterinary.VeterinaryID, Veterinary.VeterinaryName, MedicalCheckups.Weight, MedicalCheckups.Notes " +
+                    "FROM MedicalCheckups JOIN EventLogs ON MedicalCheckups.EventID = EventLogs.EventID " +
+                    "JOIN Veterinarians ON MedicalCheckups.VeterinarianID = Veterinarians.UserID " +
+                    "JOIN Users ON Veterinarians.UserID = Users.UserID " +
+                    "JOIN Veterinary ON MedicalCheckups.VeterinaryID = Veterinary.VeterinaryID " +
+                    "WHERE PetID = ? LIMIT 50;";
             PreparedStatement pr = conn.prepareStatement(query);
             pr.setInt(1, myPetID);
             ResultSet rs = pr.executeQuery();
 
             while (rs.next()) {
                 myMedicalCheckupEventData.add(new MedicalCheckupEventData(rs.getInt(1), rs.getInt(2),
-                                              rs.getString(3), rs.getInt(4), rs.getString(5),
-                                              rs.getString(6), rs.getString(7)));
+                        rs.getString(3), rs.getInt(4), rs.getString(5),
+                        rs.getString(6), rs.getString(7)));
             }
             conn.close();
         } catch (SQLException ex) {
