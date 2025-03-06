@@ -75,6 +75,32 @@
                               <Insets left="15.0" right="15.0" />
                            </padding>
                         </VBox>
+                        <VBox layoutY="244.0" prefHeight="176.0" prefWidth="401.0">
+                           <children>
+                              <Label text="Analytical Query" />
+                              <HBox>
+                                 <children>
+                                    <Label prefHeight="17.0" prefWidth="220.0" text="Find the average amount spent on " />
+                                    <ComboBox fx:id="myExpenseTypeAQ" prefHeight="25.0" prefWidth="150.0" promptText="Expense Type" />
+                                    <Label prefHeight="17.0" prefWidth="100.0" text=" per month">
+                                       <HBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox />
+                              <Button mnemonicParsing="false" onAction="#runExpenseAnalyticalQuery" prefHeight="25.0" prefWidth="388.0" text="Query">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Label fx:id="myExpenseQueryResult" prefHeight="38.0" prefWidth="371.0" />
+                           </children>
+                           <padding>
+                              <Insets left="15.0" right="15.0" />
+                           </padding>
+                        </VBox>
                      </children>
                   </AnchorPane>
                </content>

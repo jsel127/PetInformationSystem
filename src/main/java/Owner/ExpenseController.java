@@ -48,6 +48,11 @@ public class ExpenseController implements Initializable {
     @FXML
     private TableColumn<ExpenseData, String> myNotesCol;
 
+    @FXML
+    private ComboBox myExpenseTypeAQ;
+    @FXML
+    private Label myExpenseQueryResult;
+
     private ObservableList<ExpenseData> myExpenseData;
 
     public void initialize(URL theURL, ResourceBundle theRB) {
@@ -70,6 +75,7 @@ public class ExpenseController implements Initializable {
                 expenseType.add(rs.getString(1));
             }
             myExpenseType.setItems(expenseType);
+            myExpenseTypeAQ.setItems(expenseType);
             conn.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -165,6 +171,36 @@ public class ExpenseController implements Initializable {
             myErrorMessage.setText(null);
         } catch (SQLException ex) {
             myErrorMessage.setText("Expense could not be added. Please check that valid data has been entered. ");
+        }
+    }
+
+    /**
+     * Runs the second analytical query "For a given owners, find the average amount spent on <eventType> per month."
+     * Note: was adjusted to a query that can be specified by the user. The analytical part came from figuring out the amount spent per month.
+     * @param theEvent the triggering event
+     */
+    @FXML
+    public void runExpenseAnalyticalQuery(ActionEvent theEvent) {
+        String analyticalQuery = "SELECT ROUND(AVG(AverageAmountSpentPerMonth), 2) AS AverageSpentAllMonths " +
+                "FROM (SELECT AVG(Amount) AS AverageAmountSpentPerMonth " +
+                "FROM Expenses JOIN Owners ON Expenses.UserID = Owners.UserID " +
+                "JOIN ExpenseTypes ON Expenses.ExpenseTypeID = ExpenseTypes.ExpenseTypeID " +
+                "WHERE ExpenseType = ? AND Expenses.UserID = ? " +
+                "GROUP BY YEAR(Expenses.`Date`), MONTH(Expenses.`Date`)) AS AverageSpentPerMonthForEventType;";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement pr = conn.prepareStatement(analyticalQuery);
+            pr.setString(1, myExpenseTypeAQ.getValue().toString());
+            pr.setInt(2, myUserID);
+            ResultSet rs = pr.executeQuery();
+            if (rs.next() && rs.getString(1) != null) {
+                myExpenseQueryResult.setText("$" + rs.getString(1) + " per month");
+            } else {
+                myExpenseQueryResult.setText("No events of that type were found");
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            myExpenseQueryResult.setText("Invalid input received.");
         }
     }
 
