@@ -175,7 +175,7 @@ public class ExpenseController implements Initializable {
     }
 
     /**
-     * Runs the second analytical query "For a given owners, find the average amount spent on <eventType> per month."
+     * Runs the analytical query "For a given owners, find the average amount spent on <eventType> per month."
      * Note: was adjusted to a query that can be specified by the user. The analytical part came from figuring out the amount spent per month.
      * @param theEvent the triggering event
      */

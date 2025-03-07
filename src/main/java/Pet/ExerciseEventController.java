@@ -13,13 +13,11 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.net.URL;
@@ -53,6 +51,12 @@ public class ExerciseEventController implements Initializable {
     private TableColumn<ExerciseEventData, Integer> myIntensityLevelCol;
     @FXML
     private TableColumn<ExerciseEventData, String> myDistanceCol;
+    @FXML
+    private ComboBox myExerciseType;
+    @FXML
+    private TextField myIntensityLevel;
+    @FXML
+    private TextField myDistance;
     /***/
     @FXML
     private NumberAxis myYAxis;
@@ -61,12 +65,15 @@ public class ExerciseEventController implements Initializable {
     @FXML
     private Button myReturnEventPageBtn;
     private ObservableList<ExerciseEventData> myExerciseData;
+
+    /** Stores loaded events */
+    private ObservableList<ExerciseEventReportData> myExerciseEventData;
+
     /** Initializes the window and connects to the database */
     public void initialize(URL theURL, ResourceBundle theRB) {
         myConnection = new dbConnection();
+        initializeExerciseTypeComboBox();
     }
-    /** Stores loaded events */
-    private ObservableList<ExerciseEventReportData> myExerciseEventData;
     /**
      * Sets the PetID for the event
      * @param thePetID the key for the Pets table.
@@ -89,23 +96,66 @@ public class ExerciseEventController implements Initializable {
         myEventID = theEventID;
     }
 
+    private void initializeExerciseTypeComboBox() {
+        String query = "SELECT ExerciseName FROM ExerciseTypes";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement pr = conn.prepareStatement(query);
+            ResultSet rs = pr.executeQuery();
+            ObservableList<String> exerciseNames = FXCollections.observableArrayList();
+            while (rs.next()) {
+                exerciseNames.add(rs.getString(1));
+            }
+            myExerciseType.setItems(exerciseNames);
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     /**
      * Adds an event into the exercise table.
      * @param theEvent the triggering event.
      */
     @FXML
     public void addExercise(ActionEvent theEvent) {
-        String insertExerciseStatement = "INSERT INTO Exercises (EventID, ExerciseTypeID, IntensityLevel, Distance) VALUES (?, ?, ?, ?, ?);";
+        String insertExerciseStatement = "INSERT INTO Exercises (EventID, ExerciseTypeID, IntensityLevel, Distance) VALUES (?, ?, ?, ?);";
         try {
             Connection conn = dbConnection.getConnection();
             PreparedStatement prInsertEvent = conn.prepareStatement(insertExerciseStatement);
             prInsertEvent.setInt(1, myEventID);
+            prInsertEvent.setInt(2, getExerciseTypeID());
+            prInsertEvent.setInt(3, Integer.parseInt(myIntensityLevel.getText().toString()));
+            prInsertEvent.setString(4, myDistance.getText());
             prInsertEvent.execute();
             conn.close();
             myErrorMessage.setText("Sucessfully added exercise event.");
         } catch (SQLException ex) {
             myErrorMessage.setText("Only one entry of each event type per event is allowed.");
+        } catch (NullPointerException ex) {
+
         }
+    }
+
+    /**
+     * Gets the id related to the exercise type.
+     * @return the ID fo the exercise type in the ExerciseTypes table.
+     */
+    private int getExerciseTypeID() {
+        String queryGetGroomingTypeID = "SELECT ExerciseTypeID FROM ExerciseTypes WHERE ExerciseName = ?;";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement prGroomingType = conn.prepareStatement(queryGetGroomingTypeID);
+            prGroomingType.setString(1, myExerciseType.getValue().toString());
+            ResultSet rsGroomingType = prGroomingType.executeQuery();
+            if (rsGroomingType.next()) {
+                return rsGroomingType.getInt(1);
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 1;
     }
     /**
      * Loads at most 50 events from the Exercise Event Table and stores it to be loaded in the UI.
@@ -139,34 +189,6 @@ public class ExerciseEventController implements Initializable {
         myDistanceCol.setCellValueFactory(new PropertyValueFactory<ExerciseEventData, String>("myDistance"));
         myExerciseTable.setItems(null);
         myExerciseTable.setItems(myExerciseData);
-    }
-
-    public void generateBarChart() {
-        try {
-            Connection conn = dbConnection.getConnection();
-
-            String query = "SELECT ExerciseName, COUNT(*) AS TotalRepetitionsOfExercise, AVG(IntensityLevel) AS AverageIntensity\n" +
-                    "FROM Exercises JOIN EventLogs ON Exercises.EventID = EventLogs.EventID\n" +
-                    "\t\t\t   JOIN Pets ON EventLogs.PetID = Pets.PetID\n" +
-                    "               JOIN ExerciseTypes on Exercises.ExerciseTypeID = ExerciseTypes.ExerciseTypeID\n" +
-                    "WHERE Pets.PetID = 1\n" +
-                    "GROUP BY ExerciseName\n" +
-                    "ORDER BY COUNT(*);";
-            PreparedStatement pr = conn.prepareStatement(query);
-            //pr.setInt(1, myPetID);
-            ResultSet rs = pr.executeQuery();
-            XYChart.Series<String, Integer> exerciseChart = new XYChart.Series<>();
-            exerciseChart.setName("ExerciseReport");
-
-            while (rs.next()) {
-                exerciseChart.getData().add(new XYChart.Data<>(rs.getString(1), rs.getInt(2)));
-            }
-            myBarChart.getData().clear();
-            myBarChart.getData().add(exerciseChart);
-            //conn.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
     }
 
     /**

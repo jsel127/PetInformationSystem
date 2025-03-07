@@ -61,6 +61,8 @@ public class EventController implements Initializable {
     @FXML
     private Button myReturnPetPageBtn;
     @FXML
+    private Button myDeleteEventBtn;
+    @FXML
     private Label myErrorMessage;
     @FXML
     private Label myEventIDSelectedLabel;
@@ -385,9 +387,34 @@ public class EventController implements Initializable {
      * @param theStatus true if the buttons should be disabled, false otherwise.
      */
     private void updateButtonStatuses(boolean theStatus) {
-        ArrayList<Button> buttonsToChangeStatus = new ArrayList<>(Arrays.asList(myPottyEventBtn, myMealEventBtn, myExerciseEventBtn, myTrainingEventBtn, myGroomingEventBtn, myMedicalCheckupEventBtn));
+        ArrayList<Button> buttonsToChangeStatus = new ArrayList<>(Arrays.asList(myDeleteEventBtn, myPottyEventBtn, myMealEventBtn, myExerciseEventBtn, myTrainingEventBtn, myGroomingEventBtn, myMedicalCheckupEventBtn));
         for (Button buttonToChangeStatus : buttonsToChangeStatus) {
             buttonToChangeStatus.setDisable(theStatus);
+        }
+        myAddEventErrorMessage.setText("");
+    }
+
+    /**
+     * Deletes the current event.
+     * @param theEvent the triggering event.
+     */
+    @FXML
+    public void deleteCurrentEvent(ActionEvent theEvent) {
+        String deleteStatement = "DELETE FROM EventLogs WHERE EventID = ?";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement pr = conn.prepareStatement(deleteStatement);
+            pr.setInt(1, myEventID);
+            int rowsDeleted = pr.executeUpdate();
+            if (rowsDeleted > 0) {
+                updateButtonStatuses(!ENABLED);
+                myAddEventErrorMessage.setText("Event successfully deleted");
+            } else {
+                myAddEventErrorMessage.setText("Event was not able to be deleted");
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            myAddEventErrorMessage.setText("Event was not able to be deleted");
         }
     }
 }

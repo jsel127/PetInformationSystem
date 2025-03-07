@@ -34,15 +34,15 @@
                         <VBox prefHeight="299.0" prefWidth="402.0" AnchorPane.leftAnchor="0.0">
                             <children>
                                 <Label prefHeight="17.0" prefWidth="410.0" text="Add Exercise" />
-                                <ComboBox prefHeight="25.0" prefWidth="372.0" promptText="Exercise Type" />
+                                <ComboBox fx:id="myExerciseType" prefHeight="25.0" prefWidth="372.0" promptText="Exercise Type" />
                                 <TextField promptText="Intensity Level (1=easy 5=hard)" />
                                 <TextField promptText="Distance (km)" />
-                                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="379.0" text="Log Exercise">
+                                <Button mnemonicParsing="false" onAction="#addExercise" prefHeight="25.0" prefWidth="379.0" text="Log Exercise">
                                     <VBox.margin>
                                         <Insets top="10.0" />
                                     </VBox.margin>
                                 </Button>
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="374.0" text="Load Table" />
+                        <Label fx:id="myErrorMessage" prefHeight="17.0" prefWidth="376.0" />
                         <Label fx:id="myErrorMessage" prefHeight="17.0" prefWidth="374.0" />
                             </children>
                             <padding>

@@ -262,7 +262,7 @@ public class MedicalCheckupEventController implements Initializable{
     }
 
     /**
-     * Runs the first analytical query "Find the veterinary clinic that takes care of the most <species> (between __ and __kg).
+     * Runs the analytical query "Find the veterinary clinic that takes care of the most <species> (between __ and __kg).
      * Note: was adjusted to a query that can be specified by the user.
      * @param theEvent
      */
