@@ -12,13 +12,13 @@
                     <children>
                         <HBox layoutX="401.0" layoutY="-1.0" prefHeight="693.0" prefWidth="879.0">
                             <children>
-                                <TableView prefHeight="693.0" prefWidth="880.0">
+                                <TableView fx:id="myTrainingEventTable" prefHeight="693.0" prefWidth="880.0">
                                     <columns>
-                                        <TableColumn prefWidth="175.0" text="EventID" />
-                                        <TableColumn prefWidth="170.0" text="Training Type" />
-                                        <TableColumn minWidth="0.0" prefWidth="140.0" text="Execution Time (s)" />
-                                        <TableColumn minWidth="0.0" prefWidth="152.0" text="Command Held Time (s)" />
-                                        <TableColumn minWidth="0.0" prefWidth="241.0" text="Notes" />
+                                        <TableColumn fx:id="myEventIDCol" prefWidth="175.0" text="EventID" />
+                                        <TableColumn fx:id="myTrainingTypeCol" prefWidth="170.0" text="Training Type" />
+                                        <TableColumn fx:id="myExecutionTimeCol" minWidth="0.0" prefWidth="140.0" text="Execution Time (s)" />
+                                        <TableColumn fx:id="myCommandHeldTimeCol" minWidth="0.0" prefWidth="152.0" text="Command Held Time (s)" />
+                                        <TableColumn fx:id="myNotesCol" minWidth="0.0" prefWidth="241.0" text="Notes" />
                                     </columns>
                                 </TableView>
                             </children>
@@ -26,15 +26,16 @@
                         <VBox prefHeight="230.0" prefWidth="402.0" AnchorPane.leftAnchor="0.0">
                             <children>
                                 <Label prefHeight="17.0" prefWidth="410.0" text="Add Training" />
-                                <ComboBox prefHeight="25.0" prefWidth="372.0" promptText="Training Type" />
-                                <TextField promptText="Execution Time (s)" />
-                                <TextField promptText="Command Held Time (s)" />
-                                <TextArea prefHeight="75.0" prefWidth="372.0" promptText="Notes" />
-                                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="379.0" text="Log Training">
+                                <ComboBox fx:id="myTrainingType" prefHeight="25.0" prefWidth="372.0" promptText="Training Type" />
+                                <TextField fx:id="myExecutionTime" promptText="Execution Time (s)" />
+                                <TextField fx:id="myCommandHeldTime" promptText="Command Held Time (s)" />
+                                <TextArea fx:id="myNotes" prefHeight="75.0" prefWidth="372.0" promptText="Notes" />
+                                <Button mnemonicParsing="false" onAction="#addTrainingEvent" prefHeight="25.0" prefWidth="379.0" text="Log Training">
                                     <VBox.margin>
                                         <Insets top="10.0" />
                                     </VBox.margin>
                                 </Button>
+                        <Label fx:id="myErrorMessage" prefHeight="17.0" prefWidth="376.0" />
                             </children>
                             <padding>
                                 <Insets left="15.0" right="15.0" />
@@ -42,12 +43,12 @@
                         </VBox>
                   <VBox layoutY="616.0" prefHeight="50.0" prefWidth="402.0">
                      <children>
-                        <Button fx:id="myLoadTableBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="374.0" text="Load Table">
+                        <Button fx:id="myLoadTableBtn" mnemonicParsing="false" onAction="#loadTrainingEventData" prefHeight="25.0" prefWidth="374.0" text="Load Table">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="myReturnEventPageBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="374.0" text="Return Event Page">
+                        <Button fx:id="myReturnEventPageBtn" mnemonicParsing="false" onAction="#returnToEventPage" prefHeight="25.0" prefWidth="374.0" text="Return Event Page">
                            <VBox.margin>
                               <Insets bottom="10.0" top="15.0" />
                            </VBox.margin>

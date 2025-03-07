@@ -160,7 +160,7 @@ public class LoginController implements Initializable {
 
             Stage signupStage = new Stage();
             FXMLLoader loader = new FXMLLoader();
-            Pane root = (Pane) loader.load(getClass().getResource("/TrainingReport/trainingReport.fxml").openStream());
+            Pane root = (Pane) loader.load(getClass().getResource("/Pet/trainingEvent.fxml").openStream());
 
             TrainingEventController trainingEventController = (TrainingEventController) loader.getController();
 
