@@ -1,32 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Pet.PetController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Pet.PetController">
    <children>
       <Label layoutX="559.0" layoutY="20.0" text="Pet Navigation">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Button fx:id="myLogEventBtn" layoutX="146.0" layoutY="163.0" mnemonicParsing="false" onAction="#openLogEventFXML" prefHeight="25.0" prefWidth="220.0" text="Log Event">
+      <Button fx:id="myLogEventBtn" layoutX="530.0" layoutY="172.0" mnemonicParsing="false" onAction="#openLogEventFXML" prefHeight="25.0" prefWidth="220.0" text="Log Event">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Button fx:id="myGenerateTrainingReportBtn" layoutX="138.0" layoutY="262.0" mnemonicParsing="false" onAction="#openGenerateTrainingReportFXML" text="Generate Training Report">
+      <Button fx:id="myGenerateTrainingReportBtn" layoutX="516.0" layoutY="450.0" mnemonicParsing="false" onAction="#openGenerateTrainingReportFXML" text="Generate Training Report">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Button fx:id="myGenerateExerciseReportBtn" layoutX="139.0" layoutY="331.0" mnemonicParsing="false" onAction="#openGenerateExerciseReportFXML" text="Generate Exercise Report">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Button>
-      <Button fx:id="myGeneratePottyReportBtn" layoutX="138.0" layoutY="406.0" mnemonicParsing="false" onAction="#openGeneratePottyReportFXML" prefHeight="43.0" prefWidth="249.0" text="Generate Potty Report">
+      <Button fx:id="myGenerateExerciseReportBtn" layoutX="517.0" layoutY="519.0" mnemonicParsing="false" onAction="#openGenerateExerciseReportFXML" text="Generate Exercise Report">
          <font>
             <Font size="20.0" />
          </font>

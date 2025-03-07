@@ -238,7 +238,7 @@ public class OwnerController implements Initializable {
             prInsert.setInt(1, myUserID);
             prInsert.setInt(2, Integer.parseInt(myPetID.getText()));
             prInsert.setInt(3, getOwnershipTypeID(myOwnershipType.getValue().toString()));
-            prInsert.setDate(4, Date.valueOf(myDateOfAdoption.getValue()));          //Source: https://stackoverflow.com/questions/30279125/insert-date-into-mysql-database-using-javafx-datepicker
+            prInsert.setObject(4, (myDateOfAdoption.getValue() != null) ? Date.valueOf(myDateOfAdoption.getValue()) : null);          //Source: https://stackoverflow.com/questions/30279125/insert-date-into-mysql-database-using-javafx-datepicker
             prInsert.execute();
             conn.close();
             clearOwnershipForm(theEvent);
@@ -252,7 +252,6 @@ public class OwnerController implements Initializable {
         myPetID.clear();
         myDateOfAdoption.setValue(null);
         myOwnershipType.setValue(null);
-        myOwnershipMessage.setText("");
     }
 
     @FXML
@@ -300,6 +299,7 @@ public class OwnerController implements Initializable {
                 prInsertOwnership.setObject(4, doa);
                 prInsertOwnership.execute();
             }
+            myPetMessage.setText("Successfully added ownership.");
             conn.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -355,7 +355,6 @@ public class OwnerController implements Initializable {
         myPetOwnershipType.setValue(null);
         myPetSpecies.setValue(null);
         myPetBreed.setValue(null);
-        myPetMessage.setText("");
     }
 
     @FXML

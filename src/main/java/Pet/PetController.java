@@ -1,7 +1,5 @@
 package Pet;
 
-import Owner.ExpenseController;
-import Owner.OwnerController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -66,7 +64,7 @@ public class PetController implements Initializable {
 
             Stage reportStage = new Stage();
             FXMLLoader loader = new FXMLLoader();
-            Pane root = (Pane) loader.load(getClass().getResource("/TrainingReport/trainingReport.fxml").openStream());
+            Pane root = (Pane) loader.load(getClass().getResource("/Report/trainingReport.fxml").openStream());
 
             ReportController reportController = (ReportController) loader.getController();
             reportController.setPetID(myPetID);
@@ -87,28 +85,7 @@ public class PetController implements Initializable {
 
             Stage reportStage = new Stage();
             FXMLLoader loader = new FXMLLoader();
-            Pane root = (Pane) loader.load(getClass().getResource("/ExerciseReport/exerciseReport.fxml").openStream());
-
-            ReportController reportController = (ReportController) loader.getController();
-            reportController.setPetID(myPetID);
-            Scene scene = new Scene(root);
-            reportStage.setScene(scene);
-            reportStage.setTitle("Report Dashboard");
-            reportStage.setResizable(false);
-            reportStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    @FXML
-    public void openGeneratePottyReportFXML(ActionEvent theEvent) {
-        try {
-            Stage currentStage = (Stage) myGeneratePottyReportBtn.getScene().getWindow();
-            currentStage.close();
-
-            Stage reportStage = new Stage();
-            FXMLLoader loader = new FXMLLoader();
-            Pane root = (Pane) loader.load(getClass().getResource("/PottyReport/pottyReport.fxml").openStream());
+            Pane root = (Pane) loader.load(getClass().getResource("/Report/exerciseReport.fxml").openStream());
 
             ReportController reportController = (ReportController) loader.getController();
             reportController.setPetID(myPetID);
