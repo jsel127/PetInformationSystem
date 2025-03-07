@@ -188,6 +188,7 @@ public class MedicalCheckupEventController implements Initializable{
             prInsertEvent.setInt(4, Integer.parseInt(myWeight.getText()));
             prInsertEvent.setObject(5, myNotes.getText());
             prInsertEvent.execute();
+            System.out.println(prInsertEvent.toString());
             conn.close();
             myErrorMessage.setText("Successfully added medical checkup");
         } catch (SQLException ex) {
@@ -196,6 +197,7 @@ public class MedicalCheckupEventController implements Initializable{
     }
     /**
      * Loads at most 50 events from the Medical Checkup Event Table and stores it to be loaded in the UI.
+     * We considered this an honorary analytical query due to the depth of the query.
      * @param theEvent the action taken.
      */
     @FXML
@@ -205,12 +207,12 @@ public class MedicalCheckupEventController implements Initializable{
             myMedicalCheckupEventData = FXCollections.observableArrayList();
 
             String query = "SELECT MedicalCheckups.EventID, Veterinarians.UserID, CONCAT(Users.FirstName, ' ', Users.LastName) AS VeterinarianFullName, " +
-                    "Veterinary.VeterinaryID, Veterinary.VeterinaryName, MedicalCheckups.Weight, MedicalCheckups.Notes " +
-                    "FROM MedicalCheckups JOIN EventLogs ON MedicalCheckups.EventID = EventLogs.EventID " +
-                    "JOIN Veterinarians ON MedicalCheckups.VeterinarianID = Veterinarians.UserID " +
-                    "JOIN Users ON Veterinarians.UserID = Users.UserID " +
-                    "JOIN Veterinary ON MedicalCheckups.VeterinaryID = Veterinary.VeterinaryID " +
-                    "WHERE PetID = ? LIMIT 50;";
+                        "Veterinary.VeterinaryID, Veterinary.VeterinaryName, MedicalCheckups.Weight, MedicalCheckups.Notes " +
+                        "FROM MedicalCheckups LEFT JOIN EventLogs ON MedicalCheckups.EventID = EventLogs.EventID " +
+                        "LEFT JOIN Veterinarians ON MedicalCheckups.VeterinarianID = Veterinarians.UserID " +
+                        "LEFT JOIN Veterinary ON MedicalCheckups.VeterinaryID = Veterinary.VeterinaryID " +
+                        "LEFT JOIN Users ON Veterinarians.UserID = Users.UserID " +
+                        "WHERE PetID = 1 LIMIT 50;";
             PreparedStatement pr = conn.prepareStatement(query);
             pr.setInt(1, myPetID);
             ResultSet rs = pr.executeQuery();
@@ -231,6 +233,7 @@ public class MedicalCheckupEventController implements Initializable{
         myVeterinaryCol.setCellValueFactory(new PropertyValueFactory<MedicalCheckupEventData, String>("myVeterinary"));
         myWeightCol.setCellValueFactory(new PropertyValueFactory<MedicalCheckupEventData, String>("myWeight"));
         myNotesCol.setCellValueFactory(new PropertyValueFactory<MedicalCheckupEventData, String>("myNotes"));
+
         myMedicalCheckupTable.setItems(null);
         myMedicalCheckupTable.setItems(myMedicalCheckupEventData);
     }
