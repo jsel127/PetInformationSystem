@@ -38,15 +38,16 @@
                         <VBox prefHeight="213.0" prefWidth="402.0" AnchorPane.leftAnchor="0.0">
                             <children>
                                 <Label prefHeight="17.0" prefWidth="410.0" text="Add Medical Checkup" />
-                                <ComboBox prefHeight="25.0" prefWidth="372.0" promptText="Veterinarian, ID" />
-                                <ComboBox layoutX="25.0" layoutY="27.0" prefHeight="25.0" prefWidth="372.0" promptText="Veterinary, ID" />
-                                <TextField promptText="Weight (kg)" />
-                                <TextArea prefHeight="75.0" prefWidth="372.0" promptText="Notes" />
-                                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="379.0" text="Log Medical Checkup">
+                                <ComboBox fx:id="myVeterinarianAndID" prefHeight="25.0" prefWidth="372.0" promptText="Veterinarian, ID" />
+                                <ComboBox fx:id="myVeterinaryAndID" layoutX="25.0" layoutY="27.0" prefHeight="25.0" prefWidth="372.0" promptText="Veterinary, ID" />
+                                <TextField fx:id="myWeight" promptText="Weight (kg)" />
+                                <TextArea fx:id="myNotes" prefHeight="75.0" prefWidth="372.0" promptText="Notes" />
+                                <Button mnemonicParsing="false" onAction="#addMedicalCheckup" prefHeight="25.0" prefWidth="379.0" text="Log Medical Checkup">
                                     <VBox.margin>
                                         <Insets top="10.0" />
                                     </VBox.margin>
                                 </Button>
+                        <Label fx:id="myErrorMessage" prefHeight="17.0" prefWidth="375.0" />
                             </children>
                             <padding>
                                 <Insets left="15.0" right="15.0" />

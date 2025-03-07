@@ -2,6 +2,7 @@ package Pet;
 
 import Database.dbConnection;
 import Owner.OwnerController;
+import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -40,6 +41,16 @@ public class MedicalCheckupEventController implements Initializable{
     @FXML
     private Button myReturnEventPageBtn;
     @FXML
+    private ComboBox myVeterinarianAndID;
+    @FXML
+    private ComboBox myVeterinaryAndID;
+    @FXML
+    private TextField myWeight;
+    @FXML
+    private TextArea myNotes;
+    @FXML
+    private Label myErrorMessage;
+    @FXML
     private TableView<MedicalCheckupEventData> myMedicalCheckupTable;
     @FXML
     private TableColumn<MedicalCheckupEventData, Integer> myEventIDCol;
@@ -66,23 +77,59 @@ public class MedicalCheckupEventController implements Initializable{
     /** Initializes the window and connects to the database */
     public void initialize(URL theURL, ResourceBundle theRB) {
         myConnection = new dbConnection();
+        initializeVeterinarianAndIDComboBox();
+        initializeVeterinaryAndIDComboBox();
         initializeAnalyticalQuerySpeciesComboBox();
+    }
+    private void initializeVeterinarianAndIDComboBox() {
+        String query = "SELECT Users.FirstName, Users.LastName,Veterinarians.UserID FROM Veterinarians JOIN Users ON Users.UserID = Veterinarians.UserID;";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement pr = conn.prepareStatement(query);
+            ResultSet rs = pr.executeQuery();
+            ObservableList<String> veterinarians = FXCollections.observableArrayList();
+            while (rs.next()) {
+                String veterinarianAndID = String.format("%d %d, %s", rs.getString(1), rs.getString(2), rs.getInt(3));
+                veterinarians.add(veterinarianAndID);
+            }
+            myVeterinarianAndID.setItems(veterinarians);
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    private void initializeVeterinaryAndIDComboBox() {
+        String query = "SELECT VeterinaryName, VeterinaryID FROM Veterinary;";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement pr = conn.prepareStatement(query);
+            ResultSet rs = pr.executeQuery();
+            ObservableList<String> veterinarys = FXCollections.observableArrayList();
+            while (rs.next()) {
+                String veterinaryAndIds = String.format("%d, %s", rs.getString(1), rs.getInt(2));
+                veterinarys.add(rs.getString(1));
+            }
+            myVeterinaryAndID.setItems(veterinarys);
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
      * Initializes options for species type combo box
      */
     private void initializeAnalyticalQuerySpeciesComboBox() {
-        String query = "SELECT SpeciesName FROM Species";
+        String query = "SELECT SpeciesName FROM Species;";
         try {
             Connection conn = dbConnection.getConnection();
             PreparedStatement pr = conn.prepareStatement(query);
             ResultSet rs = pr.executeQuery();
-            ObservableList<String> mealTypes = FXCollections.observableArrayList();
+            ObservableList<String> species = FXCollections.observableArrayList();
             while (rs.next()) {
-                mealTypes.add(rs.getString(1));
+                species.add(rs.getString(1));
             }
-            mySelectedSpeciesAQ.setItems(mealTypes);
+            mySelectedSpeciesAQ.setItems(species);
             conn.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -111,6 +158,35 @@ public class MedicalCheckupEventController implements Initializable{
         myEventID = theEventID;
     }
 
+    /**
+     * Adds an event into the medical checkup table.
+     * @param theEvent the triggering event.
+     */
+    @FXML
+    public void addMedicalCheckup(ActionEvent theEvent) {
+        if (myWeight.getText() == null) {
+            myErrorMessage.setText("Weight is required.");
+            return;
+        }
+        String insertMealStatement = "INSERT INTO MedicalCheckups (EventID, VeterinarianID, VeterinaryID, Weight, Notes) VALUES (?, ?, ?, ?, ?);";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement prInsertEvent = conn.prepareStatement(insertMealStatement);
+            int veterinarianID = Integer.parseInt(myVeterinarianAndID.getValue().toString());
+            int veterinaryID = Integer.parseInt(myVeterinaryAndID.getValue().toString());
+            prInsertEvent.setInt(1, myEventID);
+            prInsertEvent.setObject(2, veterinarianID);
+            prInsertEvent.setObject(3, veterinaryID);
+            prInsertEvent.setInt(4, Integer.parseInt(myWeight.getText()));
+            prInsertEvent.setObject(5, myNotes.getText());
+            prInsertEvent.execute();
+            conn.close();
+            myErrorMessage.setText("Sucessfully added medical checkup");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            myErrorMessage.setText("Only one entry of each event type per event is allowed.");
+        }
+    }
     /**
      * Loads at most 50 events from the Medical Checkup Event Table and stores it to be loaded in the UI.
      * @param theEvent the action taken.
@@ -210,8 +286,10 @@ public class MedicalCheckupEventController implements Initializable{
             }
             conn.close();
         } catch (SQLException ex) {
+            ex.printStackTrace();
             myVeterinaryQueryResult.setText("Please select a species and specify valid weight (postive and min is less than max)");
         } catch (NullPointerException ex) {
+            ex.printStackTrace();
             myVeterinaryQueryResult.setText("Please select a species and specify valid weight (postive and min is less than max)");
         }
     }

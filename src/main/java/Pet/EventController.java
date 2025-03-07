@@ -144,7 +144,7 @@ public class EventController implements Initializable {
             Stage currentStage = (Stage) myPottyEventBtn.getScene().getWindow();
             currentStage.close();
 
-            Stage expenseStage = new Stage();
+            Stage pottyStage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             Pane root = (Pane) loader.load(getClass().getResource("/Pet/pottyEvent.fxml").openStream());
 
@@ -153,10 +153,10 @@ public class EventController implements Initializable {
             eventController.setEventID(myEventID);
 
             Scene scene = new Scene(root);
-            expenseStage.setScene(scene);
-            expenseStage.setTitle("Potty Event Dashboard");
-            expenseStage.setResizable(false);
-            expenseStage.show();
+            pottyStage.setScene(scene);
+            pottyStage.setTitle("Potty Event Dashboard");
+            pottyStage.setResizable(false);
+            pottyStage.show();
             myAddEventErrorMessage.setText("");
         } catch (IOException e) {
             myAddEventErrorMessage.setText("Error opening page");
@@ -174,7 +174,7 @@ public class EventController implements Initializable {
             Stage currentStage = (Stage) myMealEventBtn.getScene().getWindow();
             currentStage.close();
 
-            Stage expenseStage = new Stage();
+            Stage mealStage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             Pane root = (Pane) loader.load(getClass().getResource("/Pet/mealEvent.fxml").openStream());
 
@@ -183,10 +183,10 @@ public class EventController implements Initializable {
             eventController.setEventID(myEventID);
 
             Scene scene = new Scene(root);
-            expenseStage.setScene(scene);
-            expenseStage.setTitle("Meal Event Dashboard");
-            expenseStage.setResizable(false);
-            expenseStage.show();
+            mealStage.setScene(scene);
+            mealStage.setTitle("Meal Event Dashboard");
+            mealStage.setResizable(false);
+            mealStage.show();
             myAddEventErrorMessage.setText("");
         } catch (IOException e) {
             myAddEventErrorMessage.setText("Error opening page");
@@ -203,7 +203,7 @@ public class EventController implements Initializable {
             Stage currentStage = (Stage) myExerciseEventBtn.getScene().getWindow();
             currentStage.close();
 
-            Stage expenseStage = new Stage();
+            Stage exerciseStage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             Pane root = (Pane) loader.load(getClass().getResource("/Pet/exerciseEvent.fxml").openStream());
 
@@ -212,10 +212,10 @@ public class EventController implements Initializable {
             eventController.setEventID(myEventID);
 
             Scene scene = new Scene(root);
-            expenseStage.setScene(scene);
-            expenseStage.setTitle("Exercise Event Dashboard");
-            expenseStage.setResizable(false);
-            expenseStage.show();
+            exerciseStage.setScene(scene);
+            exerciseStage.setTitle("Exercise Event Dashboard");
+            exerciseStage.setResizable(false);
+            exerciseStage.show();
             myAddEventErrorMessage.setText("");
         } catch (IOException e) {
             myAddEventErrorMessage.setText("Error opening page");
@@ -232,7 +232,7 @@ public class EventController implements Initializable {
             Stage currentStage = (Stage) myTrainingEventBtn.getScene().getWindow();
             currentStage.close();
 
-            Stage expenseStage = new Stage();
+            Stage trainingStage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             Pane root = (Pane) loader.load(getClass().getResource("/Pet/trainingEvent.fxml").openStream());
 
@@ -241,10 +241,10 @@ public class EventController implements Initializable {
             eventController.setEventID(myEventID);
 
             Scene scene = new Scene(root);
-            expenseStage.setScene(scene);
-            expenseStage.setTitle("Training Event Dashboard");
-            expenseStage.setResizable(false);
-            expenseStage.show();
+            trainingStage.setScene(scene);
+            trainingStage.setTitle("Training Event Dashboard");
+            trainingStage.setResizable(false);
+            trainingStage.show();
             myAddEventErrorMessage.setText("");
         } catch (IOException e) {
             myAddEventErrorMessage.setText("Error opening page");
@@ -260,7 +260,7 @@ public class EventController implements Initializable {
             Stage currentStage = (Stage) myGroomingEventBtn.getScene().getWindow();
             currentStage.close();
 
-            Stage expenseStage = new Stage();
+            Stage groomingStage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             Pane root = (Pane) loader.load(getClass().getResource("/Pet/groomingEvent.fxml").openStream());
 
@@ -269,10 +269,10 @@ public class EventController implements Initializable {
             eventController.setEventID(myEventID);
 
             Scene scene = new Scene(root);
-            expenseStage.setScene(scene);
-            expenseStage.setTitle("Grooming Event Dashboard");
-            expenseStage.setResizable(false);
-            expenseStage.show();
+            groomingStage.setScene(scene);
+            groomingStage.setTitle("Grooming Event Dashboard");
+            groomingStage.setResizable(false);
+            groomingStage.show();
             myAddEventErrorMessage.setText("");
         } catch (IOException e) {
             myAddEventErrorMessage.setText("Error opening page");
@@ -288,7 +288,7 @@ public class EventController implements Initializable {
             Stage currentStage = (Stage) myMedicalCheckupEventBtn.getScene().getWindow();
             currentStage.close();
 
-            Stage expenseStage = new Stage();
+            Stage medcheckupStage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             Pane root = (Pane) loader.load(getClass().getResource("/Pet/medicalCheckupEvent.fxml").openStream());
 
@@ -297,10 +297,10 @@ public class EventController implements Initializable {
             eventController.setEventID(myEventID);
 
             Scene scene = new Scene(root);
-            expenseStage.setScene(scene);
-            expenseStage.setTitle("Medical Checkup Event Dashboard");
-            expenseStage.setResizable(false);
-            expenseStage.show();
+            medcheckupStage.setScene(scene);
+            medcheckupStage.setTitle("Medical Checkup Event Dashboard");
+            medcheckupStage.setResizable(false);
+            medcheckupStage.show();
             myAddEventErrorMessage.setText("");
         } catch (IOException e) {
             myAddEventErrorMessage.setText("Error opening page");
