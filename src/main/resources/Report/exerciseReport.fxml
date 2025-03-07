@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="693.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Pet.ExerciseEventController">
+<AnchorPane prefHeight="693.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Pet.ReportController">
    <children>
       <BarChart fx:id="myBarChart" layoutX="160.0" layoutY="127.0" prefHeight="488.0" prefWidth="690.0">
         <xAxis>

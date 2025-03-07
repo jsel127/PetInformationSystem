@@ -12,12 +12,17 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <Button fx:id="myLogEventBtn" layoutX="146.0" layoutY="163.0" mnemonicParsing="false" onAction="#openLogEventFXML" prefHeight="25.0" prefWidth="220.0" text="Log Event">
+      <Button fx:id="myLogEventBtn" layoutX="530.0" layoutY="172.0" mnemonicParsing="false" onAction="#openLogEventFXML" prefHeight="25.0" prefWidth="220.0" text="Log Event">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Button fx:id="myGenerateReportBtn" layoutX="146.0" layoutY="428.0" mnemonicParsing="false" onAction="#openGenerateReportFXML" prefHeight="25.0" prefWidth="220.0" text="Generate Reports">
+      <Button fx:id="myGenerateTrainingReportBtn" layoutX="516.0" layoutY="450.0" mnemonicParsing="false" onAction="#openGenerateTrainingReportFXML" text="Generate Training Report">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="myGenerateExerciseReportBtn" layoutX="517.0" layoutY="519.0" mnemonicParsing="false" onAction="#openGenerateExerciseReportFXML" text="Generate Exercise Report">
          <font>
             <Font size="20.0" />
          </font>

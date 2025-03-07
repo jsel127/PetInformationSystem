@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 /**
  * Controller class to connect UI to database for the Meal Event table.
  * @version March 5 2025
- * @author Jasmine Sellers
+ * @author Jasmine Sellers, Selly Beyene
  */
 public class MealEventController implements Initializable {
     /** The PetID for the event */

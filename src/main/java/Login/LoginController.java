@@ -132,6 +132,7 @@ public class LoginController implements Initializable {
             e.printStackTrace();
         }
     }
+    @FXML
     public void signup() {
         try {
             Stage currentStage = (Stage) myLoginButton.getScene().getWindow();

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ratings.RatingsForm">
+   <children>
+      <TabPane layoutY="-2.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Reports">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="186.0" prefWidth="426.0">
+                     <children>
+                        <ComboBox fx:id="myComboBox" layoutX="20.0" layoutY="37.0" prefHeight="25.0" prefWidth="217.0" promptText="Select here" />
+                        <Label layoutX="20.0" layoutY="17.0" text="Select who you want to rate." />
+                        <Label layoutX="20.0" layoutY="72.0" text="Choose a rating between 1 - 5" />
+                        <ComboBox layoutX="20.0" layoutY="97.0" prefHeight="25.0" prefWidth="217.0" promptText="1 - 5" />
+                        <TextArea layoutX="19.0" layoutY="158.0" prefHeight="96.0" prefWidth="219.0" promptText="Enter a comment here." />
+                        <TableView layoutX="259.0" layoutY="-2.0" prefHeight="375.0" prefWidth="341.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="Ratings" />
+                            <TableColumn prefWidth="264.66664632161456" text="Comments" />
+                          </columns>
+                        </TableView>
+                        <Button layoutX="20.0" layoutY="331.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="217.0" text="Return back to Owner dashboard." />
+                        <Button layoutX="20.0" layoutY="298.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="217.0" text="View Ratings" />
+                        <Label layoutX="21.0" layoutY="132.0" text="Enter a comment here." />
+                        <Button layoutX="19.0" layoutY="265.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="218.0" text="Enter Rating" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
