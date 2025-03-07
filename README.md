@@ -17,11 +17,11 @@ The database application’s primary users are aimed for pet owners seeking to t
 
 ### Register Owner & Pet
 A pet owner that is not registered can register by filling in forms for their details and the pets they own. Multiple pets can be owned by the same owner. Multiple owners can be owners of the same pet. 
-![image](https://github.com/user-attachments/assets/1a115fd4-7f1b-4321-9b67-4fbdeec50b66)
+<br />![image](https://github.com/user-attachments/assets/0753463d-dc53-4f30-a327-c7beb9226f7d)
+<br />![image](https://github.com/user-attachments/assets/1a115fd4-7f1b-4321-9b67-4fbdeec50b66)
 
 ### Register Veterinarian
 A veterinarian that is not registered can register.
-<br />![image](https://github.com/user-attachments/assets/0753463d-dc53-4f30-a327-c7beb9226f7d)
 
 ### Register Caretaker
 A caretaker that is not registered can register.
