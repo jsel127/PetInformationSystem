@@ -38,6 +38,7 @@ public class EventController implements Initializable {
     /** Stores loaded events */
     private ObservableList<EventData> myEventData;
 
+
     @FXML
     private DatePicker myStartDate;
     @FXML
@@ -330,6 +331,8 @@ public class EventController implements Initializable {
                                 rs.getString(3)));
             }
             conn.close();
+            myAddEventErrorMessage.setText("");
+            myErrorMessage.setText("");
         } catch (SQLException ex) {
             myAddEventErrorMessage.setText("Issue loading data");
         }
@@ -348,10 +351,10 @@ public class EventController implements Initializable {
      */
     @FXML
     public void changeEventSelected(MouseEvent theEvent) {
-        EventData selectedPet = myEventTable.getSelectionModel().getSelectedItem();
-        if (selectedPet != null) {
-            myEventID = selectedPet.getMyEventID();
-            myEventIDSelectedLabel.setText(Integer.toString(selectedPet.getMyEventID()));
+        EventData selectedEvent = myEventTable.getSelectionModel().getSelectedItem();
+        if (selectedEvent != null) {
+            myEventID = selectedEvent.getMyEventID();
+            myEventIDSelectedLabel.setText(Integer.toString(selectedEvent.getMyEventID()));
             updateButtonStatuses(ENABLED);
         }
     }
@@ -366,17 +369,17 @@ public class EventController implements Initializable {
             Stage currentStage = (Stage) myReturnPetPageBtn.getScene().getWindow();
             currentStage.close();
 
-            Stage expenseStage = new Stage();
+            Stage petStage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             Pane root = (Pane) loader.load(getClass().getResource("/Pet/pet.fxml").openStream());
 
             PetController petController = (PetController) loader.getController();
             petController.setPetID(myPetID);
             Scene scene = new Scene(root);
-            expenseStage.setScene(scene);
-            expenseStage.setTitle("Pet Dashboard");
-            expenseStage.setResizable(false);
-            expenseStage.show();
+            petStage.setScene(scene);
+            petStage.setTitle("Pet Dashboard");
+            petStage.setResizable(false);
+            petStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -409,6 +412,8 @@ public class EventController implements Initializable {
             if (rowsDeleted > 0) {
                 updateButtonStatuses(!ENABLED);
                 myAddEventErrorMessage.setText("Event successfully deleted");
+                myEventIDSelectedLabel.setText("");
+                myEventID = -1;
             } else {
                 myAddEventErrorMessage.setText("Event was not able to be deleted");
             }

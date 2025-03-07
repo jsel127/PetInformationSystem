@@ -1,6 +1,7 @@
 package Owner;
 
 import Database.dbConnection;
+import Pet.EventData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -17,11 +19,21 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class ExpenseController implements Initializable {
+    private final static boolean ENABLED = false;
     private int myUserID;
+    private int myExpenseID;
     private dbConnection myConnection;
+    @FXML
+    private Label myDeleteMessage;
+    @FXML
+    private Button myDeleteExpenseBtn;
+    @FXML
+    private Label myCurrentExpenseSelectedLabel;
     @FXML
     private ComboBox myExpenseType;
     @FXML
@@ -58,6 +70,7 @@ public class ExpenseController implements Initializable {
     public void initialize(URL theURL, ResourceBundle theRB) {
         myConnection = new dbConnection();
         initializeExpenseTypeComboBox();
+        updateButtonStatuses(!ENABLED);
     }
 
     public void setUserID(int theUserID) {
@@ -121,6 +134,7 @@ public class ExpenseController implements Initializable {
                         rs.getString(3), rs.getString(4), rs.getString(5)));
             }
             conn.close();
+            myDeleteMessage.setText("");
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -219,5 +233,53 @@ public class ExpenseController implements Initializable {
             ex.printStackTrace();
         }
         return 1;
+    }
+
+    /**
+     * Changes the event ID currently selected. This is used to set the event that will be changed when
+     * adding an event types (e.g. Exercise Event).
+     * @param theEvent the triggering event.
+     */
+    @FXML
+    public void changeExpenseSelected(MouseEvent theEvent) {
+        ExpenseData selectedExpense = myExpenseTable.getSelectionModel().getSelectedItem();
+        if (selectedExpense != null) {
+            myExpenseID = selectedExpense.getMyExpenseID();
+            myCurrentExpenseSelectedLabel.setText(Integer.toString(selectedExpense.getMyExpenseID()));
+            updateButtonStatuses(ENABLED);
+        }
+    }
+    /**
+     * Disable/Enables the buttons to add an event type
+     * @param theStatus true if the buttons should be disabled, false otherwise.
+     */
+    private void updateButtonStatuses(boolean theStatus) {
+        myDeleteExpenseBtn.setDisable(theStatus);
+        myDeleteMessage.setText("");
+    }
+    /**
+     * Deletes the current expense.
+     * @param theEvent the triggering event.
+     */
+    @FXML
+    public void deleteCurrentExpense(ActionEvent theEvent) {
+        String deleteStatement = "DELETE FROM Expenses WHERE ExpenseID = ?";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement pr = conn.prepareStatement(deleteStatement);
+            pr.setInt(1, myExpenseID);
+            int rowsDeleted = pr.executeUpdate();
+            if (rowsDeleted > 0) {
+                updateButtonStatuses(!ENABLED);
+                myDeleteMessage.setText("Expense successfully deleted");
+                myCurrentExpenseSelectedLabel.setText("");
+                myExpenseID = -1;
+            } else {
+                myDeleteMessage.setText("Expense was not able to be deleted");
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            myDeleteMessage.setText("Expense was not able to be deleted");
+        }
     }
 }
