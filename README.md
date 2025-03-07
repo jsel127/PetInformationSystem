@@ -20,11 +20,11 @@ A pet owner that is not registered can register by filling in forms for their de
 ![image](https://github.com/user-attachments/assets/1a115fd4-7f1b-4321-9b67-4fbdeec50b66)
 
 ### Register Veterinarian
-A veterinarian that is not registered can register by filling in forms for veterinarian. 
+A veterinarian that is not registered can register.
+<br />![image](https://github.com/user-attachments/assets/0753463d-dc53-4f30-a327-c7beb9226f7d)
 
 ### Register Caretaker
-A caretaker that is not registered can register by filling in forms for caretakers. 
-
+A caretaker that is not registered can register.
 
 ### User Login
 A user can login using their username and password. This gives them access to information they have access to. For owners they will have access to their pet’s information. For caretakers and veterinarians, they will have access to the pet information in which they have been granted access to.
