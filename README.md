@@ -5,7 +5,11 @@ The database application aims to provide an online interface for owners to log i
 Additionally, users expand to veterinarians who can utilize tracked pet information if granted permission by the pet owner. This is to aid in providing insight into daily activities and behaviors of the pet such as frequency of meals, exercise, excretion, etc. Users can also be caretakers who can utilize the tracked pet information to understand general habits (e.g. meal time) and login events for the pet taken care of. Overall, the tool aims to support pet owners to easily track and analyze the daily activities of their pet to optimize care.
 
 ## Application Installation/Run
---to be added--
+1. Execute the provided SQL script we used MySQL Workbench.
+2. Open the project file. There will be a folder in src/main/java/Database/dbConnection.java Please open this file and change the dbURL, dbUser, and dbPassword to match your MySQL configuration.
+3. Run the application. The main method is in src/main/java/Login/LoginApp.java
+
+Notes: Ensure that JavaFX SDK is set up properly to run the UI. The pom.xml file has a list of the project's dependencies. 
 
 ---
 ## Common Use Scenarios
