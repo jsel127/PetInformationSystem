@@ -59,8 +59,8 @@ public class SignUpController implements Initializable {
             myDBConnectionLabel.setText("Not Connected to Database");
         }
         myUserType.setItems(FXCollections.observableArrayList(userType.values()));
-        initializeEmailTypeComboBox();
-        initializePhoneTypeComboBox();
+        //initializeEmailTypeComboBox();
+        //initializePhoneTypeComboBox();
     }
     private void initializeEmailTypeComboBox() {
         String query = "SELECT EmailType FROM EmailTypes;";
@@ -94,18 +94,16 @@ public class SignUpController implements Initializable {
             ex.printStackTrace();
         }
     }
-    private void addEmailType() {
 
-    }
     private void addEmail() {
-        String query = "INSERT INTO Emails(UserID, Email) VALUES(?, ?);";
+        String query = "INSERT INTO Emails(UserID, Email, EmailTypeID) VALUES(?, ?, ?);";
         try {
             Connection conn = dbConnection.getConnection();
-            PreparedStatement pr = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pr = conn.prepareStatement(query);
             //ResultSet rs = pr.executeQuery();
             pr.setInt(1, myUserID);
             pr.setString(2, myEmail.getText().toString());
-            //pr.setString(3, );
+            pr.setString(3, myEmail.getId().toString());
             pr.executeQuery();
             conn.close();
         } catch (SQLException ex) {
@@ -113,13 +111,14 @@ public class SignUpController implements Initializable {
         }
     }
     private void addPhone() {
-        String query = "INSERT INTO Phones(UserID, PhoneNumber) VALUES(?, ?);";
+        String query = "INSERT INTO Phones(UserID, PhoneNumber, PhoneTypeID) VALUES(?, ?, ?);";
         try {
             Connection conn = dbConnection.getConnection();
             PreparedStatement pr = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             //ResultSet rs = pr.executeQuery();
             pr.setInt(1, myUserID);
             pr.setString(2, myPhoneNumber.getText().toString());
+            pr.setString(3, myPhoneNumberType.getId().toString());
             pr.executeQuery();
             conn.close();
         } catch (SQLException ex) {
@@ -164,7 +163,7 @@ public class SignUpController implements Initializable {
                     int userID = generatedKeys.getInt(1);
                     myLoginMessage.setText("You have successfully created an account! You're UserID is " + userID);
                 }
-                //backToLogin();
+                backToLogin();
             } else {
                 myLoginMessage.setText("Signup failed. Please try again.");
             }
