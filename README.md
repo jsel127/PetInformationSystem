@@ -68,16 +68,25 @@ Provide a report on what the training type and how effective the training was ov
 ## Analytical Queries 
 1. Find the veterinary clinic that takes care of the most <species> (between __ and __kg)
    ![image](https://github.com/user-attachments/assets/30935456-90f3-4ff5-b283-339ff2a15035)
-   Note: located in the medical checkup page
+   \n**Note:** located in the medical checkup page
 2. Find the average daily calories consumed by species.
 3. For a given owners, find the average amount spent on <eventType> per month.
    ![image](https://github.com/user-attachments/assets/439c0c25-c085-43e9-8853-51fa8ac97971)
-   Note: located on the expense page. It allows users to select the type of event they would like the average amount spent per month calculated for.
+   \n**Note:** located on the expense page. It allows users to select the type of event they would like the average amount spent per month calculated for.
    
 4. For a given area what is the groomer that has the highest average rating and has over 10 ratings.
    ![image](https://github.com/user-attachments/assets/9dfcd000-d351-46c1-8ecf-2cdf2db1176c)
    ![image](https://github.com/user-attachments/assets/afd33a31-e15b-4362-ad93-4a002e5b0415)
-   Note: located on grooming page. It allows users to select the city they want to find a groomer (based on ratings).
+   \n**Note:** located on grooming page. It allows users to select the city they want to find a groomer (based on ratings).
    
 5. Analyze pet training success by the time of day.
 6. For dogs what are the two most common 1 hour time frames in which dogs pee.
+
+<hl>
+# References
+* Connect MySQL to Java in IntelliJ 2024 | Full JDBC Tutorial for DB Connectivity - https://www.youtube.com/watch?v=9ntKSLLDeSs&t=8s 
+* JAVA DATABASE TUTORIAL WITH SQLITE Create School management System - https://www.youtube.com/watch?v=h1rYlMrvNyE
+* How to Set Up JavaFX in IntelliJ IDEA | Step-by-Step Guide - https://www.youtube.com/watch?v=hZEin6M09cY
+* Populating the combobox from database - https://stackoverflow.com/questions/52085575/populating-the-combobox-from-database
+* Returning the Generated Keys in JDBC - https://www.baeldung.com/jdbc-returning-generated-keys
+
