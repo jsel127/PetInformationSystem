@@ -1,22 +1,13 @@
 package Pet;
 
 import Database.dbConnection;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,24 +33,6 @@ public class ReportController implements Initializable {
     public void setPetID(int thePetID) {
         myPetID = thePetID;
     }
-
-/*    private void initializeTrainingTypeComboBox() {
-        String query = "SELECT TrainingType FROM TrainingTypes";
-        try {
-            Connection conn = dbConnection.getConnection();
-            PreparedStatement pr = conn.prepareStatement(query);
-            ResultSet rs = pr.executeQuery();
-            ObservableList<String> trainingTypes = FXCollections.observableArrayList();
-            while (rs.next()) {
-                trainingTypes.add(rs.getString(1));
-            }
-            myTrainingType.setItems(trainingTypes);
-            //myPetOwnershipType.setItems(ownershipTypes);
-            conn.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }*/
 
     public void generateLineChart() {
         try {
@@ -103,7 +76,7 @@ public class ReportController implements Initializable {
             //pr.setInt(1, myPetID);
             ResultSet rs = pr.executeQuery();
             XYChart.Series<String, Integer> exerciseChart = new XYChart.Series<>();
-            exerciseChart.setName("ExerciseReport");
+            exerciseChart.setName("Report");
 
             while (rs.next()) {
                 exerciseChart.getData().add(new XYChart.Data<>(rs.getString(1), rs.getInt(2)));
