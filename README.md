@@ -25,45 +25,49 @@ A veterinarian that is not registered can register by filling in forms for veter
 ### Register Caretaker
 A caretaker that is not registered can register by filling in forms for caretakers. 
 
+
 ### User Login
 A user can login using their username and password. This gives them access to information they have access to. For owners they will have access to their pet’s information. For caretakers and veterinarians, they will have access to the pet information in which they have been granted access to.
-![image](https://github.com/user-attachments/assets/e632eae0-ef12-4110-ab42-870222466c35)
+<br />![image](https://github.com/user-attachments/assets/c58bd9d2-11f6-4d93-b963-c9583b2c78de)
+<br />![image](https://github.com/user-attachments/assets/d5385f8a-e6c7-474c-887a-9132b2a8c55e)
 
 ### Adding an Event
 An owner can log an event specifying the type, date, and time. The date and time will automatically be set to the current date and time unless specified otherwise.
 <br />![image](https://github.com/user-attachments/assets/285dce37-9816-40b2-948d-3ca7c6451e38)
 <br />![image](https://github.com/user-attachments/assets/876b4b78-5d07-4d9f-a3d6-9b925a4959b2)
-
+<br /> Each event type button will bring the user to a new page to log the event specific information. A single event can consist of many event types but only one of each.
 
 ### Event History
 An owner can get a summary log of all events. The information that will be included are those that are shared in all events.
-<br />![image](https://github.com/user-attachments/assets/a075e1b4-5c6c-4f7e-bb42-6afa2fb16042)
-
+<br />![image](https://github.com/user-attachments/assets/3af8cd2c-1a4c-4268-bab0-8af61b12c715)
+<br /> First the owner would choose the pet for which they want the event history of. Then they will be brought to a pet page in which they can open up the event history for the pet.
+<br />![image](https://github.com/user-attachments/assets/c2e32588-59db-45cf-b5d5-0a0ca34f7314)
+<br />![image](https://github.com/user-attachments/assets/5f709c89-ceec-4d60-a0fc-25081734c067)
 
 ### Delete an Event
 An owner can delete an event made by them. This action is disabled if no events have been added for the pet.
 <br />![image](https://github.com/user-attachments/assets/88656a68-80e7-4415-9252-df6f15984ff1)
-
-### Calorie Intake
-An owner can calculate a pet’s daily calorie intake, which will be retrieved from meal events.
+<br />![image](https://github.com/user-attachments/assets/94b92ec2-a524-411a-8b79-cb86fd505b68)
 
 ### Add Expense
 An owner can enter different types of expenses related to the pet. 
-<br />![image](https://github.com/user-attachments/assets/1b5c0d93-1003-425b-8926-cb195547507e)
+<br />![image](https://github.com/user-attachments/assets/70ac6334-8cc3-4eba-a0ae-de5064c63a6c)
 
 ### Remove Expense
 An owner can remove an expense related to the pet. If there are no expenses related to the pet this action will be disabled.
-
-### Expense Report
-An owner can calculate the expenses related to the pet over a given time period which will be retrieved from expense entries. 
+<br />![image](https://github.com/user-attachments/assets/df78f119-a5ec-42ed-970f-5030d415774e)
+<br />![image](https://github.com/user-attachments/assets/e1adbde2-d5d3-4e5f-bdc8-99ed66ebed5f)
 
 ### Exercise Report 
 Provides a report on how active the pet was over a given time period based on duration. 
 <br />![image](https://github.com/user-attachments/assets/8582437d-ab74-49f6-b488-9a91493b6bd8)
+<br />![image](https://github.com/user-attachments/assets/dc49bf5c-d91e-429d-a8c0-473e20db1eb8)
+
 
 ### Potty Report
 Provides a report on how often the pet has gone potty, distinguished by type of potty, over a given time period.
 <br />![image](https://github.com/user-attachments/assets/9c763f3e-96a4-4d68-9693-6f2190889931)
+<br />![image](https://github.com/user-attachments/assets/688fd13a-8bb4-4d24-bb9b-f303e5b893f4)
 
 ### Medical Checkup Report
 Provides a report on all medical checkups of the pet. This includes information on the reason for the visit, weight, notes from the visit, the veterinarian and the veterinary
