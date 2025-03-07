@@ -158,8 +158,8 @@ public class TrainingEventController implements Initializable {
             PreparedStatement prInsertEvent = conn.prepareStatement(insertEventStatement);
             prInsertEvent.setInt(1, myEventID);
             prInsertEvent.setInt(2, getMyTrainingTypeID());
-            prInsertEvent.setObject(3, Integer.parseInt(myExecutionTime.getText()));
-            prInsertEvent.setObject(4, Integer.parseInt(myCommandHeldTime.getText()));
+            prInsertEvent.setObject(3, (myExecutionTime.getText() != null && myExecutionTime.getText() != "") ? Integer.parseInt(myExecutionTime.getText()) : null);
+            prInsertEvent.setObject(4, (myCommandHeldTime.getText() != null && myCommandHeldTime.getText() != "") ? Integer.parseInt(myCommandHeldTime.getText()) :null);
             prInsertEvent.setObject(5, myNotes.getText());          //Source: https://stackoverflow.com/questions/30279125/insert-date-into-mysql-database-using-javafx-datepicker
             prInsertEvent.execute();
             conn.close();
