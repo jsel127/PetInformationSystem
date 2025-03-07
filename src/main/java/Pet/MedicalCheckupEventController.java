@@ -89,7 +89,7 @@ public class MedicalCheckupEventController implements Initializable{
             ResultSet rs = pr.executeQuery();
             ObservableList<String> veterinarians = FXCollections.observableArrayList();
             while (rs.next()) {
-                String veterinarianAndID = String.format("%d %d, %s", rs.getString(1), rs.getString(2), rs.getInt(3));
+                String veterinarianAndID = String.format("%s %s, %d", rs.getString(1), rs.getString(2), rs.getInt(3));
                 veterinarians.add(veterinarianAndID);
             }
             myVeterinarianAndID.setItems(veterinarians);
@@ -106,8 +106,8 @@ public class MedicalCheckupEventController implements Initializable{
             ResultSet rs = pr.executeQuery();
             ObservableList<String> veterinarys = FXCollections.observableArrayList();
             while (rs.next()) {
-                String veterinaryAndIds = String.format("%d, %s", rs.getString(1), rs.getInt(2));
-                veterinarys.add(rs.getString(1));
+                String veterinaryAndIds = String.format("%s, %d", rs.getString(1), rs.getInt(2));
+                veterinarys.add(veterinaryAndIds);
             }
             myVeterinaryAndID.setItems(veterinarys);
             conn.close();
@@ -164,7 +164,7 @@ public class MedicalCheckupEventController implements Initializable{
      */
     @FXML
     public void addMedicalCheckup(ActionEvent theEvent) {
-        if (myWeight.getText() == null) {
+        if (myWeight.getText().isEmpty()) {
             myErrorMessage.setText("Weight is required.");
             return;
         }
@@ -172,18 +172,25 @@ public class MedicalCheckupEventController implements Initializable{
         try {
             Connection conn = dbConnection.getConnection();
             PreparedStatement prInsertEvent = conn.prepareStatement(insertMealStatement);
-            int veterinarianID = Integer.parseInt(myVeterinarianAndID.getValue().toString());
-            int veterinaryID = Integer.parseInt(myVeterinaryAndID.getValue().toString());
             prInsertEvent.setInt(1, myEventID);
-            prInsertEvent.setObject(2, veterinarianID);
-            prInsertEvent.setObject(3, veterinaryID);
+            if (myVeterinarianAndID.getValue() != null) {
+                String[] veterinarian = myVeterinarianAndID.getValue().toString().split(", ");
+                prInsertEvent.setObject(2, Integer.parseInt(veterinarian[1]));
+            } else {
+                prInsertEvent.setObject(2, null);
+            }
+            if (myVeterinaryAndID.getValue() != null) {
+                String[] veterinary = myVeterinaryAndID.getValue().toString().split(", ");
+                prInsertEvent.setObject(3, Integer.parseInt(veterinary[1]));
+            } else {
+                prInsertEvent.setObject(3, null);
+            }
             prInsertEvent.setInt(4, Integer.parseInt(myWeight.getText()));
             prInsertEvent.setObject(5, myNotes.getText());
             prInsertEvent.execute();
             conn.close();
-            myErrorMessage.setText("Sucessfully added medical checkup");
+            myErrorMessage.setText("Successfully added medical checkup");
         } catch (SQLException ex) {
-            ex.printStackTrace();
             myErrorMessage.setText("Only one entry of each event type per event is allowed.");
         }
     }
