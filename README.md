@@ -27,12 +27,12 @@ A user can login using their username and password. This gives them access to in
 
 ### Adding an Event
 An owner can log an event specifying the type, date, and time. The date and time will automatically be set to the current date and time unless specified otherwise.
-![image](https://github.com/user-attachments/assets/285dce37-9816-40b2-948d-3ca7c6451e38)
-![image](https://github.com/user-attachments/assets/fc86425b-e094-48d8-9544-cb6ee26df748)
+<br />![image](https://github.com/user-attachments/assets/285dce37-9816-40b2-948d-3ca7c6451e38)
+<br />![image](https://github.com/user-attachments/assets/fc86425b-e094-48d8-9544-cb6ee26df748)
 
 ### Event History
 An owner can get a summary log of all events. The information that will be included are those that are shared in all events.
-![image](https://github.com/user-attachments/assets/6beadfae-c1bf-47a1-91c7-0ad21ace38ab)
+<br />![image](https://github.com/user-attachments/assets/6beadfae-c1bf-47a1-91c7-0ad21ace38ab)
 
 ### Delete an Event
 An owner can delete an event made by them. This action is disabled if no events have been added for the pet.
@@ -42,7 +42,7 @@ An owner can calculate a pet’s daily calorie intake, which will be retrieved f
 
 ### Add Expense
 An owner can enter different types of expenses related to the pet. 
-![image](https://github.com/user-attachments/assets/1b5c0d93-1003-425b-8926-cb195547507e)
+<br />![image](https://github.com/user-attachments/assets/1b5c0d93-1003-425b-8926-cb195547507e)
 
 ### Remove Expense
 An owner can remove an expense related to the pet. If there are no expenses related to the pet this action will be disabled.
@@ -52,32 +52,32 @@ An owner can calculate the expenses related to the pet over a given time period 
 
 ### Exercise Report 
 Provides a report on how active the pet was over a given time period based on duration. 
-![image](https://github.com/user-attachments/assets/8582437d-ab74-49f6-b488-9a91493b6bd8)
+<br />![image](https://github.com/user-attachments/assets/8582437d-ab74-49f6-b488-9a91493b6bd8)
 
 ### Potty Report
 Provides a report on how often the pet has gone potty, distinguished by type of potty, over a given time period.
-![image](https://github.com/user-attachments/assets/9c763f3e-96a4-4d68-9693-6f2190889931)
+<br />![image](https://github.com/user-attachments/assets/9c763f3e-96a4-4d68-9693-6f2190889931)
 
 ### Medical Checkup Report
 Provides a report on all medical checkups of the pet. This includes information on the reason for the visit, weight, notes from the visit, the veterinarian and the veterinary
-![image](https://github.com/user-attachments/assets/197dab57-beac-4640-aa8e-102876e333a5)
+<br />![image](https://github.com/user-attachments/assets/197dab57-beac-4640-aa8e-102876e333a5)
 
 ### Training Report
 Provide a report on what the training type and how effective the training was over a given time period based on execution time of commands and the time in which commands are held.
-![image](https://github.com/user-attachments/assets/01f7b861-a75b-4de5-8d90-dfc1ee7f29e2)
+<br />![image](https://github.com/user-attachments/assets/01f7b861-a75b-4de5-8d90-dfc1ee7f29e2)
 
 ## Analytical Queries 
 1. Find the veterinary clinic that takes care of the most <species> (between __ and __kg)
-   ![image](https://github.com/user-attachments/assets/30935456-90f3-4ff5-b283-339ff2a15035)
+   <br />![image](https://github.com/user-attachments/assets/30935456-90f3-4ff5-b283-339ff2a15035)
    <br />**Note:** located in the medical checkup page
 2. Find the average daily calories consumed by species.
 3. For a given owners, find the average amount spent on <eventType> per month.
-   ![image](https://github.com/user-attachments/assets/439c0c25-c085-43e9-8853-51fa8ac97971)
+   <br />![image](https://github.com/user-attachments/assets/439c0c25-c085-43e9-8853-51fa8ac97971)
    <br />**Note:** located on the expense page. It allows users to select the type of event they would like the average amount spent per month calculated for.
    
 4. For a given area what is the groomer that has the highest average rating and has over 10 ratings.
-   ![image](https://github.com/user-attachments/assets/9dfcd000-d351-46c1-8ecf-2cdf2db1176c)
-   ![image](https://github.com/user-attachments/assets/afd33a31-e15b-4362-ad93-4a002e5b0415)
+   <br />![image](https://github.com/user-attachments/assets/9dfcd000-d351-46c1-8ecf-2cdf2db1176c)
+   <br />![image](https://github.com/user-attachments/assets/afd33a31-e15b-4362-ad93-4a002e5b0415)
    <br />**Note:** located on grooming page. It allows users to select the city they want to find a groomer (based on ratings).
    
 5. Analyze pet training success by the time of day.
