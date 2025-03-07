@@ -25,7 +25,7 @@
                      <children>
                         <HBox layoutX="401.0" layoutY="-1.0" prefHeight="693.0" prefWidth="879.0">
                            <children>
-                              <TableView fx:id="myExpenseTable" prefHeight="693.0" prefWidth="880.0">
+                              <TableView fx:id="myExpenseTable" onMouseClicked="#changeExpenseSelected" prefHeight="693.0" prefWidth="880.0">
                                 <columns>
                                   <TableColumn fx:id="myExpenseIDCol" prefWidth="104.0" text="ExpenseID" />
                                   <TableColumn fx:id="myExpenseTypeCol" prefWidth="135.0" text="ExpenseType" />
@@ -75,7 +75,7 @@
                               <Insets left="15.0" right="15.0" />
                            </padding>
                         </VBox>
-                        <VBox layoutY="244.0" prefHeight="176.0" prefWidth="401.0">
+                        <VBox layoutY="244.0" prefHeight="139.0" prefWidth="401.0">
                            <children>
                               <Label text="Analytical Query" />
                               <HBox>
@@ -96,6 +96,25 @@
                                  </VBox.margin>
                               </Button>
                               <Label fx:id="myExpenseQueryResult" prefHeight="38.0" prefWidth="371.0" />
+                           </children>
+                           <padding>
+                              <Insets left="15.0" right="15.0" />
+                           </padding>
+                        </VBox>
+                        <VBox layoutY="365.0" prefHeight="124.0" prefWidth="402.0">
+                           <children>
+                              <HBox>
+                                 <children>
+                                    <Label prefHeight="17.0" prefWidth="108.0" text="Delete Expense" />
+                                    <Label fx:id="myCurrentExpenseSelectedLabel" prefHeight="17.0" prefWidth="261.0" text="Selected EventID (click on the row)" />
+                                 </children>
+                              </HBox>
+                              <Button fx:id="myDeleteExpenseBtn" mnemonicParsing="false" onAction="#deleteCurrentExpense" prefHeight="25.0" prefWidth="405.0" text="Delete Expense">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Label fx:id="myDeleteMessage" prefHeight="17.0" prefWidth="381.0" />
                            </children>
                            <padding>
                               <Insets left="15.0" right="15.0" />
