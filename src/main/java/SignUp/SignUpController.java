@@ -7,6 +7,7 @@ import Login.userType;
 import Owner.OwnerController;
 import com.dlsc.formsfx.model.structure.DateField;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,15 +19,12 @@ import javafx.stage.Stage;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ResourceBundle;
 
 public class SignUpController implements Initializable {
     private SignUpModel signUpModel = new SignUpModel();
-
+    private int myUserID;
     @FXML
     private Label myDBConnectionLabel;
     @FXML
@@ -61,8 +59,73 @@ public class SignUpController implements Initializable {
             myDBConnectionLabel.setText("Not Connected to Database");
         }
         myUserType.setItems(FXCollections.observableArrayList(userType.values()));
+        initializeEmailTypeComboBox();
+        initializePhoneTypeComboBox();
     }
+    private void initializeEmailTypeComboBox() {
+        String query = "SELECT EmailType FROM EmailTypes;";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement pr = conn.prepareStatement(query);
+            ResultSet rs = pr.executeQuery();
+            ObservableList<String> insurances = FXCollections.observableArrayList();
+            while (rs.next()) {
+                insurances.add(rs.getString(1));
+            }
+            myEmailType.setItems(insurances);
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    private void initializePhoneTypeComboBox() {
+        String query = "SELECT PhoneType FROM PhoneTypes;";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement pr = conn.prepareStatement(query);
+            ResultSet rs = pr.executeQuery();
+            ObservableList<String> insurances = FXCollections.observableArrayList();
+            while (rs.next()) {
+                insurances.add(rs.getString(1));
+            }
+            myPhoneNumberType.setItems(insurances);
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    private void addEmailType() {
 
+    }
+    private void addEmail() {
+        String query = "INSERT INTO Emails(UserID, Email) VALUES(?, ?);";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement pr = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            //ResultSet rs = pr.executeQuery();
+            pr.setInt(1, myUserID);
+            pr.setString(2, myEmail.getText().toString());
+            //pr.setString(3, );
+            pr.executeQuery();
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    private void addPhone() {
+        String query = "INSERT INTO Phones(UserID, PhoneNumber) VALUES(?, ?);";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement pr = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            //ResultSet rs = pr.executeQuery();
+            pr.setInt(1, myUserID);
+            pr.setString(2, myPhoneNumber.getText().toString());
+            pr.executeQuery();
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
     @FXML
     public void signup() {
         int vetValue = 0;
@@ -110,7 +173,6 @@ public class SignUpController implements Initializable {
             localException.printStackTrace();
         }
     }
-
 
     public void backToLogin() {
         try {
