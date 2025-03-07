@@ -67,32 +67,30 @@ Provides a report on how active the pet was over a given time period based on du
 ### Potty Report
 Provides a report on how often the pet has gone potty, distinguished by type of potty, over a given time period.
 <br />![image](https://github.com/user-attachments/assets/9c763f3e-96a4-4d68-9693-6f2190889931)
-<br />![image](https://github.com/user-attachments/assets/688fd13a-8bb4-4d24-bb9b-f303e5b893f4)
-
-### Medical Checkup Report
-Provides a report on all medical checkups of the pet. This includes information on the reason for the visit, weight, notes from the visit, the veterinarian and the veterinary
-<br />![image](https://github.com/user-attachments/assets/197dab57-beac-4640-aa8e-102876e333a5)
 
 ### Training Report
 Provide a report on what the training type and how effective the training was over a given time period based on execution time of commands and the time in which commands are held.
 <br />![image](https://github.com/user-attachments/assets/01f7b861-a75b-4de5-8d90-dfc1ee7f29e2)
+<br />![image](https://github.com/user-attachments/assets/7cd7dab6-e56e-4d67-a74d-96f216ab89fa)
 
 ## Analytical Queries 
 1. Find the veterinary clinic that takes care of the most <species> (between __ and __kg)
    <br />![image](https://github.com/user-attachments/assets/30935456-90f3-4ff5-b283-339ff2a15035)
    <br />**Note:** located in the medical checkup page
-2. Find the average daily calories consumed by species.
-3. For a given owners, find the average amount spent on <eventType> per month.
+2. For a given owners, find the average amount spent on <eventType> per month.
    <br />![image](https://github.com/user-attachments/assets/439c0c25-c085-43e9-8853-51fa8ac97971)
    <br />**Note:** located on the expense page. It allows users to select the type of event they would like the average amount spent per month calculated for.
    
-4. For a given area what is the groomer that has the highest average rating and has over 10 ratings.
+3. For a given area what is the groomer that has the highest average rating and has over 10 ratings.
    <br />![image](https://github.com/user-attachments/assets/9dfcd000-d351-46c1-8ecf-2cdf2db1176c)
    <br />![image](https://github.com/user-attachments/assets/afd33a31-e15b-4362-ad93-4a002e5b0415)
    <br />**Note:** located on grooming page. It allows users to select the city they want to find a groomer (based on ratings).
    
-5. Analyze pet training success by the time of day.
-6. For dogs what are the two most common 1 hour time frames in which dogs pee.
+4. Analyze pet training success by the time of day.
+   ![image](https://github.com/user-attachments/assets/2d236e28-e6c8-4649-91b4-148193b48fc0)
+
+5. Provides a report on all medical checkups of the pet. This includes information on the reason for the visit, weight, notes from the visit, the veterinarian and the veterinary
+<br />![image](https://github.com/user-attachments/assets/197dab57-beac-4640-aa8e-102876e333a5)
 
 ----
 # References
