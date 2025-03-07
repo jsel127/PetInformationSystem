@@ -9,7 +9,7 @@ import javafx.beans.property.StringProperty;
  * Stores individual data entries for the Event Table.
  *
  * @version March 5, 2025
- * @author Jasmine Sellers
+ * @author Jasmine Sellers, Selly Beyene
  */
 public class EventData {
     private final IntegerProperty myEventID;

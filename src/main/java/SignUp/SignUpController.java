@@ -34,19 +34,19 @@ public class SignUpController implements Initializable {
     @FXML
     private TextField myUserLastName;
     @FXML
+    private ComboBox myUserType;
+    @FXML
     private TextField myPhoneNumber;
     @FXML
     private TextField myEmail;
     @FXML
-    private TextField myPassword;
+    private PasswordField myPassword;
+    @FXML
+    private ComboBox myPhoneNumberType;
+    @FXML
+    private ComboBox myEmailType;
     @FXML
     private Button myCreateAccountButton;
-    @FXML
-    private RadioButton isOwner;
-    @FXML
-    private RadioButton isVeterinarian;
-    @FXML
-    private RadioButton isCaretaker;
     @FXML
     private Label myLoginMessage;
     private dbConnection myConnection;
@@ -60,22 +60,20 @@ public class SignUpController implements Initializable {
         } else {
             myDBConnectionLabel.setText("Not Connected to Database");
         }
-        //myUserType.setItems(FXCollections.observableArrayList(userType.values()));
+        myUserType.setItems(FXCollections.observableArrayList(userType.values()));
     }
 
     @FXML
     public void signup() {
-        int vetValue;
-        int careValue;
-        if (isVeterinarian.isSelected()) {
-            vetValue = 1;
-        } else {
-            vetValue = 0;
-        }
-        if (isCaretaker.isSelected()) {
-            careValue = 1;
-        } else {
-            careValue = 0;
+        int vetValue = 0;
+        int careValue = 0;
+        switch (((userType)myUserType.getValue()).toString()) {
+            case "Veterinarian":
+                vetValue = 1;
+                break;
+            case "Caretaker":
+                careValue = 1;
+                break;
         }
         String insertNewUser = "INSERT INTO Users(Password, FirstName, LastName, DateJoined, IsVeterinarian, " +
                 "IsCaretaker, IsLoggedin) VALUES(?, ?, ?, ?, ?, ?, ?);";
@@ -112,6 +110,7 @@ public class SignUpController implements Initializable {
             localException.printStackTrace();
         }
     }
+
 
     public void backToLogin() {
         try {

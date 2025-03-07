@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 /**
  * Controller class to connect UI to database for the Training Event table.
  * @version March 5 2025
- * @author Jasmine Sellers
+ * @author Jasmine Sellers, Selly Beyene
  */
 public class TrainingEventController implements Initializable {
     /** The PetID for the event */
@@ -191,32 +191,7 @@ public class TrainingEventController implements Initializable {
         return 1;
     }
 
-    public void generateLineChart() {
-        try {
-            Connection conn = dbConnection.getConnection();
 
-            String query = "SELECT firstname, trainingtype, commandheldtime, TIME(StartDateTime) AS TimeOfDay\n" +
-                    "FROM pets JOIN eventlogs ON pets.PetID = eventlogs.PetID\n" +
-                    "\t\t  JOIN trainings ON eventlogs.EventID = trainings.EventID\n" +
-                    "\t\t  JOIN trainingtypes ON trainings.TrainingTypeID = TrainingTypes.TrainingTypeID\n" +
-                    "ORDER BY commandheldtime DESC;";
-            PreparedStatement pr = conn.prepareStatement(query);
-            //pr.setInt(1, myPetID);
-            ResultSet rs = pr.executeQuery();
-            XYChart.Series trainingChart = new XYChart.Series<>();
-            trainingChart.setName("TrainingReport");
-
-            while (rs.next()) {
-                trainingChart.getData().add(new XYChart.Data<>(rs.getString(4), rs.getInt(3)));
-            }
-
-            myLineChart.getData().clear();
-            myLineChart.getData().addAll(trainingChart);
-            //conn.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
     /**
      * Returns to the pet page.
      * @param theEvent the triggering event

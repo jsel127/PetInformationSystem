@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
 /**
  * Controller class to connect UI to database for the Exercise Event table.
  * @version March 5 2025
- * @author Jasmine Sellers
+ * @author Jasmine Sellers, Selly Beyene
  */
 public class ExerciseEventController implements Initializable {
     /** The PetID for the event */

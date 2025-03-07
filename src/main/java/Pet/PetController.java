@@ -19,7 +19,11 @@ public class PetController implements Initializable {
     @FXML
     private Button myLogEventBtn;
     @FXML
-    private Button myGenerateReportBtn;
+    private Button myGenerateTrainingReportBtn;
+    @FXML
+    private Button myGenerateExerciseReportBtn;
+    @FXML
+    private Button myGeneratePottyReportBtn;
     private int myPetID;
     public void initialize(URL theURL, ResourceBundle theRB) {
 
@@ -55,14 +59,56 @@ public class PetController implements Initializable {
     }
 
     @FXML
-    public void openGenerateReportFXML(ActionEvent theEvent) {
+    public void openGenerateTrainingReportFXML(ActionEvent theEvent) {
         try {
-            Stage currentStage = (Stage) myGenerateReportBtn.getScene().getWindow();
+            Stage currentStage = (Stage) myGenerateTrainingReportBtn.getScene().getWindow();
             currentStage.close();
 
             Stage reportStage = new Stage();
             FXMLLoader loader = new FXMLLoader();
-            Pane root = (Pane) loader.load(getClass().getResource("/Pet/report.fxml").openStream());
+            Pane root = (Pane) loader.load(getClass().getResource("/TrainingReport/trainingReport.fxml").openStream());
+
+            ReportController reportController = (ReportController) loader.getController();
+            reportController.setPetID(myPetID);
+            Scene scene = new Scene(root);
+            reportStage.setScene(scene);
+            reportStage.setTitle("Report Dashboard");
+            reportStage.setResizable(false);
+            reportStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    public void openGenerateExerciseReportFXML(ActionEvent theEvent) {
+        try {
+            Stage currentStage = (Stage) myGenerateExerciseReportBtn.getScene().getWindow();
+            currentStage.close();
+
+            Stage reportStage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            Pane root = (Pane) loader.load(getClass().getResource("/ExerciseReport/exerciseReport.fxml").openStream());
+
+            ReportController reportController = (ReportController) loader.getController();
+            reportController.setPetID(myPetID);
+            Scene scene = new Scene(root);
+            reportStage.setScene(scene);
+            reportStage.setTitle("Report Dashboard");
+            reportStage.setResizable(false);
+            reportStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    public void openGeneratePottyReportFXML(ActionEvent theEvent) {
+        try {
+            Stage currentStage = (Stage) myGeneratePottyReportBtn.getScene().getWindow();
+            currentStage.close();
+
+            Stage reportStage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            Pane root = (Pane) loader.load(getClass().getResource("/PottyReport/pottyReport.fxml").openStream());
 
             ReportController reportController = (ReportController) loader.getController();
             reportController.setPetID(myPetID);

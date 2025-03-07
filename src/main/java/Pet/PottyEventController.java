@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
@@ -24,7 +26,7 @@ import java.util.ResourceBundle;
 /**
  * Controller class to connect UI to database for the Potty Event table.
  * @version March 5 2025
- * @author Jasmine Sellers
+ * @author Jasmine Sellers, Selly Beyene
  */
 public class PottyEventController implements Initializable {
     /** The PetID for the event */
@@ -44,6 +46,8 @@ public class PottyEventController implements Initializable {
     private Label myErrorMessage;
     @FXML
     private Button myReturnEventPageBtn;
+    @FXML
+    private BarChart<String, Integer> myBarChart;
     @FXML
     private TableView<PottyEventData> myPottyTable;
     @FXML
@@ -203,4 +207,5 @@ public class PottyEventController implements Initializable {
             e.printStackTrace();
         }
     }
+
 }
