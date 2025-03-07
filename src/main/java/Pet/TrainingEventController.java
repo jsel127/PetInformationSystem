@@ -170,19 +170,19 @@ public class TrainingEventController implements Initializable {
     }
 
     /**
-     * Gets the id of the potty type.
-     * @return key of the selected potty type
+     * Gets the id of the grooming type.
+     * @return key of the selected grooming type
      */
     @FXML
     private int getMyTrainingTypeID() {
-        String queryGetPottyTypeID = "SELECT TrainingTypeID FROM TrainingTypes WHERE TrainingType = ?;";
+        String queryGetTrainingTypeID = "SELECT TrainingTypeID FROM TrainingTypes WHERE TrainingType = ?;";
         try {
             Connection conn = dbConnection.getConnection();
-            PreparedStatement prPottiesType = conn.prepareStatement(queryGetPottyTypeID);
-            prPottiesType.setString(1, myTrainingType.getValue().toString());
-            ResultSet rsPottiesType = prPottiesType.executeQuery();
-            if (rsPottiesType.next()) {
-                return rsPottiesType.getInt(1);
+            PreparedStatement prTrainingType = conn.prepareStatement(queryGetTrainingTypeID);
+            prTrainingType.setString(1, myTrainingType.getValue().toString());
+            ResultSet rsTrainingType = prTrainingType.executeQuery();
+            if (rsTrainingType.next()) {
+                return rsTrainingType.getInt(1);
             }
             conn.close();
         } catch (SQLException ex) {

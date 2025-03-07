@@ -33,13 +33,14 @@
                         <VBox prefHeight="148.0" prefWidth="402.0" AnchorPane.leftAnchor="0.0">
                             <children>
                                 <Label prefHeight="17.0" prefWidth="410.0" text="Add Grooming" />
-                                <ComboBox prefHeight="25.0" prefWidth="372.0" promptText="Grooming Type" />
-                                <ComboBox layoutX="25.0" layoutY="27.0" prefHeight="25.0" prefWidth="372.0" promptText="GroomerID" />
-                                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="379.0" text="Log Grooming">
+                                <ComboBox fx:id="myGroomingType" prefHeight="25.0" prefWidth="372.0" promptText="Grooming Type" />
+                                <ComboBox fx:id="myGroomerID" layoutX="25.0" layoutY="27.0" prefHeight="25.0" prefWidth="372.0" promptText="GroomerID" />
+                                <Button mnemonicParsing="false" onAction="#addGroomingEvent" prefHeight="25.0" prefWidth="379.0" text="Log Grooming">
                                     <VBox.margin>
                                         <Insets top="10.0" />
                                     </VBox.margin>
                                 </Button>
+                        <Label fx:id="myErrorMessage" prefHeight="30.0" prefWidth="372.0" />
                             </children>
                             <padding>
                                 <Insets left="15.0" right="15.0" />

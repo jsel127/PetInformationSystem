@@ -38,6 +38,12 @@ public class GroomingEventController implements Initializable {
     /** Stores loaded events */
     private ObservableList<GroomingEventData> myGroomingEventData;
     @FXML
+    private ComboBox myGroomingType;
+    @FXML
+    private ComboBox myGroomerID;
+    @FXML
+    private Label myErrorMessage;
+    @FXML
     private Button myReturnEventPageBtn;
     @FXML
     private TableView<GroomingEventData> myGroomingTable;
@@ -56,9 +62,44 @@ public class GroomingEventController implements Initializable {
     /** Initializes the window and connects to the database */
     public void initialize(URL theURL, ResourceBundle theRB) {
         myConnection = new dbConnection();
+        initializeGroomingTypeComboBox();
+        initializeGroomerIDComboBox();
         initializeCitiesComboBox();
     }
 
+    private void initializeGroomerIDComboBox() {
+        String query = "SELECT GroomerId FROM Groomers;";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement pr = conn.prepareStatement(query);
+            ResultSet rs = pr.executeQuery();
+            ObservableList<String> groomerID = FXCollections.observableArrayList();
+            while (rs.next()) {
+                groomerID.add(rs.getString(1));
+            }
+            myGroomerID.setItems(groomerID);
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void initializeGroomingTypeComboBox() {
+        String query = "SELECT GroomingType FROM GroomingTypes;";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement pr = conn.prepareStatement(query);
+            ResultSet rs = pr.executeQuery();
+            ObservableList<String> groomingTypes = FXCollections.observableArrayList();
+            while (rs.next()) {
+                groomingTypes.add(rs.getString(1));
+            }
+            myGroomingType.setItems(groomingTypes);
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
     private void initializeCitiesComboBox() {
         String query = "SELECT CityName FROM Cities";
         try {
@@ -95,6 +136,47 @@ public class GroomingEventController implements Initializable {
             throw new IndexOutOfBoundsException();
         }
         myEventID = theEventID;
+    }
+
+    public void addGroomingEvent(ActionEvent theEvent) {
+        String insertEventStatement = "INSERT INTO Groomings(EventID, GroomingTypeID, GroomerID) VALUES(?, ?, ?);";
+        try {
+            if (myGroomingType.getValue() == null) {
+                myErrorMessage.setText("A grooming type must be specified");
+                return;
+            }
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement prInsertEvent = conn.prepareStatement(insertEventStatement);
+            prInsertEvent.setInt(1, myEventID);
+            prInsertEvent.setInt(2, getGroomingTypeID());
+            prInsertEvent.setObject(3, Integer.parseInt(myGroomerID.getValue().toString()));
+            prInsertEvent.execute();
+            conn.close();
+            myErrorMessage.setText("Sucessfully added grooming event.");
+        } catch (SQLException ex) {
+            myErrorMessage.setText("Failed to create event. Only of each event type can be added for a given event.");
+        }
+    }
+    /**
+     * Gets the id of the grooming type.
+     * @return key of the selected grooming type
+     */
+    @FXML
+    private int getGroomingTypeID() {
+        String queryGetGroomingTypeID = "SELECT GroomingTypeID FROM GroomingTypes WHERE GroomingType = ?;";
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement prGroomingType = conn.prepareStatement(queryGetGroomingTypeID);
+            prGroomingType.setString(1, myGroomingType.getValue().toString());
+            ResultSet rsGroomingType = prGroomingType.executeQuery();
+            if (rsGroomingType.next()) {
+                return rsGroomingType.getInt(1);
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 1;
     }
 
     /**

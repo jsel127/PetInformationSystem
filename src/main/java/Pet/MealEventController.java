@@ -111,10 +111,10 @@ public class MealEventController implements Initializable {
             myErrorMessage.setText("Meal type is required.");
             return;
         }
-        String insertExerciseStatement = "INSERT INTO Meals (EventID, MealTypeID, Notes) VALUES (?, ?, ?);";
+        String insertMealStatement = "INSERT INTO Meals (EventID, MealTypeID, Notes) VALUES (?, ?, ?);";
         try {
             Connection conn = dbConnection.getConnection();
-            PreparedStatement prInsertEvent = conn.prepareStatement(insertExerciseStatement);
+            PreparedStatement prInsertEvent = conn.prepareStatement(insertMealStatement);
             prInsertEvent.setInt(1, myEventID);
             prInsertEvent.setInt(2, getMealTypeID());
             prInsertEvent.setString(3, myNotes.getText());
