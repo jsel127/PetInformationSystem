@@ -28,14 +28,17 @@ A user can login using their username and password. This gives them access to in
 ### Adding an Event
 An owner can log an event specifying the type, date, and time. The date and time will automatically be set to the current date and time unless specified otherwise.
 <br />![image](https://github.com/user-attachments/assets/285dce37-9816-40b2-948d-3ca7c6451e38)
-<br />![image](https://github.com/user-attachments/assets/fc86425b-e094-48d8-9544-cb6ee26df748)
+<br />![image](https://github.com/user-attachments/assets/876b4b78-5d07-4d9f-a3d6-9b925a4959b2)
+
 
 ### Event History
 An owner can get a summary log of all events. The information that will be included are those that are shared in all events.
-<br />![image](https://github.com/user-attachments/assets/6beadfae-c1bf-47a1-91c7-0ad21ace38ab)
+<br />![image](https://github.com/user-attachments/assets/a075e1b4-5c6c-4f7e-bb42-6afa2fb16042)
+
 
 ### Delete an Event
 An owner can delete an event made by them. This action is disabled if no events have been added for the pet.
+<br />![image](https://github.com/user-attachments/assets/88656a68-80e7-4415-9252-df6f15984ff1)
 
 ### Calorie Intake
 An owner can calculate a pet’s daily calorie intake, which will be retrieved from meal events.
